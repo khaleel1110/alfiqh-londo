@@ -1,0 +1,150 @@
+<section class="page-header">
+  <div class="container">
+    <span class="section-eyebrow">About {{ orgName }}</span>
+    <h1 class="page-title">An Islamic Initiative for Knowledge, Service and Community</h1>
+    <p class="page-subtitle">
+      We're not a mosque — we're a platform for turning Islamic values into
+      projects that genuinely change lives.
+    </p>
+  </div>
+</section>
+
+<!-- ============ WHO WE ARE ============ -->
+<section class="who-section">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-12 col-lg-6">
+        <span class="section-eyebrow">Who We Are</span>
+        <h2 class="section-title">Belief, Turned Into Action</h2>
+        <p class="section-body">
+          {{ orgName }} exists to make Islamic knowledge accessible and to turn
+          Islamic values — charity, compassion, service — into projects with
+          real, measurable impact. We run and support work in Da'wah, Zakat,
+          charity, education, orphan care and community development.
+        </p>
+        <p class="section-body">
+          We're intentionally not built around a single building or
+          congregation. Our work reaches wherever there's a need we can meet —
+          across London and, through partners, beyond it.
+        </p>
+        <a class="link-arrow" routerLink="/projects">See what we're working on &rarr;</a>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="who-image" style="background-image:url('/h5.webp')"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MISSION / VISION ============ -->
+<section class="mission-section">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-12 col-lg-6">
+        <div class="statement-card">
+          <span class="section-eyebrow section-eyebrow-light">Our Mission</span>
+          <p class="statement-text">{{ missionStatement }}</p>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="statement-card statement-card-outline">
+          <span class="section-eyebrow">Our Vision</span>
+          <p class="statement-text statement-text-dark">{{ visionStatement }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OUR WORK ============ -->
+<section class="workareas-section">
+  <div class="container">
+    <span class="section-eyebrow">Our Work</span>
+    <h2 class="section-title">Six Ways We Serve the Ummah</h2>
+
+    <div class="workareas-grid">
+      <a
+        class="workarea-card"
+        *ngFor="let area of workAreas"
+        [routerLink]="area.link"
+        [queryParams]="area.queryParams"
+      >
+        <i class="{{ area.icon }} workarea-icon"></i>
+        <h3 class="workarea-title">{{ area.title }}</h3>
+        <p class="workarea-description">{{ area.description }}</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OUR APPROACH ============ -->
+<section class="approach-section">
+  <div class="container">
+    <div class="row align-items-start g-5">
+      <div class="col-12 col-lg-4">
+        <span class="section-eyebrow">Our Approach</span>
+        <h2 class="section-title">How We Work</h2>
+        <p class="section-body">
+          Four principles guide every project we run or support, from a
+          single food parcel to a multi-year sponsorship.
+        </p>
+      </div>
+      <div class="col-12 col-lg-8">
+        <div class="approach-grid">
+          <div class="approach-item" *ngFor="let item of approach">
+            <h3 class="approach-title">{{ item.title }}</h3>
+            <p class="approach-description">{{ item.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OUR VALUES ============ -->
+<section class="values-section">
+  <div class="container">
+    <span class="section-eyebrow">Our Values</span>
+    <h2 class="section-title">What Guides Us</h2>
+
+    <div class="values-grid">
+      <div class="value-card" *ngFor="let value of coreValues">
+        <i class="{{ value.icon }} value-icon"></i>
+        <h3 class="value-title">{{ value.title }}</h3>
+        <p class="value-description">{{ value.description }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ IMPACT SNAPSHOT ============ -->
+<section class="impact-snapshot-section">
+  <div class="container impact-snapshot-inner">
+    <div>
+      <span class="section-eyebrow section-eyebrow-light">Our Impact</span>
+      <h2 class="section-title section-title-light">Real Numbers, Real People</h2>
+      <p class="section-body section-body-light">
+        A snapshot of what your support has made possible so far.
+      </p>
+      <a class="link-arrow link-arrow-light" routerLink="/impact">See the full impact report &rarr;</a>
+    </div>
+    <div class="impact-snapshot-grid">
+      <div class="impact-snapshot-item" *ngFor="let item of impactHighlights">
+        <div class="impact-snapshot-value">{{ item.value }}</div>
+        <div class="impact-snapshot-label">{{ item.label }}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CLOSING CTA ============ -->
+<section class="closing-cta-section">
+  <div class="container closing-cta-inner">
+    <h2 class="section-title">Ready to Be Part of It?</h2>
+    <p class="section-body">Explore our current projects or support our work directly.</p>
+    <div class="closing-cta-actions">
+      <a class="btn btn-primary-cta" routerLink="/projects">Explore Our Projects</a>
+      <a class="btn btn-outline-dark" routerLink="/donate">Support Our Work</a>
+    </div>
+  </div>
+</section>

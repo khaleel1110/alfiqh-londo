@@ -1,0 +1,615 @@
+// ---------------------------------------------------------------
+// Swiper core styles — REQUIRED. Without these the slider's JS runs
+// but the slides have no positioning/transition CSS, so they stack
+// on top of each other instead of fading. This was the main reason
+// the previous slider looked "broken".
+// ---------------------------------------------------------------
+@import 'swiper/css';
+@import 'swiper/css/effect-fade';
+@import 'swiper/css/pagination';
+
+// ---------------------------------------------------------------
+// Design tokens
+// ---------------------------------------------------------------
+:host {
+  --masjid-green: #0f4c3a;
+  --masjid-green-deep: #0a3529;
+  --brass: #c9a24b;
+  --brass-soft: #e4cd8f;
+  --ivory: #f7f3e9;
+  --ink: #232420;
+  --ink-soft: #5b6058;
+  --brick: #8c3b2e;
+
+  --font-display: 'Amiri', 'Georgia', serif;
+  --font-body: 'Karla', 'Inter', system-ui, sans-serif;
+  --font-utility: 'Inter', system-ui, sans-serif;
+
+  display: block;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--ivory);
+}
+
+.container {
+  max-width: 1180px;
+}
+
+.section-eyebrow {
+  display: inline-block;
+  font-family: var(--font-utility);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin-bottom: 0.5rem;
+
+  &.section-eyebrow-light {
+    color: var(--brass-soft);
+  }
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 2.5vw, 2.5rem);
+  color: var(--masjid-green-deep);
+  margin-bottom: 1rem;
+
+  &.section-title-light {
+    color: var(--ivory);
+  }
+}
+
+.section-body {
+  color: var(--ink-soft);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+
+  &.section-body-light {
+    color: rgba(247, 243, 233, 0.85);
+  }
+}
+
+.section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.link-arrow {
+  font-family: var(--font-utility);
+  font-weight: 600;
+  color: var(--masjid-green);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--brass);
+  }
+}
+
+// ---------------------------------------------------------------
+// Hero — arch-shaped content panel is the signature motif, echoed
+// again on the prayer card and events below.
+// ---------------------------------------------------------------
+.hero {
+  min-height: 88vh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: var(--masjid-green-deep);
+}
+
+.hero-swiper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-slide-image {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-slide-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 53, 41, 0.35) 0%,
+    rgba(10, 53, 41, 0.55) 55%,
+    rgba(10, 53, 41, 0.92) 100%
+  );
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  color: var(--ivory);
+  padding-bottom: 4rem;
+}
+
+.eyebrow {
+  font-family: var(--font-utility);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: var(--brass-soft);
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  margin: 0.5rem 0 1rem;
+}
+
+.hero-subtitle {
+  font-size: 1.15rem;
+  color: rgba(247, 243, 233, 0.85);
+  max-width: 40ch;
+  margin-bottom: 1.25rem;
+}
+
+.hero-dates {
+  font-family: var(--font-utility);
+  font-size: 0.95rem;
+  color: var(--brass-soft);
+  margin-bottom: 1.75rem;
+
+  .dot {
+    margin: 0 0.5rem;
+  }
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.btn {
+  font-family: var(--font-utility);
+  font-weight: 600;
+  padding: 0.85rem 1.75rem;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.btn-donate {
+  background: var(--brass);
+  color: var(--masjid-green-deep);
+
+  &:hover {
+    background: var(--brass-soft);
+    transform: translateY(-1px);
+  }
+}
+
+.btn-outline {
+  border: 1px solid rgba(247, 243, 233, 0.5);
+  color: var(--ivory);
+
+  &:hover {
+    border-color: var(--brass-soft);
+    color: var(--brass-soft);
+  }
+}
+
+// ---------------------------------------------------------------
+// Prayer band
+// ---------------------------------------------------------------
+.prayer-band {
+  margin-top: -3.5rem;
+  position: relative;
+  z-index: 3;
+  padding-bottom: 3rem;
+}
+
+.prayer-card {
+  background: var(--masjid-green);
+  border-radius: 32px 32px 8px 8px; // arch echo at the top
+  padding: 2rem clamp(1.25rem, 4vw, 2.5rem);
+  box-shadow: 0 24px 48px rgba(10, 53, 41, 0.25);
+}
+
+.prayer-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 1rem;
+  color: var(--ivory);
+  border-bottom: 1px solid rgba(247, 243, 233, 0.15);
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+
+  .label {
+    display: block;
+    font-family: var(--font-utility);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brass-soft);
+    margin-bottom: 0.25rem;
+  }
+}
+
+.next-prayer-name {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  text-transform: capitalize;
+  margin: 0;
+}
+
+.countdown-value {
+  font-family: var(--font-utility);
+  font-variant-numeric: tabular-nums;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--brass);
+}
+
+.prayer-row-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.75rem;
+}
+
+.prayer-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  background: rgba(247, 243, 233, 0.04);
+  color: var(--ivory);
+
+  &.is-current {
+    background: rgba(201, 162, 75, 0.16);
+  }
+
+  &.is-next {
+    background: var(--brass);
+    color: var(--masjid-green-deep);
+
+    .prayer-arabic,
+    .prayer-time {
+      color: var(--masjid-green-deep);
+    }
+  }
+}
+
+.prayer-arabic {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--brass-soft);
+}
+
+.prayer-name {
+  font-family: var(--font-utility);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.prayer-time {
+  font-family: var(--font-utility);
+  font-variant-numeric: tabular-nums;
+  color: rgba(247, 243, 233, 0.75);
+}
+
+// ---------------------------------------------------------------
+// About
+// ---------------------------------------------------------------
+.about-section {
+  padding: 5rem 0;
+}
+
+.about-image {
+  width: 100%;
+  min-height: 320px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 32px 32px 8px 8px;
+}
+
+// ---------------------------------------------------------------
+// Jumu'ah
+// ---------------------------------------------------------------
+.jumuah-section {
+  padding-bottom: 5rem;
+}
+
+.jumuah-card {
+  background: var(--brass-soft);
+  border-radius: 8px 32px 8px 32px;
+  padding: clamp(1.5rem, 4vw, 3rem);
+}
+
+.jumuah-times {
+  display: flex;
+  gap: 3rem;
+  margin: 1rem 0 1.25rem;
+
+  .label {
+    display: block;
+    font-family: var(--font-utility);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--masjid-green);
+  }
+
+  .value {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    color: var(--masjid-green-deep);
+  }
+}
+
+// ---------------------------------------------------------------
+// Events
+// ---------------------------------------------------------------
+.events-section {
+  padding-bottom: 5rem;
+}
+
+.event-card {
+  height: 100%;
+  padding: 1.5rem;
+  border: 1px solid rgba(15, 76, 58, 0.12);
+  border-radius: 8px 32px 8px 8px;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+
+  &:hover {
+    box-shadow: 0 16px 32px rgba(15, 76, 58, 0.1);
+    transform: translateY(-2px);
+  }
+}
+
+.event-category {
+  font-family: var(--font-utility);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brick);
+}
+
+.event-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--masjid-green-deep);
+  margin: 0.5rem 0;
+}
+
+.event-meta {
+  font-family: var(--font-utility);
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+
+  .dot {
+    margin: 0 0.4rem;
+  }
+}
+
+.event-location {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin-top: 0.5rem;
+}
+
+// ---------------------------------------------------------------
+// Announcements
+// ---------------------------------------------------------------
+.announcements-section {
+  padding-bottom: 5rem;
+}
+
+.announcement-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.announcement-item {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  border-left: 3px solid var(--masjid-green);
+  background: rgba(15, 76, 58, 0.03);
+
+  &.is-priority {
+    border-left-color: var(--brick);
+    background: rgba(140, 59, 46, 0.05);
+  }
+}
+
+.announcement-date {
+  font-family: var(--font-utility);
+  font-weight: 700;
+  color: var(--masjid-green);
+}
+
+.announcement-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  margin: 0 0 0.35rem;
+  color: var(--ink);
+}
+
+.announcement-message {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+// ---------------------------------------------------------------
+// Gallery
+// ---------------------------------------------------------------
+.gallery-section {
+  padding-bottom: 5rem;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.gallery-item {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  overflow: hidden;
+
+  .gallery-caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0.75rem;
+    font-family: var(--font-utility);
+    font-size: 0.8rem;
+    color: var(--ivory);
+    background: linear-gradient(180deg, transparent, rgba(10, 53, 41, 0.85));
+  }
+}
+
+// ---------------------------------------------------------------
+// Donate CTA
+// ---------------------------------------------------------------
+.donate-section {
+  background: var(--masjid-green-deep);
+  padding: 4rem 0;
+}
+
+.donate-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.btn-donate-light {
+  background: var(--brass);
+  color: var(--masjid-green-deep);
+  white-space: nowrap;
+}
+
+// ---------------------------------------------------------------
+// Quick links
+// ---------------------------------------------------------------
+.quicklinks-section {
+  padding: 3rem 0;
+  border-bottom: 1px solid rgba(15, 76, 58, 0.1);
+}
+
+.quicklinks-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.quicklink {
+  font-family: var(--font-utility);
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.6rem 1.25rem;
+  border-radius: 999px;
+  border: 1px solid rgba(15, 76, 58, 0.2);
+  color: var(--masjid-green-deep);
+  text-decoration: none;
+
+  &:hover {
+    background: var(--masjid-green);
+    color: var(--ivory);
+    border-color: var(--masjid-green);
+  }
+}
+
+// ---------------------------------------------------------------
+// Contact
+// ---------------------------------------------------------------
+.contact-section {
+  padding: 5rem 0;
+}
+
+.contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+
+  li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid rgba(15, 76, 58, 0.1);
+
+    strong {
+      font-family: var(--font-utility);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--brass);
+    }
+  }
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+
+  a {
+    font-family: var(--font-utility);
+    font-weight: 600;
+    color: var(--masjid-green);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--brick);
+    }
+  }
+}
+
+.contact-map {
+  width: 100%;
+  min-height: 360px;
+  border: 0;
+  border-radius: 8px 32px 8px 8px;
+}
+
+// ---------------------------------------------------------------
+// Responsive
+// ---------------------------------------------------------------
+@media (max-width: 767.98px) {
+  .hero {
+    min-height: 100vh;
+  }
+
+  .prayer-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .jumuah-times {
+    gap: 1.5rem;
+  }
+
+  .donate-inner {
+    text-align: center;
+    justify-content: center;
+  }
+}

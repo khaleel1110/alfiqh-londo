@@ -1,0 +1,16 @@
+/* Light mode active navlink */
+:root [data-bs-theme="light"] .nav-link.active,
+html:not([data-bs-theme="dark"]) .nav-link.active {
+  font-weight: bold;
+  color: #017B4D;
+}
+
+/* Dark mode active navlink */
+[data-bs-theme="dark"] .nav-link.active {
+  font-weight: bold;
+  color: #1fa875;
+}
+
+.nav-link {
+  font-weight: bold;
+}

@@ -1,0 +1,125 @@
+<section class="page-header">
+  <div class="container">
+    <span class="section-eyebrow">Our Projects</span>
+    <h1 class="page-title">Islamic Projects Making an Impact</h1>
+    <p class="page-subtitle">
+      Browse the Da'wah, Zakat, charity, education and community projects
+      Al-Fiqh London runs and supports across London.
+    </p>
+  </div>
+</section>
+
+<section class="filters-section">
+  <div class="container">
+    <div class="search-row">
+      <div class="search-input">
+        <i class="ai-search"></i>
+        <input
+          type="text"
+          placeholder="Search projects..."
+          [value]="searchTerm()"
+          (input)="searchTerm.set($any($event.target).value)"
+        />
+      </div>
+
+      <select class="filter-select" [value]="selectedLocation()" (change)="selectedLocation.set($any($event.target).value)">
+        <option *ngFor="let loc of locations" [value]="loc">{{ loc === 'All' ? 'All Locations' : loc }}</option>
+      </select>
+
+      <select class="filter-select" [value]="sortBy()" (change)="sortBy.set($any($event.target).value)">
+        <option *ngFor="let opt of sortOptions" [value]="opt.key">Sort: {{ opt.label }}</option>
+      </select>
+
+      <button
+        type="button"
+        class="featured-toggle"
+        [class.is-active]="featuredOnly()"
+        (click)="toggleFeaturedOnly()"
+      >
+        <i class="ai-star"></i> Featured Only
+      </button>
+    </div>
+
+    <div class="chip-row">
+      <button
+        type="button"
+        class="chip"
+        [class.is-active]="selectedCategory() === 'all'"
+        (click)="setCategory('all')"
+      >All Categories</button>
+      <button
+        type="button"
+        class="chip"
+        *ngFor="let cat of categories"
+        [class.is-active]="selectedCategory() === cat.key"
+        (click)="setCategory(cat.key)"
+      >{{ cat.label }}</button>
+    </div>
+
+    <div class="chip-row chip-row-status">
+      <button
+        type="button"
+        class="chip chip-status"
+        *ngFor="let status of statuses"
+        [class.is-active]="selectedStatus() === status"
+        (click)="setStatus(status)"
+      >{{ status }}</button>
+    </div>
+  </div>
+</section>
+
+<section class="results-section">
+  <div class="container">
+    <div class="results-header">
+      <span class="results-count">{{ filteredProjects().length }} project{{ filteredProjects().length === 1 ? '' : 's' }}</span>
+      <button
+        type="button"
+        class="link-arrow clear-filters"
+        *ngIf="searchTerm() || selectedCategory() !== 'all' || selectedStatus() !== 'All' || selectedLocation() !== 'All' || featuredOnly()"
+        (click)="clearFilters()"
+      >Clear all filters</button>
+    </div>
+
+    <div class="row g-4" *ngIf="filteredProjects().length; else emptyState">
+      <div class="col-12 col-md-6 col-lg-4" *ngFor="let project of filteredProjects()">
+        <div class="project-card">
+          <div class="project-image" [style.background-image]="'url(' + project.imageUrl + ')'">
+            <span class="project-status" [class]="'status-' + project.status.toLowerCase()">{{ project.status }}</span>
+            <span class="project-featured" *ngIf="project.featured"><i class="ai-star"></i></span>
+          </div>
+          <div class="project-body">
+            <span class="project-category">{{ categoryLabel(project.category) }} &middot; {{ project.location }}</span>
+            <h3 class="project-title">{{ project.title }}</h3>
+            <p class="project-description">{{ project.shortDescription }}</p>
+
+            <ng-container *ngIf="project.fundraisingEnabled && project.targetAmount; else impactBlock">
+              <div class="project-progress">
+                <div class="progress-track">
+                  <div class="progress-fill" [style.width.%]="progressPercent(project)"></div>
+                </div>
+                <div class="progress-meta">
+                  <span><strong>&pound;{{ project.raisedAmount | number }}</strong> of &pound;{{ project.targetAmount | number }}</span>
+                  <span>{{ progressPercent(project) }}%</span>
+                </div>
+              </div>
+            </ng-container>
+            <ng-template #impactBlock>
+              <div class="project-impact-label" *ngIf="project.beneficiaries">{{ project.beneficiaries }}</div>
+            </ng-template>
+
+            <a class="btn btn-support-project" [routerLink]="['/projects', project.slug]">View Project</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #emptyState>
+      <div class="empty-state">
+        <i class="ai-search"></i>
+        <h3>No projects match your filters</h3>
+        <p>Try adjusting your search or clearing filters to see everything we're working on.</p>
+        <button type="button" class="btn btn-primary-cta" (click)="clearFilters()">Clear Filters</button>
+      </div>
+    </ng-template>
+  </div>
+</section>
