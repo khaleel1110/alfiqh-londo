@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Project, ProjectCategory, ProjectStatus } from './project.model';
+import { Project, ProjectCategory } from '../features/projects/project.model';
+
 
 export interface ProjectStats {
   total: number;
@@ -75,7 +76,7 @@ export class ProjectService {
       shortDescription: 'Weekly Qur\'an classes for children and adults across London.',
       category: 'quran',
       status: 'Active',
-      imageUrl: '/h1.webp',
+      imageUrl: '/q2.webp',
       location: 'North London',
       startDate: new Date('2025-01-10'),
       beneficiaries: '250 students',
@@ -93,7 +94,7 @@ export class ProjectService {
       shortDescription: 'Mentorship and foundational classes for new Muslims.',
       category: 'dawah',
       status: 'Active',
-      imageUrl: '/h5.webp',
+      imageUrl: '/z2.jpg',
       location: 'Central London',
       startDate: new Date('2025-06-01'),
       targetAmount: 4000,
@@ -131,7 +132,7 @@ export class ProjectService {
       shortDescription: 'Responsible Zakat collection and distribution to eligible beneficiaries.',
       category: 'zakat',
       status: 'Ongoing',
-      imageUrl: '/h2.webp',
+      imageUrl: '/z6.webp',
       location: 'London',
       startDate: new Date('2025-01-01'),
       targetAmount: 30000,
@@ -150,7 +151,7 @@ export class ProjectService {
       shortDescription: 'A residential weekend building confidence and Islamic identity in Muslim youth.',
       category: 'youth',
       status: 'Upcoming',
-      imageUrl: '/h1.webp',
+      imageUrl: '/z3.jpg',
       location: 'Surrey (residential)',
       startDate: new Date('2026-05-22'),
       targetAmount: 6000,
@@ -168,7 +169,7 @@ export class ProjectService {
       shortDescription: 'Open community iftars held every weekend during Ramadan.',
       category: 'community',
       status: 'Active',
-      imageUrl: '/h3.webp',
+      imageUrl: '/y7.jpg',
       location: 'East London',
       startDate: new Date('2026-02-15'),
       endDate: new Date('2026-03-30'),
@@ -185,7 +186,7 @@ export class ProjectService {
       shortDescription: 'Regular street Da\'wah stalls introducing Islam to the public.',
       category: 'dawah',
       status: 'Completed',
-      imageUrl: '/h5.webp',
+      imageUrl: '/img4.png',
       location: 'Central London',
       startDate: new Date('2025-04-01'),
       endDate: new Date('2025-08-31'),

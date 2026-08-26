@@ -1,0 +1,197 @@
+<footer class="site-footer">
+
+  <!-- Main Footer -->
+  <div class="container">
+
+    <div class="footer-main">
+
+      <!-- Brand -->
+      <div class="footer-brand">
+
+        <a routerLink="/home" class="footer-logo">
+          <img src="/logo.svg" alt="Organization logo">
+        </a>
+
+        <p class="footer-description">
+          Working together to create meaningful impact,
+          strengthen communities and support people through
+          sustainable development and humanitarian action.
+        </p>
+
+        <div class="footer-socials">
+
+          @for (social of socialLinks; track social.label) {
+            <a
+              [href]="social.url"
+              target="_blank"
+              rel="noopener"
+              class="footer-social"
+              [attr.aria-label]="social.label">
+
+              <i [class]="social.icon"></i>
+
+            </a>
+          }
+
+        </div>
+
+      </div>
+
+
+      <!-- Explore -->
+      <div class="footer-column">
+
+        <span class="footer-eyebrow">
+          Explore
+        </span>
+
+        <h3 class="footer-heading">
+          Discover
+        </h3>
+
+        <ul class="footer-links">
+
+          @for (link of exploreLinks; track link.path) {
+            <li>
+              <a [routerLink]="link.path">
+                {{ link.label }}
+                <i class="bi bi-arrow-right"></i>
+              </a>
+            </li>
+          }
+
+        </ul>
+
+      </div>
+
+
+      <!-- Islamic Resources -->
+      <div class="footer-column">
+
+        <span class="footer-eyebrow">
+          Islamic Life
+        </span>
+
+        <h3 class="footer-heading">
+          Resources
+        </h3>
+
+        <ul class="footer-links">
+
+          @for (link of resourceLinks; track link.label) {
+            <li>
+              <a [routerLink]="link.path">
+                {{ link.label }}
+                <i class="bi bi-arrow-right"></i>
+              </a>
+            </li>
+          }
+
+        </ul>
+
+      </div>
+
+
+      <!-- Contact -->
+      <div class="footer-column footer-contact">
+
+        <span class="footer-eyebrow">
+          Get In Touch
+        </span>
+
+        <h3 class="footer-heading">
+          Contact Us
+        </h3>
+
+        <div class="contact-item">
+
+          <div class="contact-icon">
+            <i class="bi bi-geo-alt"></i>
+          </div>
+
+          <div>
+            <span class="contact-label">
+              Address
+            </span>
+
+            <span class="contact-value">
+              Your organization address
+            </span>
+          </div>
+
+        </div>
+
+
+        <div class="contact-item">
+
+          <div class="contact-icon">
+            <i class="bi bi-telephone"></i>
+          </div>
+
+          <div>
+            <span class="contact-label">
+              Phone
+            </span>
+
+            <span class="contact-value">
+              +234 000 000 0000
+            </span>
+          </div>
+
+        </div>
+
+
+        <div class="contact-item">
+
+          <div class="contact-icon">
+            <i class="bi bi-envelope"></i>
+          </div>
+
+          <div>
+            <span class="contact-label">
+              Email
+            </span>
+
+            <span class="contact-value">
+              info&#64;example.org
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Bottom -->
+  <div class="footer-bottom">
+
+    <div class="container">
+
+      <div class="footer-bottom-inner">
+
+        <p>
+          © {{ currentYear }} Your Organization.
+          All rights reserved.
+        </p>
+
+        <div class="footer-bottom-links">
+          <a routerLink="/privacy">
+            Privacy Policy
+          </a>
+
+          <a routerLink="/terms">
+            Terms
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</footer>

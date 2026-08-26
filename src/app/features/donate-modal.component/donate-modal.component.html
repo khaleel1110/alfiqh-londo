@@ -144,6 +144,61 @@
             </span>
           </button>
 
+          @if (selectedMethod === 'transfer') {
+            <div class="transfer-box mt-4">
+
+              <div class="d-flex align-items-center gap-2 mb-3">
+                <i class="bi bi-bank fs-4"></i>
+
+                <div>
+                  <h6 class="mb-0">Bank Transfer</h6>
+                  <small class="text-muted">
+                    Transfer your donation directly to our account.
+                  </small>
+                </div>
+              </div>
+
+              <div class="bank-detail">
+                <span>Bank</span>
+                <strong>{{ bankDetails.bankName }}</strong>
+              </div>
+
+              <div class="bank-detail">
+                <span>Account Name</span>
+                <strong>{{ bankDetails.accountName }}</strong>
+              </div>
+
+              <div class="bank-detail">
+                <span>Account Number</span>
+
+                <div class="d-flex align-items-center gap-2">
+                  <strong>{{ bankDetails.accountNumber }}</strong>
+
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                    (click)="copyAccountNumber()">
+
+                    <i class="bi bi-copy"></i>
+                  </button>
+                </div>
+              </div>
+
+              @if (bankDetails.sortCode) {
+                <div class="bank-detail">
+                  <span>Sort Code</span>
+                  <strong>{{ bankDetails.sortCode }}</strong>
+                </div>
+              }
+
+              <div class="alert alert-light mt-3 mb-0">
+                <i class="bi bi-info-circle me-2"></i>
+                {{ bankDetails.referenceHint }}
+              </div>
+
+            </div>
+          }
+
           <button
             type="button"
             class="payment-method"

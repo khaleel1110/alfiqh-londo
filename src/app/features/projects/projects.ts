@@ -1,8 +1,9 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
-import { ProjectService } from './project.service';
+
 import { PROJECT_CATEGORIES, Project, ProjectCategory, ProjectStatus } from './project.model';
+import { ProjectService } from '../../services/project.service';
 
 type SortOption = 'newest' | 'alphabetical' | 'progress';
 type StatusFilter = 'All' | ProjectStatus;

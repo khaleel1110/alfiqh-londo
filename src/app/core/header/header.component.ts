@@ -4,28 +4,42 @@ import {NgClass, NgForOf} from "@angular/common";
 import {digitalProduct, service} from "./links";
 import {DarkModeService} from "../../services/dark-mode/dark-mode.service";
 import {filter} from "rxjs";
-import { servicesData } from '../../features/products-and-services/services';
-import {projectCaseStudies} from "../../features/digital-products/projects";
+import { DonationModalService } from '../../services/donation-modal.service';
+
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [
-    RouterLinkActive,
-    RouterLink,
-    NgForOf,
-    NgClass
-  ],
+  imports: [RouterLinkActive, RouterLink, NgForOf, NgClass],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
+  constructor(private donationModal: DonationModalService) {
+    /*this.footerServices = this.processServicesForFooter();*/
+    this.isSmallScreen.set(window.innerWidth < 991);
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd || event instanceof NavigationStart))
+      .subscribe((event: any) => {
+        if (event instanceof NavigationEnd) {
+          this.checkRoute(event.urlAfterRedirects);
+        }
+        if (event instanceof NavigationStart) {
+          this.checkRoute(event.url);
+        }
+      });
+  }
+
+  openDonate(): void {
+    this.donationModal.open();
+  }
+
   menuItems = [
     { label: 'About', link: '/our-work' },
     { label: 'Team', link: '/team' },
     { label: 'Career', link: '/career' },
     { label: 'Partnerships', link: '/partnerships' },
-   
+
     { label: 'Contact us', link: '/contact-us' },
     { label: 'News', link: '/news-and-activities' },
   ];
@@ -37,9 +51,17 @@ export class HeaderComponent {
   isSmallScreen = signal(false);
 
   headerThemeMode = computed(() => {
-    const darkOnlyRoutes = ['/our-work', '/home', '/digital-solutions', '/crop-prices', '/team', '/partnerships', '/products-and-services',
-    '/legal/terms-of-use'];
-    const lightOnlyRoutes = ['/', '', '/studio/partnership',];
+    const darkOnlyRoutes = [
+      '/our-work',
+      '/home',
+      '/digital-solutions',
+      '/crop-prices',
+      '/team',
+      '/partnerships',
+      '/products-and-services',
+      '/legal/terms-of-use',
+    ];
+    const lightOnlyRoutes = ['/', '', '/studio/partnership'];
     const url = this.currentUrl();
 
     if (this.isScrolled()) {
@@ -56,43 +78,22 @@ export class HeaderComponent {
         return this.themeService.theme();
       }
     }
-
-
   });
   private checkRoute(url: string) {
-
-
     this.currentUrl.set(url);
-
-
   }
 
   themeModeChanged($event: any) {
     console.log($event.data);
-    this.themeService.toggleTheme()
+    this.themeService.toggleTheme();
   }
-
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.isSmallScreen.set(window.innerWidth < 991);
   }
-  constructor() {
-this.footerServices = this.processServicesForFooter();
-    this.isSmallScreen.set(window.innerWidth < 991);
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd || event instanceof NavigationStart),
-    ).subscribe((event: any) => {
 
-      if (event instanceof NavigationEnd) {
-        this.checkRoute(event.urlAfterRedirects);
-      }
-      if (event instanceof NavigationStart) {
-        this.checkRoute(event.url);
-      }
-    });
-  }
-  projects = projectCaseStudies;
+  /*  projects = projectCaseStudies;*/
   /*  headerThemeMode = computed(() => {
       const darkOnlyRoutes = ['/studio/about-us', '/studio/team', '/services', '/studio/projects'];
       const lightOnlyRoutes = ['/', '', '/studio/partnership',];
@@ -116,7 +117,6 @@ this.footerServices = this.processServicesForFooter();
 
     });*/
 
-
   @HostListener('window:scroll', [])
   onWindowScroll() {
     // Check if page is scrolled more than 50px
@@ -128,29 +128,24 @@ this.footerServices = this.processServicesForFooter();
   }
 
   protected readonly service = service;
-  
 
+  // Create a processed version of servicesData with slugs
+  footerServices: Array<{ name: string; slug: string }> = [];
 
- 
-    // Create a processed version of servicesData with slugs
-    footerServices: Array<{name: string, slug: string}> = [];
-  
-   
-    
-  
-    // Method to create slugs
-    getSlug(name: string): string {
-      // Replace en dash with hyphen first
-      const cleanName = name.replace(/–/g, '-');
-  
-      return cleanName.toLowerCase()
-        .replace(/[^\w\s-]/g, '')
-        .replace(/\s+/g, '-')
-        .trim();
-    }
-  
-    // Process servicesData for the footer
-    private processServicesForFooter(): Array<{name: string, slug: string}> {
+  // Method to create slugs
+  getSlug(name: string): string {
+    // Replace en dash with hyphen first
+    const cleanName = name.replace(/–/g, '-');
+
+    return cleanName
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .trim();
+  }
+
+  // Process servicesData for the footer
+  /*    private processServicesForFooter(): Array<{name: string, slug: string}> {
       return servicesData.map(service => {
         // Use the slug from service data if it exists, otherwise generate it
         const slug = service.slug || this.getSlug(service.name);
@@ -159,5 +154,5 @@ this.footerServices = this.processServicesForFooter();
           slug: slug
         };
       });
-    }
+    }*/
 }

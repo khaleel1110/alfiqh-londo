@@ -1,0 +1,249 @@
+.site-footer {
+  position: relative;
+  margin-top: 5rem;
+  background: #0d3529;
+  color: #f7f3e9;
+  overflow: hidden;
+}
+
+.site-footer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .04;
+
+  background-image:
+    radial-gradient(
+      circle at 20% 20%,
+      #c9a24b 0,
+      transparent 1px
+    );
+
+  background-size: 30px 30px;
+}
+
+.footer-main {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+  gap: 4rem;
+  padding: 5rem 0;
+}
+
+.footer-brand {
+  max-width: 340px;
+}
+
+.footer-logo {
+  display: inline-flex;
+  margin-bottom: 1.5rem;
+
+  img {
+    height: 64px;
+    width: auto;
+  }
+}
+
+.footer-description {
+  margin: 0;
+  color: rgba(247, 243, 233, .72);
+  line-height: 1.8;
+  font-family: var(--font-utility, inherit);
+  font-size: .92rem;
+}
+
+.footer-eyebrow {
+  display: block;
+  margin-bottom: .55rem;
+  color: #c9a24b;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  font-size: .72rem;
+  font-weight: 700;
+}
+
+.footer-heading {
+  margin-bottom: 1.4rem;
+  color: #f7f3e9;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    margin-bottom: .8rem;
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+
+    color: rgba(247, 243, 233, .7);
+    text-decoration: none;
+    font-family: var(--font-utility, inherit);
+    font-size: .9rem;
+
+    transition:
+      color .2s ease,
+      transform .2s ease;
+
+    i {
+      font-size: .75rem;
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: all .2s ease;
+    }
+
+    &:hover {
+      color: #e4cd8f;
+      transform: translateX(3px);
+
+      i {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+  }
+}
+
+.footer-socials {
+  display: flex;
+  gap: .65rem;
+  margin-top: 1.7rem;
+}
+
+.footer-social {
+  width: 38px;
+  height: 38px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(228, 205, 143, .22);
+  border-radius: 50%;
+
+  color: #e4cd8f;
+  text-decoration: none;
+
+  transition:
+    background .2s ease,
+    color .2s ease,
+    transform .2s ease;
+
+  &:hover {
+    background: #c9a24b;
+    color: #0d3529;
+    transform: translateY(-3px);
+  }
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: .8rem;
+  margin-bottom: 1.2rem;
+}
+
+.contact-icon {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #c9a24b;
+  border: 1px solid rgba(201, 162, 75, .25);
+  border-radius: 8px;
+}
+
+.contact-label,
+.contact-value {
+  display: block;
+}
+
+.contact-label {
+  margin-bottom: .15rem;
+  color: #e4cd8f;
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.contact-value {
+  color: rgba(247, 243, 233, .7);
+  font-size: .88rem;
+  line-height: 1.5;
+}
+
+.footer-bottom {
+  position: relative;
+  border-top: 1px solid rgba(247, 243, 233, .1);
+}
+
+.footer-bottom-inner {
+  min-height: 72px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.footer-bottom p {
+  margin: 0;
+  color: rgba(247, 243, 233, .5);
+  font-size: .78rem;
+}
+
+.footer-bottom-links {
+  display: flex;
+  gap: 1.5rem;
+
+  a {
+    color: rgba(247, 243, 233, .55);
+    text-decoration: none;
+    font-size: .78rem;
+
+    &:hover {
+      color: #e4cd8f;
+    }
+  }
+}
+
+:host-context(html[data-bs-theme='dark']) .site-footer {
+  background: #091f18;
+}
+
+@media (max-width: 991.98px) {
+  .footer-main {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .footer-main {
+    grid-template-columns: 1fr;
+    padding: 4rem 0;
+    gap: 2.5rem;
+  }
+
+  .footer-brand {
+    max-width: none;
+  }
+
+  .footer-bottom-inner {
+    padding: 1.25rem 0;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

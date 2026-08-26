@@ -1,0 +1,268 @@
+<section class="islamic-calendar-page">
+
+  <!-- Hero -->
+  <section class="calendar-hero">
+    <div class="container">
+
+      <a routerLink="/" class="back-link">
+        <i class="bi bi-arrow-left"></i>
+        Back to Home
+      </a>
+
+      <span class="section-eyebrow section-eyebrow-light">
+        Islamic Calendar
+      </span>
+
+      <h1>
+        Stay Connected With
+        <span>Islamic Time</span>
+      </h1>
+
+      <p>
+        Explore today's Hijri date, important Islamic occasions,
+        and beneficial reminders throughout the year.
+      </p>
+
+    </div>
+  </section>
+
+
+  <!-- Today's date -->
+  <section class="today-section">
+    <div class="container">
+
+      <div class="today-card">
+
+        <div class="today-icon">
+          <i class="bi bi-calendar-heart"></i>
+        </div>
+
+        <div>
+          <span class="today-label">
+            Today
+          </span>
+
+          <h2>
+            {{ today | date:'EEEE, d MMMM yyyy' }}
+          </h2>
+
+          <p>
+            {{ getHijriDate(today) }}
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- Calendar -->
+  <section class="calendar-section">
+    <div class="container">
+
+      <div class="section-header">
+
+        <div>
+          <span class="section-eyebrow">
+            Hijri Calendar
+          </span>
+
+          <h2 class="section-title">
+            {{ currentMonthLabel() }}
+          </h2>
+        </div>
+
+        <div class="calendar-actions">
+
+          <button
+            class="calendar-btn"
+            type="button"
+            (click)="previousMonth()">
+
+            <i class="bi bi-chevron-left"></i>
+          </button>
+
+          <button
+            class="today-btn"
+            type="button"
+            (click)="goToToday()">
+
+            Today
+          </button>
+
+          <button
+            class="calendar-btn"
+            type="button"
+            (click)="nextMonth()">
+
+            <i class="bi bi-chevron-right"></i>
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="calendar-card">
+
+        <!-- Weekdays -->
+        <div class="calendar-weekdays">
+
+          @for (day of ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']; track day) {
+            <div>
+              {{ day }}
+            </div>
+          }
+
+        </div>
+
+
+        <!-- Days -->
+        <div class="calendar-grid">
+
+          @for (day of calendarDays(); track day.gregorianDate.getTime()) {
+
+            <div
+              class="calendar-day"
+              [class.other-month]="!day.isCurrentMonth"
+              [class.today]="day.isToday">
+
+              <span class="gregorian-day">
+                {{ day.gregorianDate | date:'d' }}
+              </span>
+
+              <span class="hijri-day">
+                {{ day.hijriDay }}
+              </span>
+
+            </div>
+
+          }
+
+        </div>
+
+      </div>
+
+      <p class="calendar-note">
+        <i class="bi bi-info-circle"></i>
+        Islamic dates may vary by one day depending on local
+        moon sighting and the calendar methodology used.
+      </p>
+
+    </div>
+  </section>
+
+
+  <!-- Important dates -->
+  <section class="events-section">
+
+    <div class="container">
+
+      <div class="section-header">
+
+        <div>
+          <span class="section-eyebrow">
+            Important Occasions
+          </span>
+
+          <h2 class="section-title">
+            Important Islamic Dates
+          </h2>
+        </div>
+
+      </div>
+
+
+      <div class="events-grid">
+
+        @for (event of islamicEvents; track event.title) {
+
+          <article class="islamic-event-card">
+
+            <div class="event-icon">
+              <i [class]="event.icon"></i>
+            </div>
+
+            <span class="event-date">
+              {{ event.hijriDate }}
+            </span>
+
+            <h3>
+              {{ event.title }}
+            </h3>
+
+            <p>
+              {{ event.description }}
+            </p>
+
+          </article>
+
+        }
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- Learning -->
+  <section class="learning-section">
+
+    <div class="container">
+
+      <div class="section-header">
+
+        <div>
+          <span class="section-eyebrow">
+            Islamic Learning
+          </span>
+
+          <h2 class="section-title">
+            Learn Something Beneficial
+          </h2>
+
+          <p class="section-body">
+            Explore simple reminders and foundational Islamic
+            knowledge to strengthen your understanding and practice.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="learning-grid">
+
+        @for (topic of learningTopics; track topic.title) {
+
+          <article class="learning-card">
+
+            <div class="learning-icon">
+              <i [class]="topic.icon"></i>
+            </div>
+
+            <h3>
+              {{ topic.title }}
+            </h3>
+
+            <p>
+              {{ topic.description }}
+            </p>
+
+            <a routerLink="/islamic-learning">
+              Learn more
+              <i class="bi bi-arrow-right"></i>
+            </a>
+
+          </article>
+
+        }
+
+      </div>
+
+    </div>
+
+  </section>
+
+</section>

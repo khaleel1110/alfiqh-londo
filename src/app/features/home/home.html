@@ -1,111 +1,246 @@
 <!-- ============ HERO ============ -->
+<div style="overflow: hidden" class="">
+
 <section class="hero position-relative">
   <div class="swiper hero-swiper" #heroSwiper>
     <div class="swiper-wrapper">
-      <div class="swiper-slide" *ngFor="let slide of slides">
-        <div class="hero-slide-image" [style.background-image]="'url(' + slide.image + ')'"></div>
+
+      <div
+        class="swiper-slide"
+        *ngFor="let slide of slides; let i = index"
+      >
+        <div
+          class="hero-slide-image"
+          [style.background-image]="'url(' + slide.image + ')'"
+        ></div>
+
         <div class="hero-slide-overlay"></div>
       </div>
+
     </div>
+
     <div class="swiper-pagination"></div>
   </div>
 
   <div class="hero-content container">
-    <span class="eyebrow">{{ mosqueLocation }}</span>
-    <h1 class="hero-title">{{ slides[currentSlide]?.title }}</h1>
-    <p class="hero-subtitle">{{ slides[currentSlide]?.subtitle }}</p>
+    <span class="hero-tag">
+      {{ slides[currentSlide()]?.tag }}
+    </span>
 
-    <div class="hero-dates">
-      <span>{{ gregorianDate }}</span>
-      <span class="dot">&middot;</span>
-      <span>{{ hijriDate }} AH</span>
-    </div>
+    <h1 class="hero-title text-white display-2">
+      Building a Stronger Ummah Through Action
+    </h1>
+
+    <p class="hero-subtitle">
+      {{ orgName }} develops and supports Islamic projects that promote
+      knowledge, compassion, charity and positive change.
+    </p>
 
     <div class="hero-actions">
-      <a class="btn btn-donate" routerLink="/donate">Donate Now</a>
-      <a class="btn btn-outline" routerLink="/prayer-times">View Prayer Times</a>
+      <a
+        class="btn btn-primary-cta"
+        routerLink="/projects"
+      >
+        Explore Our Projects
+      </a>
+
+      <a
+        class="btn btn-outline"
+        routerLink="/support-us"
+      >
+        Support Our Work
+      </a>
     </div>
   </div>
 </section>
 
-<!-- ============ NEXT PRAYER / TODAY'S PRAYERS ============ -->
-<section class="prayer-band">
+<!-- ============ IMPACT STATISTICS ============ -->
+<section class="stats-section" #statsSection>
   <div class="container">
-    <div class="prayer-card">
-      <div class="prayer-card-header">
-        <div>
-          <span class="label">Next Prayer</span>
-          <h2 class="next-prayer-name">{{ nextPrayerKey || '—' }}</h2>
-        </div>
-        <div class="countdown">
-          <span class="label">Time Remaining</span>
-          <span class="countdown-value">{{ countdown }}</span>
-        </div>
-      </div>
+    <span class="section-eyebrow">Our Impact</span>
+    <h2 class="section-title">Measurable Change, Real People</h2>
 
-      <div class="prayer-row-list">
-        <div
-          class="prayer-row"
-          *ngFor="let prayer of todayPrayers"
-          [class.is-current]="prayer.key === currentPrayerKey"
-          [class.is-next]="prayer.key === nextPrayerKey"
-        >
-          <span class="prayer-arabic">{{ prayer.arabic }}</span>
-          <span class="prayer-name">{{ prayer.label }}</span>
-          <span class="prayer-time">{{ prayer.time | date: 'h:mm a' }}</span>
-        </div>
+    <div class="stats-grid">
+      <div class="stat-card" *ngFor="let stat of impactStats; let i = index">
+        <i class="{{ stat.icon }} stat-icon"></i>
+        <div class="stat-value">{{ counterValues()[i] | number }}{{ stat.suffix }}</div>
+        <div class="stat-title">{{ stat.title }}</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ ABOUT ============ -->
-<section class="about-section">
+<!-- ============ FEATURED PROJECTS ============ -->
+<section class="projects-section">
   <div class="container">
-    <div class="row align-items-center g-5">
-      <div class="col-12 col-lg-6">
-        <span class="section-eyebrow">About Us</span>
-        <h2 class="section-title">{{ mosqueName }}</h2>
-        <p class="section-body">
-          Al-Fiqh Nigerian Islamic Trust serves the Nigerian Muslim community and
-          the wider ummah in London, offering a place for the five daily prayers,
-          Jumu'ah, Islamic education and community support. Our doors are open to
-          Muslims of every background.
-        </p>
-        <p class="section-body">
-          We are guided by a commitment to authentic Islamic teaching, service to
-          our neighbours, and nurturing the next generation through our Madrasah
-          and youth programmes.
-        </p>
-        <a class="link-arrow" routerLink="/about">Learn more about our mosque &rarr;</a>
+    <div class="section-header">
+      <div>
+        <span class="section-eyebrow">Our Projects</span>
+        <h2 class="section-title">What We're Working On</h2>
       </div>
-      <div class="col-12 col-lg-6">
-        <div class="about-image" style="background-image:url('/assets/gallery/prayer-hall.jpg')"></div>
+      <a class="link-arrow" routerLink="/projects">View all projects &rarr;</a>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-12 col-md-6 col-lg-4" *ngFor="let project of featuredProjects">
+        <div class="project-card">
+          <div class="project-image" [style.background-image]="'url(' + project.image + ')'">
+            <span class="project-status" [class]="'status-' + project.status.toLowerCase()">{{ project.status }}</span>
+          </div>
+          <div class="project-body">
+            <span class="project-category">{{ project.category }}</span>
+            <h3 class="project-title">{{ project.title }}</h3>
+            <p class="project-description">{{ project.shortDescription }}</p>
+
+      <!--      <ng-container *ngIf="project.fundraisingEnabled; else impactBlock">
+              <div class="project-progress">
+                <div class="progress-track">
+                  <div class="progress-fill" [style.width.%]="progressPercent(project)"></div>
+                </div>
+                <div class="progress-meta">
+                  <span><strong>&pound;{{ project.raised | number }}</strong> raised of &pound;{{ project.target | number }}</span>
+                  <span>{{ progressPercent(project) }}%</span>
+                </div>
+                <div class="project-supporters" *ngIf="project.supporters">{{ project.supporters }} supporters</div>
+              </div>
+            </ng-container>-->
+            <ng-template #impactBlock>
+              <div class="project-impact-label">{{ project.impactLabel }}</div>
+            </ng-template>
+
+            <a class="btn btn-support-project" routerLink="/projects" routerLinkActive>Support Project</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ JUMU'AH ============ -->
-<section class="jumuah-section">
+<!-- ============ WHAT WE DO ============ -->
+<section class="workareas-section">
   <div class="container">
-    <div class="jumuah-card">
-      <span class="section-eyebrow">Jumu'ah</span>
-      <h2 class="section-title">Friday Prayer</h2>
-      <div class="jumuah-times">
-        <div>
-          <span class="label">Khutbah</span>
-          <span class="value">{{ jumuah.khutbahTime }}</span>
-        </div>
-        <div>
-          <span class="label">Jama'ah</span>
-          <span class="value">{{ jumuah.jamaahTime }}</span>
-        </div>
-      </div>
-      <p class="section-body">{{ jumuah.note }}</p>
+    <span class="section-eyebrow">What We Do</span>
+    <h2 class="section-title">Six Ways We Serve the Ummah</h2>
+
+    <div class="workareas-grid">
+      <a
+        class="workarea-card"
+        *ngFor="let area of workAreas"
+        [routerLink]="['/projects']"
+        [queryParams]="{ category: area.slug }"
+      >
+        <i class="{{ area.icon }} workarea-icon"></i>
+        <h3 class="workarea-title">{{ area.title }}</h3>
+        <p class="workarea-description">{{ area.description }}</p>
+      </a>
     </div>
   </div>
 </section>
+
+<section class="campaign-section">
+  <div class="container">
+
+    <div class="campaign-slider-wrapper">
+
+      <div class="campaign-swiper" #campaignSwiper>
+
+        <div class="swiper-wrapper">
+
+          @for (campaign of campaigns; track campaign.slug) {
+            <div class="swiper-slide">
+
+              <div class="campaign-card">
+
+                <!-- Campaign image -->
+                <div
+                  class="campaign-image"
+                  [style.background-image]="'url(' + campaign.image + ')'">
+                </div>
+
+                <!-- Campaign content -->
+                <div class="campaign-body">
+
+                  <span class="section-eyebrow section-eyebrow-light">
+                    {{ campaign.category }}
+                  </span>
+
+                  <h2 class="section-title section-title-light">
+                    {{ campaign.title }}
+                  </h2>
+
+                  <p class="section-body section-body-light">
+                    {{ campaign.shortDescription }}
+                  </p>
+
+                  <div class="campaign-meta">
+
+                    @if (campaign.supporters) {
+                      <span>
+                        <i class="bi bi-people me-1"></i>
+                        {{ campaign.supporters }} supporters
+                      </span>
+                    }
+
+                    @if (campaign.status) {
+                      <span class="campaign-status">
+                        {{ campaign.status }}
+                      </span>
+                    }
+
+                  </div>
+
+                  <a
+                    (click)=" openDonate()"
+                    class="btn btn-donate-light">
+
+
+                    <i class="bi bi-heart me-2"></i>
+
+                    Support This Campaign
+
+                  </a>
+
+                </div>
+
+              </div>
+
+            </div>
+          }
+
+        </div>
+
+      </div>
+
+      <!-- Previous -->
+      <button
+        type="button"
+        class="campaign-nav campaign-prev"
+        aria-label="Previous campaign"
+        (click)="previousCampaign()">
+
+        <i class="bi bi-chevron-left"></i>
+
+      </button>
+
+      <!-- Next -->
+      <button
+        type="button"
+        class="campaign-nav campaign-next"
+        aria-label="Next campaign"
+        (click)="nextCampaign()">
+
+        <i class="bi bi-chevron-right"></i>
+
+      </button>
+
+      <!-- Pagination -->
+      <div class="campaign-pagination"></div>
+
+    </div>
+
+  </div>
+</section>
+<!-- ============ CURRENT CAMPAIGN ============ -->
 
 <!-- ============ UPCOMING EVENTS ============ -->
 <section class="events-section">
@@ -115,7 +250,7 @@
         <span class="section-eyebrow">What's On</span>
         <h2 class="section-title">Upcoming Events</h2>
       </div>
-      <a class="link-arrow" routerLink="/events">See all events &rarr;</a>
+  <!--    <a class="link-arrow" routerLink="/events">See all events &rarr;</a>-->
     </div>
 
     <div class="row g-4">
@@ -135,25 +270,58 @@
   </div>
 </section>
 
-<!-- ============ ANNOUNCEMENTS ============ -->
-<section class="announcements-section">
+<!-- ============ ISLAMIC RESOURCES ============ -->
+<section class="resources-section">
   <div class="container">
-    <span class="section-eyebrow">Notices</span>
-    <h2 class="section-title">Latest Announcements</h2>
+    <div class="section-header">
+      <div>
+        <span class="section-eyebrow">Learn</span>
+        <h2 class="section-title">Islamic Resources</h2>
+      </div>
+      <a class="link-arrow" routerLink="/islamic-resources">Browse all resources &rarr;</a>
+    </div>
 
-    <div class="announcement-list">
-      <div
-        class="announcement-item"
-        *ngFor="let note of announcements"
-        [class.is-priority]="note.priority === 'high'"
-      >
-        <div class="announcement-date">{{ note.date | date: 'd MMM' }}</div>
-        <div>
-          <h3 class="announcement-title">{{ note.title }}</h3>
-          <p class="announcement-message">{{ note.message }}</p>
-        </div>
+    <div class="row g-4">
+      <div class="col-12 col-md-6 col-lg-4" *ngFor="let resource of resources">
+        <a class="resource-card" routerLink="/resources">
+          <div class="resource-image" [style.background-image]="'url(' + resource.image + ')'"></div>
+          <span class="resource-category">{{ resource.category }}</span>
+          <h3 class="resource-title">{{ resource.title }}</h3>
+          <p class="resource-excerpt">{{ resource.excerpt }}</p>
+        </a>
       </div>
     </div>
+  </div>
+</section>
+<section class="prayer-widget-section">
+  <div class="container">
+    <a class="prayer-widget" routerLink="/prayer-times">
+      <div>
+        <span class="label">Next Prayer</span>
+        <span class="prayer-widget-name">{{ nextPrayerKey() || '—' }}</span>
+        <span class="prayer-widget-time">{{ nextPrayerTimeLabel() }}</span>
+      </div>
+      <div class="prayer-widget-countdown">
+        <span class="label">In</span>
+        <span class="value">{{ countdown() }}</span>
+      </div>
+      <span class="link-arrow">Full prayer times &rarr;</span>
+    </a>
+  </div>
+</section>
+
+<!-- ============ DONATE CTA ============ -->
+<section class="donate-section">
+  <div class="container donate-inner">
+    <div>
+      <span class="section-eyebrow section-eyebrow-light">Support Islamic Projects</span>
+      <h2 class="section-title section-title-light">Your Support Creates Impact</h2>
+      <p class="section-body section-body-light">
+        Your contribution can help provide food, education, support for vulnerable
+        families, orphan care, Islamic education and community development.
+      </p>
+    </div>
+    <a (click)="openDonate()" class="btn btn-donate-light" >Donate Now</a>
   </div>
 </section>
 
@@ -163,7 +331,7 @@
     <div class="section-header">
       <div>
         <span class="section-eyebrow">Moments</span>
-        <h2 class="section-title">From Our Community</h2>
+        <h2 class="section-title">From Our Projects</h2>
       </div>
       <a class="link-arrow" routerLink="/gallery">View full gallery &rarr;</a>
     </div>
@@ -176,24 +344,13 @@
   </div>
 </section>
 
-<!-- ============ DONATE CTA ============ -->
-<section class="donate-section">
-  <div class="container donate-inner">
-    <div>
-      <span class="section-eyebrow section-eyebrow-light">Support Our Mosque</span>
-      <h2 class="section-title section-title-light">Give Sadaqah, Zakat &amp; Support Our Projects</h2>
-      <p class="section-body section-body-light">
-        Your donations keep the mosque running, fund our Madrasah, and support
-        our community services. Every contribution, big or small, is a trust
-        we take seriously.
-      </p>
-    </div>
-    <a class="btn btn-donate-light" routerLink="/donate">Donate Now</a>
-  </div>
-</section>
+<!-- ============ PRAYER TIMES WIDGET ============ -->
+<!-- Small utility widget per the brief — the full daily card and
+     monthly calendar live on the dedicated /prayer-times page. -->
+
 
 <!-- ============ QUICK LINKS ============ -->
-<section class="quicklinks-section">
+<!--<section class="quicklinks-section">
   <div class="container">
     <div class="quicklinks-grid">
       <a class="quicklink" *ngFor="let link of quickLinks" [routerLink]="link.path">
@@ -201,14 +358,45 @@
       </a>
     </div>
   </div>
+</section>-->
+
+<!-- ============ NEWSLETTER ============ -->
+<section class="newsletter-section">
+  <div class="container">
+    <div class="newsletter-card" *ngIf="!newsletterSubmitted(); else thanksBlock">
+      <div>
+        <span class="section-eyebrow">Stay Updated</span>
+        <h2 class="section-title">Get Project Updates</h2>
+        <p class="section-body">Occasional updates on new projects, campaigns and events. No spam.</p>
+      </div>
+      <form class="newsletter-form" (submit)="$event.preventDefault(); submitNewsletter()">
+        <input
+          type="email"
+          required
+          placeholder="Your email address"
+          [value]="newsletterEmail()"
+          (input)="newsletterEmail.set($any($event.target).value)"
+        />
+        <button type="submit" class="btn btn-primary-cta">Subscribe</button>
+      </form>
+    </div>
+    <ng-template #thanksBlock>
+      <div class="newsletter-card newsletter-thanks">
+        <h2 class="section-title">You're subscribed &mdash; thank you!</h2>
+        <p class="section-body">We'll only email you when there's something worth sharing.</p>
+      </div>
+    </ng-template>
+  </div>
 </section>
 
-<!-- ============ CONTACT / LOCATION ============ -->
+
+
+<!-- ============ CONTACT / LOCATION ============
 <section class="contact-section">
   <div class="container">
     <div class="row g-5">
       <div class="col-12 col-lg-5">
-        <span class="section-eyebrow">Visit Us</span>
+        <span class="section-eyebrow">Get In Touch</span>
         <h2 class="section-title">Contact &amp; Location</h2>
 
         <ul class="contact-list">
@@ -231,4 +419,5 @@
       </div>
     </div>
   </div>
-</section>
+</section>-->
+</div>

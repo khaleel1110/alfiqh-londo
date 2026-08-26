@@ -1,0 +1,139 @@
+<section class="impact-section">
+  <div class="container">
+
+    <!-- Section heading -->
+    <div class="impact-header">
+
+      <div>
+        <span class="section-eyebrow">
+          Our Impact
+        </span>
+
+        <h2 class="section-title">
+          Turning Islamic Values Into Meaningful Action
+        </h2>
+      </div>
+
+      <p class="section-body">
+        Through our Islamic projects, programmes and community initiatives,
+        we work to create lasting positive change and support people with
+        dignity, compassion and purpose.
+      </p>
+
+    </div>
+
+
+    <!-- Main impact layout -->
+    <div class="impact-layout">
+
+      <!-- Large feature -->
+      <div class="impact-feature">
+
+        <div class="impact-feature-content">
+
+          <span class="impact-feature-label">
+            <i class="bi bi-heart-fill"></i>
+            Our growing impact
+          </span>
+
+          <div class="impact-feature-number">
+            {{ counterValues()[0] | number }}
+            <span>+</span>
+          </div>
+
+          <h3>
+            Families Supported
+          </h3>
+
+          <p>
+            Families reached through food distribution, Zakat,
+            emergency assistance and community support programmes.
+          </p>
+
+        </div>
+
+        <div class="impact-pattern"></div>
+
+        <i class="bi bi-people impact-feature-icon"></i>
+
+      </div>
+
+
+      <!-- Statistics -->
+      <div class="impact-stats">
+
+        @for (stat of impactStats; track stat.title; let i = $index) {
+
+          <div class="impact-card">
+
+            <div class="impact-card-top">
+
+              <div class="impact-icon">
+                <i [class]="'bi ' + stat.icon"></i>
+              </div>
+
+              <span class="impact-card-index">
+                {{ (i + 1).toString().padStart(2, '0') }}
+              </span>
+
+            </div>
+
+            <div class="impact-number">
+
+              {{ counterValues()[i] | number }}
+
+              <span>
+                {{ stat.suffix }}
+              </span>
+
+            </div>
+
+            <h4>
+              {{ stat.title }}
+            </h4>
+
+            <div class="impact-line">
+              <span></span>
+            </div>
+
+          </div>
+
+        }
+
+      </div>
+
+    </div>
+
+
+    <!-- Bottom message -->
+    <div class="impact-bottom">
+
+      <div class="impact-bottom-icon">
+        <i class="bi bi-stars"></i>
+      </div>
+
+      <div>
+        <span class="impact-bottom-label">
+          More than numbers
+        </span>
+
+        <p>
+          Every number represents a person, a family, a learner,
+          a beneficiary or a community touched by an Islamic initiative.
+        </p>
+      </div>
+
+      <a
+        routerLink="/projects"
+        class="impact-link">
+
+        Explore Our Projects
+
+        <i class="bi bi-arrow-right"></i>
+
+      </a>
+
+    </div>
+
+  </div>
+</section>

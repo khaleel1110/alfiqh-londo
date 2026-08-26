@@ -1,0 +1,146 @@
+<section class="prayer-page">
+
+  <!-- Hero -->
+  <div class="container">
+
+    <div class="page-heading text-center">
+
+      <span class="section-eyebrow">
+        <i class="bi bi-moon-stars me-2"></i>
+        Islamic Life
+      </span>
+
+      <h1 class="section-title">
+        Prayer Times
+      </h1>
+
+      <p class="section-body mx-auto">
+        Keep track of the daily prayer times and stay
+        connected to your daily acts of worship.
+      </p>
+
+    </div>
+
+
+    <!-- Main Prayer Card -->
+    <div class="prayer-main-card ">
+
+      <div class="prayer-location">
+
+        <div class="location-icon">
+          <i class="bi bi-geo-alt"></i>
+        </div>
+
+        <div>
+          <span class="location-label">
+            Prayer times for
+          </span>
+
+          <strong>
+            {{ city() }}, {{ country() }}
+          </strong>
+        </div>
+
+      </div>
+
+
+      @if (nextPrayer(); as next) {
+
+        <div class="next-prayer">
+
+          <span class="next-label">
+            Next Prayer
+          </span>
+
+          <div class="next-icon">
+            <i [class]="next.icon"></i>
+          </div>
+
+          <h2>
+            {{ next.name }}
+          </h2>
+
+          <div class="next-time">
+            {{ next.formattedTime }}
+          </div>
+
+          <div class="countdown">
+            {{ countdown() }}
+          </div>
+
+          <span class="countdown-label">
+            remaining
+          </span>
+
+        </div>
+
+      }
+
+    </div>
+
+
+    <!-- Date -->
+    <div class="prayer-date text-center">
+
+      <span>
+        {{ currentTime() | date:'EEEE, MMMM d, y' }}
+      </span>
+
+    </div>
+
+
+    <!-- Prayer Grid -->
+    <div class="prayer-grid">
+
+      @for (prayer of prayers(); track prayer.prayer) {
+
+        <div
+          class="prayer-card  "
+          [class.active]="isNextPrayer(prayer)">
+
+          <div class="prayer-card-top">
+
+            <div class="prayer-icon">
+              <i [class]="prayer.icon"></i>
+            </div>
+
+            @if (isNextPrayer(prayer)) {
+              <span class="current-badge">
+                Next
+              </span>
+            }
+
+          </div>
+
+          <div class="prayer-name">
+            {{ prayer.name }}
+          </div>
+
+          <div class="prayer-time">
+            {{ prayer.formattedTime }}
+          </div>
+
+        </div>
+
+      }
+
+    </div>
+
+
+    <!-- Information -->
+    <div class="prayer-note">
+
+      <i class="bi bi-info-circle"></i>
+
+      <p>
+        Prayer times are calculated using the Muslim World
+        League calculation method. Times may vary slightly
+        depending on the calculation method used by your
+        local mosque.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>

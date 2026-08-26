@@ -11,11 +11,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import {
-  DonationModalService,
-  DonationPurpose,
-} from './donation-modal.service';
-import { DonationService } from './donation.service';
+import { DonationModalService, DonationPurpose } from '../../services/donation-modal.service';
+import { DonationService } from '../../services/donation.service';
+
 
 interface Currency {
   code: string;
@@ -45,6 +43,14 @@ export class DonateModalComponent {
     'Food Distribution',
     'Education',
   ];
+
+  readonly bankDetails = {
+    bankName: 'YOUR BANK NAME',
+    accountName: 'YOUR ORGANIZATION NAME',
+    accountNumber: '0000000000',
+    sortCode: '',
+    referenceHint: 'Please use your name or donation purpose as the transfer reference.',
+  };
 
   readonly currencies: Currency[] = [
     { code: 'NGN', symbol: '₦', name: 'Nigerian Naira' },
@@ -102,12 +108,18 @@ export class DonateModalComponent {
 
     const value = this.form.getRawValue();
 
+    // -----------------------------------------
+    // BANK TRANSFER
+    // -----------------------------------------
     if (this.selectedMethod === 'transfer') {
-      this.errorMessage =
-        'Bank transfer instructions will be shown after the secure payment endpoint is connected.';
+      this.successMessage = 'Please complete the bank transfer using the account details below.';
+
       return;
     }
 
+    // -----------------------------------------
+    // CARD PAYMENT
+    // -----------------------------------------
     this.loading = true;
 
     this.donationService
@@ -125,15 +137,21 @@ export class DonateModalComponent {
         next: (response) => {
           this.loading = false;
 
-          // The backend must return a provider-generated checkout URL.
-          // Never put a Paystack secret key in this Angular application.
+          if (!response?.authorization_url) {
+            this.errorMessage = 'Payment checkout could not be created. Please try again.';
+            return;
+          }
+
           window.location.href = response.authorization_url;
         },
+
         error: (error) => {
           this.loading = false;
+
+          console.error('Donation initialization failed:', error);
+
           this.errorMessage =
-            error?.error?.message ||
-            'Unable to start the payment. Please try again.';
+            error?.error?.message || 'Unable to start the payment. Please try again.';
         },
       });
   }
@@ -141,5 +159,16 @@ export class DonateModalComponent {
   private resetMessages(): void {
     this.errorMessage = '';
     this.successMessage = '';
+  }
+
+  copyAccountNumber(): void {
+    navigator.clipboard
+      .writeText(this.bankDetails.accountNumber)
+      .then(() => {
+        this.successMessage = 'Account number copied.';
+      })
+      .catch(() => {
+        this.errorMessage = 'Unable to copy the account number.';
+      });
   }
 }

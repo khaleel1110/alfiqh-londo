@@ -1,1 +1,84 @@
-/* You can add global styles to this file, and also import other style files */
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+.bg-primary-alt{
+  background-color: #002F2E;
+}
+.bg-gradient-primary-n {
+  background: linear-gradient(25deg,#002F2E , #008553) !important;
+}
+
+
+.bg-gradient-primary-alt-animated {
+  background: linear-gradient(25deg, #008553,  #002F2E ,#702B00, #002F2E);
+  background-size: 400% 250%;
+  animation: gradient 15s ease infinite;
+}
+
+.bg-gradient-primary-home-animated {
+  background: linear-gradient(-45deg, #008553,  #002F2E ,#702B00, #002F2E);
+  background-size: 400% 400%;
+  animation: gradient 25s ease infinite;
+}
+@keyframes gradient {
+
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+.cursor-hand{
+  cursor: pointer;
+}
+
+.sticky_header {
+  position: sticky;
+  top: 0px;
+  z-index: 1;
+}
+
+
+
+.bg-dotted-animated {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-image: url('/public/assets/color_dotted_background_2.svg');
+
+  background-size: contain;
+  animation: slide 20s ease-in-out infinite;
+}
+.bg-dotted-2-animated {
+  background-image: url('/public/assets/color_dotted_background_1.svg');
+  background-position: center bottom;
+  animation: slide 20s ease-in-out infinite;
+}
+
+@keyframes slide {
+  0% {
+    transform: translateX(0);
+
+  }
+  25% {
+    transform: translateY(2%);
+  }
+  50% {
+    transform: translatex(-2%);
+  }
+  75% {
+    transform: translatey(2%);
+  }
+  100% {
+    transform: translatex(0%);
+  }
+
+}

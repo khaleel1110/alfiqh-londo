@@ -1,0 +1,124 @@
+<section class="resources-page">
+
+  <div class="container">
+
+    <div class="page-heading text-center">
+
+      <span class="section-eyebrow">
+        <i class="bi bi-stars me-2"></i>
+        Islamic Life
+      </span>
+
+      <h1 class="section-title">
+        Islamic Resources
+      </h1>
+
+      <p class="section-body mx-auto">
+        A collection of beneficial resources for learning,
+        reflection, worship and everyday life.
+      </p>
+
+    </div>
+
+
+    <!-- Categories -->
+    <div class="resource-filters">
+
+      @for (category of categories; track category) {
+
+        <button
+          type="button"
+          class="resource-filter"
+          [class.active]="selectedCategory() === category"
+          (click)="selectCategory(category)">
+
+          {{ category }}
+
+        </button>
+
+      }
+
+    </div>
+
+
+    <!-- Resources -->
+    <div class="row g-4">
+
+      @for (
+        resource of filteredResources();
+        track resource.title
+        ) {
+
+        <div class="col-12 col-md-6 col-lg-4">
+
+          @if (resource.path) {
+
+            <a
+              [routerLink]="resource.path"
+              class="resource-card">
+
+              <div class="resource-icon">
+                <i [class]="resource.icon"></i>
+              </div>
+
+              <span class="resource-category">
+                {{ resource.category }}
+              </span>
+
+              <h2>
+                {{ resource.title }}
+              </h2>
+
+              <p>
+                {{ resource.description }}
+              </p>
+
+              <span class="resource-action">
+                Explore
+                <i class="bi bi-arrow-right"></i>
+              </span>
+
+            </a>
+
+          } @else {
+
+            <a
+              [href]="resource.externalUrl || '#'"
+              [target]="resource.externalUrl ? '_blank' : '_self'"
+              [rel]="resource.externalUrl ? 'noopener noreferrer' : null"
+              class="resource-card">
+
+              <div class="resource-icon">
+                <i [class]="resource.icon"></i>
+              </div>
+
+              <span class="resource-category">
+                {{ resource.category }}
+              </span>
+
+              <h2>
+                {{ resource.title }}
+              </h2>
+
+              <p>
+                {{ resource.description }}
+              </p>
+
+              <span class="resource-action">
+                Explore
+                <i class="bi bi-arrow-right"></i>
+              </span>
+
+            </a>
+
+          }
+
+        </div>
+
+      }
+
+    </div>
+
+  </div>
+
+</section>

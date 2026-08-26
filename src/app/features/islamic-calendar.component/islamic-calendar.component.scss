@@ -1,0 +1,393 @@
+:host {
+  --emerald: #0f4c3a;
+  --emerald-deep: #0a3529;
+  --gold: #c9a24b;
+  --gold-soft: #e4cd8f;
+  --ivory: #f7f3e9;
+  --ink: #232420;
+  --ink-soft: #5b6058;
+  --border-soft: rgba(15, 76, 58, 0.14);
+
+  display: block;
+  color: var(--ink);
+  background: var(--ivory);
+}
+
+.container {
+  max-width: 1180px;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.calendar-hero {
+  padding: 6rem 0 5rem;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(10, 53, 41, .97),
+      rgba(15, 76, 58, .92)
+    );
+  color: var(--ivory);
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  color: var(--gold-soft);
+  text-decoration: none;
+  margin-bottom: 2rem;
+}
+
+.calendar-hero .section-eyebrow {
+  display: block;
+  color: var(--gold-soft);
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .15em;
+  margin-bottom: 1rem;
+}
+
+.calendar-hero h1 {
+  max-width: 800px;
+  font-family: 'Amiri', Georgia, serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  line-height: 1.1;
+  margin-bottom: 1.25rem;
+}
+
+.calendar-hero h1 span {
+  color: var(--gold-soft);
+}
+
+.calendar-hero p {
+  max-width: 620px;
+  color: rgba(247,243,233,.8);
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+
+/* =========================
+   TODAY
+========================= */
+
+.today-section {
+  padding: 3rem 0;
+}
+
+.today-card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-soft);
+  background: white;
+  box-shadow: 0 12px 30px rgba(15,76,58,.06);
+}
+
+.today-icon {
+  width: 65px;
+  height: 65px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--emerald);
+  color: var(--gold-soft);
+  font-size: 1.5rem;
+}
+
+.today-label {
+  display: block;
+  color: var(--gold);
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  font-weight: 700;
+}
+
+.today-card h2 {
+  margin: .25rem 0;
+  font-family: 'Amiri', Georgia, serif;
+}
+
+.today-card p {
+  margin: 0;
+  color: var(--emerald);
+  font-weight: 600;
+}
+
+
+/* =========================
+   CALENDAR
+========================= */
+
+.calendar-section {
+  padding: 2rem 0 5rem;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.section-eyebrow {
+  color: var(--gold);
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  font-weight: 700;
+}
+
+.section-title {
+  font-family: 'Amiri', Georgia, serif;
+  color: var(--emerald-deep);
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin: .4rem 0;
+}
+
+.calendar-actions {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.calendar-btn,
+.today-btn {
+  border: 1px solid var(--border-soft);
+  background: white;
+  color: var(--emerald);
+  height: 42px;
+  padding: 0 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.calendar-btn {
+  width: 42px;
+  padding: 0;
+}
+
+.calendar-btn:hover,
+.today-btn:hover {
+  background: var(--emerald);
+  color: white;
+}
+
+.calendar-card {
+  background: white;
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(15,76,58,.06);
+}
+
+.calendar-weekdays,
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.calendar-weekdays {
+  background: var(--emerald);
+  color: var(--gold-soft);
+  font-weight: 700;
+  text-align: center;
+}
+
+.calendar-weekdays div {
+  padding: 1rem .5rem;
+}
+
+.calendar-day {
+  min-height: 110px;
+  padding: .75rem;
+  border-right: 1px solid var(--border-soft);
+  border-top: 1px solid var(--border-soft);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: background .2s ease;
+}
+
+.calendar-day:hover {
+  background: rgba(15,76,58,.04);
+}
+
+.calendar-day.other-month {
+  opacity: .35;
+}
+
+.calendar-day.today {
+  background: rgba(201,162,75,.14);
+  box-shadow: inset 0 0 0 2px var(--gold);
+}
+
+.gregorian-day {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.hijri-day {
+  align-self: flex-end;
+  color: var(--emerald);
+  font-family: 'Amiri', Georgia, serif;
+  font-size: 1.25rem;
+}
+
+.calendar-note {
+  margin-top: 1rem;
+  color: var(--ink-soft);
+  font-size: .85rem;
+}
+
+
+/* =========================
+   EVENTS
+========================= */
+
+.events-section {
+  padding: 5rem 0;
+  background: rgba(15,76,58,.035);
+}
+
+.events-grid,
+.learning-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.islamic-event-card,
+.learning-card {
+  padding: 1.75rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-soft);
+  background: white;
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease;
+}
+
+.islamic-event-card:hover,
+.learning-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 35px rgba(15,76,58,.1);
+}
+
+.event-icon,
+.learning-icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px 18px 8px 8px;
+  background: var(--emerald);
+  color: var(--gold-soft);
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.event-date {
+  color: var(--gold);
+  font-size: .75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.islamic-event-card h3,
+.learning-card h3 {
+  font-family: 'Amiri', Georgia, serif;
+  color: var(--emerald-deep);
+  font-size: 1.35rem;
+  margin: .4rem 0;
+}
+
+.islamic-event-card p,
+.learning-card p {
+  color: var(--ink-soft);
+  line-height: 1.7;
+  font-size: .9rem;
+}
+
+
+/* =========================
+   LEARNING
+========================= */
+
+.learning-section {
+  padding: 5rem 0;
+}
+
+.section-body {
+  max-width: 650px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
+.learning-icon {
+  background: var(--gold);
+  color: var(--emerald-deep);
+}
+
+.learning-card a {
+  display: inline-flex;
+  gap: .5rem;
+  align-items: center;
+  color: var(--emerald);
+  font-weight: 700;
+  text-decoration: none;
+  margin-top: .5rem;
+}
+
+.learning-card a:hover {
+  color: var(--gold);
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 767px) {
+
+  .calendar-hero {
+    padding: 4rem 0;
+  }
+
+  .today-card {
+    align-items: flex-start;
+  }
+
+  .section-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .calendar-day {
+    min-height: 75px;
+    padding: .4rem;
+  }
+
+  .events-grid,
+  .learning-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .calendar-weekdays div {
+    font-size: .75rem;
+  }
+
+  .hijri-day {
+    font-size: 1rem;
+  }
+
+}

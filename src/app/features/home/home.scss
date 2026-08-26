@@ -1,25 +1,22 @@
 // ---------------------------------------------------------------
-// Swiper core styles — REQUIRED. Without these the slider's JS runs
-// but the slides have no positioning/transition CSS, so they stack
-// on top of each other instead of fading. This was the main reason
-// the previous slider looked "broken".
-// ---------------------------------------------------------------
-@import 'swiper/css';
-@import 'swiper/css/effect-fade';
-@import 'swiper/css/pagination';
-
-// ---------------------------------------------------------------
-// Design tokens
+// Design tokens — same palette as before (it already matches the
+// brief's "deep emerald/green, warm ivory, charcoal, subtle gold"
+// direction), renamed from mosque-specific names now that the site
+// is a projects/impact platform rather than a single mosque.
 // ---------------------------------------------------------------
 :host {
-  --masjid-green: #0f4c3a;
-  --masjid-green-deep: #0a3529;
-  --brass: #c9a24b;
-  --brass-soft: #e4cd8f;
+  --emerald: #0f4c3a;
+  --emerald-deep: #0a3529;
+  --gold: #c9a24b;
+  --gold-soft: #e4cd8f;
   --ivory: #f7f3e9;
   --ink: #232420;
   --ink-soft: #5b6058;
   --brick: #8c3b2e;
+
+  --heading: var(--emerald-deep);
+  --border-soft: rgba(15, 76, 58, 0.14);
+  --surface-tint: rgba(15, 76, 58, 0.035);
 
   --font-display: 'Amiri', 'Georgia', serif;
   --font-body: 'Karla', 'Inter', system-ui, sans-serif;
@@ -29,6 +26,22 @@
   font-family: var(--font-body);
   color: var(--ink);
   background: var(--ivory);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+:host-context(html[data-bs-theme='dark']) {
+  --emerald: #22916d;
+  --emerald-deep: #0d251d;
+  --gold: #d9b563;
+  --gold-soft: #f0dca0;
+  --ivory: #101a16;
+  --ink: #eef0ec;
+  --ink-soft: #a7b3ac;
+  --brick: #d1725c;
+
+  --heading: var(--gold-soft);
+  --border-soft: rgba(238, 240, 236, 0.12);
+  --surface-tint: rgba(238, 240, 236, 0.04);
 }
 
 .container {
@@ -42,22 +55,22 @@
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--brass);
+  color: var(--gold);
   margin-bottom: 0.5rem;
 
   &.section-eyebrow-light {
-    color: var(--brass-soft);
+    color: var(--gold-soft);
   }
 }
 
 .section-title {
   font-family: var(--font-display);
   font-size: clamp(1.75rem, 2.5vw, 2.5rem);
-  color: var(--masjid-green-deep);
+  color: var(--heading);
   margin-bottom: 1rem;
 
   &.section-title-light {
-    color: var(--ivory);
+    color: #f7f3e9;
   }
 }
 
@@ -83,24 +96,86 @@
 .link-arrow {
   font-family: var(--font-utility);
   font-weight: 600;
-  color: var(--masjid-green);
+  font-size: 0.9rem;
+  color: var(--emerald);
   text-decoration: none;
 
   &:hover {
-    color: var(--brass);
+    color: var(--gold);
   }
 }
 
+:host-context(html[data-bs-theme='dark']) .link-arrow {
+  color: var(--gold-soft);
+  &:hover { color: var(--gold); }
+}
+
+.btn {
+  font-family: var(--font-utility);
+  font-weight: 600;
+  padding: 0.85rem 1.75rem;
+  border-radius: 2px;
+  text-decoration: none;
+  border: none;
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.btn-primary-cta {
+  background: var(--gold);
+  color: var(--emerald-deep);
+
+  &:hover { background: var(--gold-soft); transform: translateY(-1px); }
+}
+
+.btn-outline {
+  border: 1px solid rgba(247, 243, 233, 0.5);
+  color: var(--ivory);
+
+  &:hover { border-color: var(--gold-soft); color: var(--gold-soft); }
+}
+
+.btn-donate-light {
+  background: var(--gold);
+  color: var(--emerald-deep);
+  white-space: nowrap;
+
+  &:hover { background: var(--gold-soft); transform: translateY(-1px); }
+}
+
+.btn-support-project {
+  display: block;
+  width: 100%;
+  background: transparent;
+  border: 1px solid var(--emerald);
+  color: var(--emerald);
+  padding: 0.65rem 1.25rem;
+  font-size: 0.9rem;
+  border-radius: 4px;
+
+  &:hover { background: var(--emerald); color: #f7f3e9; }
+}
+
+:host-context(html[data-bs-theme='dark']) .btn-support-project {
+  border-color: var(--gold-soft);
+  color: var(--gold-soft);
+  &:hover { background: var(--gold-soft); color: var(--emerald-deep); }
+}
+
 // ---------------------------------------------------------------
-// Hero — arch-shaped content panel is the signature motif, echoed
-// again on the prayer card and events below.
+// Hero + slider — see prior notes: crossfade is self-contained via
+// ::ng-deep + !important, does not rely on the EffectFade module or
+// the (duplicated, conflicting) global swiper-bundle.min.css.
 // ---------------------------------------------------------------
 .hero {
+  position: relative;
   min-height: 88vh;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   overflow: hidden;
-  background: var(--masjid-green-deep);
+  background: var(--emerald-deep);
 }
 
 .hero-swiper {
@@ -108,6 +183,65 @@
   inset: 0;
   width: 100%;
   height: 100%;
+}
+
+:host ::ng-deep .hero-swiper {
+  &.swiper,
+  .swiper-wrapper {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .swiper-wrapper {
+    position: relative !important;
+    transform: none !important;
+  }
+
+  .swiper-slide {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    opacity: 0;
+    transform: none !important;
+    transition: opacity 1.2s ease-in-out;
+    will-change: opacity;
+    pointer-events: none;
+  }
+
+  .swiper-slide-active {
+    opacity: 1 !important;
+    z-index: 1;
+    pointer-events: auto;
+  }
+
+  .swiper-pagination {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 28px;
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+    margin: 0 !important;
+    border-radius: 50%;
+    background: rgba(247, 243, 233, 0.45);
+    opacity: 1;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .swiper-pagination-bullet-active {
+    width: 28px;
+    border-radius: 6px;
+    background: var(--gold);
+  }
 }
 
 .hero-slide-image {
@@ -120,51 +254,41 @@
 .hero-slide-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(10, 53, 41, 0.35) 0%,
-    rgba(10, 53, 41, 0.55) 55%,
-    rgba(10, 53, 41, 0.92) 100%
-  );
+  background: linear-gradient(180deg, rgba(10, 53, 41, 0.45) 0%, rgba(10, 53, 41, 0.6) 55%, rgba(10, 53, 41, 0.88) 100%);
 }
 
 .hero-content {
   position: relative;
   z-index: 2;
   color: var(--ivory);
-  padding-bottom: 4rem;
+  max-width: 46rem;
 }
 
-.eyebrow {
+.hero-tag {
+  display: inline-block;
   font-family: var(--font-utility);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   font-size: 0.75rem;
-  color: var(--brass-soft);
+  color: var(--gold-soft);
+  padding: 0.35rem 0.85rem;
+  border: 1px solid rgba(228, 205, 143, 0.4);
+  border-radius: 999px;
+  margin-bottom: 1.25rem;
 }
 
 .hero-title {
   font-family: var(--font-display);
   font-size: clamp(2.25rem, 5vw, 3.75rem);
-  margin: 0.5rem 0 1rem;
+  line-height: 1.15;
+  margin: 0 0 1.25rem;
 }
 
 .hero-subtitle {
   font-size: 1.15rem;
   color: rgba(247, 243, 233, 0.85);
-  max-width: 40ch;
-  margin-bottom: 1.25rem;
-}
-
-.hero-dates {
-  font-family: var(--font-utility);
-  font-size: 0.95rem;
-  color: var(--brass-soft);
+  max-width: 42ch;
   margin-bottom: 1.75rem;
-
-  .dot {
-    margin: 0 0.5rem;
-  }
 }
 
 .hero-actions {
@@ -173,188 +297,538 @@
   gap: 0.75rem;
 }
 
-.btn {
-  font-family: var(--font-utility);
-  font-weight: 600;
-  padding: 0.85rem 1.75rem;
-  border-radius: 2px;
-  text-decoration: none;
-  transition: transform 0.15s ease, background 0.15s ease;
-}
-
-.btn-donate {
-  background: var(--brass);
-  color: var(--masjid-green-deep);
-
-  &:hover {
-    background: var(--brass-soft);
-    transform: translateY(-1px);
-  }
-}
-
-.btn-outline {
-  border: 1px solid rgba(247, 243, 233, 0.5);
-  color: var(--ivory);
-
-  &:hover {
-    border-color: var(--brass-soft);
-    color: var(--brass-soft);
-  }
-}
-
 // ---------------------------------------------------------------
-// Prayer band
+// Impact statistics
 // ---------------------------------------------------------------
-.prayer-band {
-  margin-top: -3.5rem;
-  position: relative;
-  z-index: 3;
-  padding-bottom: 3rem;
-}
+.stats-section {
+  padding: 5rem 0 4rem;
+  text-align: center;
 
-.prayer-card {
-  background: var(--masjid-green);
-  border-radius: 32px 32px 8px 8px; // arch echo at the top
-  padding: 2rem clamp(1.25rem, 4vw, 2.5rem);
-  box-shadow: 0 24px 48px rgba(10, 53, 41, 0.25);
-}
-
-.prayer-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  flex-wrap: wrap;
-  gap: 1rem;
-  color: var(--ivory);
-  border-bottom: 1px solid rgba(247, 243, 233, 0.15);
-  padding-bottom: 1.5rem;
-  margin-bottom: 1.5rem;
-
-  .label {
+  .section-eyebrow,
+  .section-title {
     display: block;
-    font-family: var(--font-utility);
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--brass-soft);
-    margin-bottom: 0.25rem;
+  }
+
+  .section-title {
+    margin-bottom: 2.5rem;
   }
 }
 
-.next-prayer-name {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  text-transform: capitalize;
-  margin: 0;
-}
-
-.countdown-value {
-  font-family: var(--font-utility);
-  font-variant-numeric: tabular-nums;
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--brass);
-}
-
-.prayer-row-list {
+.stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 1.25rem;
 }
 
-.prayer-row {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  padding: 0.85rem 1rem;
-  border-radius: 8px;
-  background: rgba(247, 243, 233, 0.04);
-  color: var(--ivory);
-
-  &.is-current {
-    background: rgba(201, 162, 75, 0.16);
-  }
-
-  &.is-next {
-    background: var(--brass);
-    color: var(--masjid-green-deep);
-
-    .prayer-arabic,
-    .prayer-time {
-      color: var(--masjid-green-deep);
-    }
-  }
+.stat-card {
+  padding: 1.75rem 1rem;
+  border-radius: 8px 32px 8px 8px;
+  background: var(--surface-tint);
+  border: 1px solid var(--border-soft);
 }
 
-.prayer-arabic {
+.stat-icon {
+  font-size: 1.5rem;
+  color: var(--gold);
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.stat-value {
   font-family: var(--font-display);
-  font-size: 1.1rem;
-  color: var(--brass-soft);
+  font-size: 2.25rem;
+  color: var(--heading);
+  line-height: 1;
+  margin-bottom: 0.4rem;
 }
 
-.prayer-name {
+.stat-title {
   font-family: var(--font-utility);
-  font-weight: 600;
-  font-size: 0.9rem;
-}
-
-.prayer-time {
-  font-family: var(--font-utility);
-  font-variant-numeric: tabular-nums;
-  color: rgba(247, 243, 233, 0.75);
+  font-size: 0.85rem;
+  color: var(--ink-soft);
 }
 
 // ---------------------------------------------------------------
-// About
+// Featured projects
 // ---------------------------------------------------------------
-.about-section {
-  padding: 5rem 0;
-}
-
-.about-image {
-  width: 100%;
-  min-height: 320px;
-  background-size: cover;
-  background-position: center;
-  border-radius: 32px 32px 8px 8px;
-}
-
-// ---------------------------------------------------------------
-// Jumu'ah
-// ---------------------------------------------------------------
-.jumuah-section {
+.projects-section {
   padding-bottom: 5rem;
 }
 
-.jumuah-card {
-  background: var(--brass-soft);
-  border-radius: 8px 32px 8px 32px;
-  padding: clamp(1.5rem, 4vw, 3rem);
+.project-card {
+  height: 100%;
+  border: 1px solid var(--border-soft);
+  border-radius: 8px 32px 8px 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+
+  &:hover {
+    box-shadow: 0 16px 32px rgba(15, 76, 58, 0.1);
+    transform: translateY(-2px);
+  }
 }
 
-.jumuah-times {
-  display: flex;
-  gap: 3rem;
-  margin: 1rem 0 1.25rem;
+.project-image {
+  position: relative;
+  height: 180px;
+  background-size: cover;
+  background-position: center;
+}
 
-  .label {
-    display: block;
-    font-family: var(--font-utility);
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--masjid-green);
+.project-status {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  font-family: var(--font-utility);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(16, 26, 22, 0.75);
+  color: #f7f3e9;
+
+  &.status-active { background: rgba(15, 76, 58, 0.85); }
+  &.status-completed { background: rgba(15, 76, 58, 0.5); }
+  &.status-upcoming { background: rgba(140, 59, 46, 0.8); }
+}
+
+.project-body {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-category {
+  font-family: var(--font-utility);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brick);
+}
+
+.project-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--heading);
+  margin: 0.5rem 0 0.5rem;
+}
+
+.project-description {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  margin-bottom: 1rem;
+  flex: 1;
+}
+
+.progress-track {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--border-soft);
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+
+  &.progress-track-light {
+    background: rgba(247, 243, 233, 0.2);
+  }
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--gold);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-utility);
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  margin-bottom: 0.5rem;
+
+  &.progress-meta-light {
+    color: rgba(247, 243, 233, 0.8);
+  }
+}
+
+.project-supporters {
+  font-family: var(--font-utility);
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  margin-bottom: 1rem;
+}
+
+.project-impact-label {
+  font-family: var(--font-utility);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--emerald);
+  background: var(--surface-tint);
+  border-radius: 6px;
+  padding: 0.6rem 0.85rem;
+  margin-bottom: 1rem;
+}
+
+// ---------------------------------------------------------------
+// What We Do
+// ---------------------------------------------------------------
+.workareas-section {
+  padding-bottom: 5rem;
+}
+
+.workareas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+
+.workarea-card {
+  display: block;
+  padding: 1.75rem;
+  border-radius: 8px 32px 8px 8px;
+  border: 1px solid var(--border-soft);
+  text-decoration: none;
+  transition: box-shadow 0.15s ease, transform 0.15s ease, background 0.15s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 32px rgba(15, 76, 58, 0.1);
+    background: var(--surface-tint);
+  }
+}
+
+.workarea-icon {
+  font-size: 1.5rem;
+  color: var(--gold);
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.workarea-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--heading);
+  margin-bottom: 0.4rem;
+}
+
+.workarea-description {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+// ---------------------------------------------------------------
+// Campaign Slider
+// ---------------------------------------------------------------
+// ---------------------------------------------------------------
+// Campaign Slider
+// ---------------------------------------------------------------
+
+.campaign-section {
+  padding-bottom: 5rem;
+}
+
+.campaign-slider-wrapper {
+  position: relative;
+  width: 100%;
+  padding: 0 3.5rem;
+}
+
+.campaign-swiper {
+  width: 100%;
+  height: 430px;
+  overflow: hidden;
+  border-radius: 32px 32px 8px 8px;
+}
+
+.campaign-swiper .swiper-wrapper {
+  height: 100%;
+}
+
+.campaign-swiper .swiper-slide {
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+.campaign-card {
+  width: 100%;
+  height: 100%;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  overflow: hidden;
+
+  background: var(--emerald-deep);
+
+  border-radius: 32px 32px 8px 8px;
+}
+
+.campaign-image {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+
+  background-size: cover;
+  background-position: center;
+
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+
+    background:
+      linear-gradient(
+        90deg,
+        rgba(10, 53, 41, 0.05),
+        rgba(10, 53, 41, 0.2)
+      );
+  }
+}
+
+.campaign-body {
+  height: 100%;
+
+  padding: clamp(1.75rem, 4vw, 3.5rem);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  overflow: hidden;
+}
+
+.campaign-body .section-title {
+  margin-bottom: 1rem;
+}
+
+.campaign-body .section-body {
+  max-width: 55ch;
+}
+
+.campaign-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  flex-wrap: wrap;
+
+  margin: 0.75rem 0 1.5rem;
+
+  color: rgba(247, 243, 233, 0.75);
+
+  font-family: var(--font-utility);
+  font-size: 0.85rem;
+}
+
+.campaign-status {
+  padding: 0.35rem 0.75rem;
+
+  border-radius: 999px;
+
+  background: rgba(201, 162, 75, 0.18);
+
+  color: var(--gold-soft);
+
+  font-size: 0.7rem;
+
+  font-weight: 600;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.06em;
+}
+.campaign-nav {
+  position: absolute;
+
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  z-index: 20;
+
+  width: 48px;
+  height: 48px;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(201, 162, 75, 0.45);
+
+  background: var(--emerald-deep);
+
+  color: var(--gold-soft);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1.25rem;
+
+  cursor: pointer;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    background: var(--gold);
+
+    color: var(--emerald-deep);
+
+    transform: translateY(-50%) scale(1.08);
+
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
   }
 
-  .value {
-    font-family: var(--font-display);
-    font-size: 1.75rem;
-    color: var(--masjid-green-deep);
+  &:active {
+    transform: translateY(-50%) scale(0.95);
+  }
+
+  i {
+    line-height: 1;
+  }
+}
+
+.campaign-prev {
+  left: 0;
+}
+
+.campaign-next {
+  right: 0;
+}
+.campaign-pagination {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+
+  bottom: -2rem;
+
+  z-index: 10;
+
+  display: flex;
+
+  justify-content: center;
+
+  gap: 0.5rem;
+}
+
+:host ::ng-deep .campaign-pagination .swiper-pagination-bullet {
+  width: 9px;
+  height: 9px;
+
+  margin: 0 !important;
+
+  background: var(--emerald);
+
+  opacity: 0.25;
+
+  transition:
+    width 0.25s ease,
+    opacity 0.25s ease,
+    background 0.25s ease;
+}
+
+:host ::ng-deep
+.campaign-pagination
+.swiper-pagination-bullet-active {
+  width: 26px;
+
+  border-radius: 10px;
+
+  opacity: 1;
+
+  background: var(--gold);
+}
+
+
+
+@media (max-width: 991.98px) {
+
+  .campaign-slider-wrapper {
+    padding: 0 2.75rem;
+  }
+
+  .campaign-swiper {
+    height: 500px;
+  }
+
+  .campaign-card {
+    grid-template-columns: 1fr;
+  }
+
+  .campaign-image {
+    height: 220px;
+  }
+
+  .campaign-body {
+    height: auto;
+    min-height: 280px;
+  }
+}
+@media (max-width: 575.98px) {
+
+  .campaign-slider-wrapper {
+    padding: 0 2.25rem;
+  }
+
+  .campaign-swiper {
+    height: 560px;
+
+    border-radius: 24px 24px 8px 8px;
+  }
+
+  .campaign-card {
+    border-radius: 24px 24px 8px 8px;
+  }
+
+  .campaign-image {
+    height: 200px;
+  }
+
+  .campaign-body {
+    padding: 1.5rem;
+    min-height: 360px;
+  }
+
+  .campaign-body .section-title {
+    font-size: 1.7rem;
+  }
+
+  .campaign-body .section-body {
+    font-size: 0.9rem;
+  }
+
+  .campaign-nav {
+    width: 42px;
+    height: 42px;
+    font-size: 1rem;
+  }
+
+  .campaign-prev {
+    left: 0;
+  }
+
+  .campaign-next {
+    right: 0;
   }
 }
 
 // ---------------------------------------------------------------
-// Events
+// Events (unchanged pattern)
 // ---------------------------------------------------------------
 .events-section {
   padding-bottom: 5rem;
@@ -363,7 +837,7 @@
 .event-card {
   height: 100%;
   padding: 1.5rem;
-  border: 1px solid rgba(15, 76, 58, 0.12);
+  border: 1px solid var(--border-soft);
   border-radius: 8px 32px 8px 8px;
   transition: box-shadow 0.15s ease, transform 0.15s ease;
 
@@ -384,7 +858,7 @@
 .event-title {
   font-family: var(--font-display);
   font-size: 1.3rem;
-  color: var(--masjid-green-deep);
+  color: var(--heading);
   margin: 0.5rem 0;
 }
 
@@ -393,9 +867,7 @@
   font-size: 0.85rem;
   color: var(--ink-soft);
 
-  .dot {
-    margin: 0 0.4rem;
-  }
+  .dot { margin: 0 0.4rem; }
 }
 
 .event-location {
@@ -405,50 +877,71 @@
 }
 
 // ---------------------------------------------------------------
-// Announcements
+// Islamic resources
 // ---------------------------------------------------------------
-.announcements-section {
+.resources-section {
   padding-bottom: 5rem;
 }
 
-.announcement-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-top: 1.5rem;
-}
+.resource-card {
+  display: block;
+  height: 100%;
+  border: 1px solid var(--border-soft);
+  border-radius: 8px 32px 8px 8px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
 
-.announcement-item {
-  display: grid;
-  grid-template-columns: 90px 1fr;
-  gap: 1.25rem;
-  padding: 1.25rem;
-  border-left: 3px solid var(--masjid-green);
-  background: rgba(15, 76, 58, 0.03);
-
-  &.is-priority {
-    border-left-color: var(--brick);
-    background: rgba(140, 59, 46, 0.05);
+  &:hover {
+    box-shadow: 0 16px 32px rgba(15, 76, 58, 0.1);
+    transform: translateY(-2px);
   }
 }
 
-.announcement-date {
-  font-family: var(--font-utility);
-  font-weight: 700;
-  color: var(--masjid-green);
+.resource-image {
+  height: 150px;
+  background-size: cover;
+  background-position: center;
 }
 
-.announcement-title {
+.resource-category {
+  display: block;
+  font-family: var(--font-utility);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brick);
+  margin: 1.25rem 1.25rem 0;
+}
+
+.resource-title {
   font-family: var(--font-display);
   font-size: 1.1rem;
-  margin: 0 0 0.35rem;
-  color: var(--ink);
+  color: var(--heading);
+  margin: 0.5rem 1.25rem;
 }
 
-.announcement-message {
+.resource-excerpt {
+  font-size: 0.85rem;
   color: var(--ink-soft);
-  font-size: 0.95rem;
-  margin: 0;
+  margin: 0 1.25rem 1.25rem;
+}
+
+// ---------------------------------------------------------------
+// Donate CTA
+// ---------------------------------------------------------------
+.donate-section {
+  background: var(--emerald-deep);
+  padding: 4rem 0;
+}
+
+.donate-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
 }
 
 // ---------------------------------------------------------------
@@ -480,31 +973,65 @@
     padding: 0.75rem;
     font-family: var(--font-utility);
     font-size: 0.8rem;
-    color: var(--ivory);
+    color: #f7f3e9;
     background: linear-gradient(180deg, transparent, rgba(10, 53, 41, 0.85));
   }
 }
 
 // ---------------------------------------------------------------
-// Donate CTA
+// Prayer widget — deliberately small, a footnote feature per the brief.
 // ---------------------------------------------------------------
-.donate-section {
-  background: var(--masjid-green-deep);
-  padding: 4rem 0;
+.prayer-widget-section {
+  padding-bottom: 3rem;
 }
 
-.donate-inner {
+.prayer-widget {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 2rem;
   flex-wrap: wrap;
+  padding: 1.25rem 1.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-soft);
+  text-decoration: none;
+  color: var(--ink);
+
+  .label {
+    display: block;
+    font-family: var(--font-utility);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  &:hover {
+    background: var(--surface-tint);
+  }
 }
 
-.btn-donate-light {
-  background: var(--brass);
-  color: var(--masjid-green-deep);
-  white-space: nowrap;
+.prayer-widget-name {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--heading);
+  margin-right: 0.5rem;
+}
+
+.prayer-widget-time {
+  font-family: var(--font-utility);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-soft);
+}
+
+.prayer-widget-countdown {
+  font-family: var(--font-utility);
+  font-variant-numeric: tabular-nums;
+
+  .value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gold);
+  }
 }
 
 // ---------------------------------------------------------------
@@ -512,7 +1039,7 @@
 // ---------------------------------------------------------------
 .quicklinks-section {
   padding: 3rem 0;
-  border-bottom: 1px solid rgba(15, 76, 58, 0.1);
+  border-bottom: 1px solid var(--border-soft);
 }
 
 .quicklinks-grid {
@@ -528,14 +1055,55 @@
   font-size: 0.9rem;
   padding: 0.6rem 1.25rem;
   border-radius: 999px;
-  border: 1px solid rgba(15, 76, 58, 0.2);
-  color: var(--masjid-green-deep);
+  border: 1px solid var(--border-soft);
+  color: var(--heading);
   text-decoration: none;
 
   &:hover {
-    background: var(--masjid-green);
-    color: var(--ivory);
-    border-color: var(--masjid-green);
+    background: var(--emerald);
+    color: #f7f3e9;
+    border-color: var(--emerald);
+  }
+}
+
+// ---------------------------------------------------------------
+// Newsletter
+// ---------------------------------------------------------------
+.newsletter-section {
+  padding: 3rem 0 5rem;
+}
+
+.newsletter-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  border-radius: 8px 32px 8px 32px;
+  background: var(--gold-soft);
+
+  .section-title,
+  .section-body {
+    color: #0a3529;
+  }
+}
+
+.newsletter-thanks {
+  justify-content: flex-start;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+
+  input {
+    padding: 0.85rem 1.1rem;
+    border-radius: 2px;
+    border: 1px solid rgba(10, 53, 41, 0.25);
+    font-family: var(--font-utility);
+    min-width: 240px;
   }
 }
 
@@ -556,14 +1124,14 @@
     flex-direction: column;
     gap: 0.15rem;
     padding: 0.85rem 0;
-    border-bottom: 1px solid rgba(15, 76, 58, 0.1);
+    border-bottom: 1px solid var(--border-soft);
 
     strong {
       font-family: var(--font-utility);
       font-size: 0.75rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--brass);
+      color: var(--gold);
     }
   }
 }
@@ -575,13 +1143,16 @@
   a {
     font-family: var(--font-utility);
     font-weight: 600;
-    color: var(--masjid-green);
+    color: var(--emerald);
     text-decoration: none;
 
-    &:hover {
-      color: var(--brick);
-    }
+    &:hover { color: var(--brick); }
   }
+}
+
+:host-context(html[data-bs-theme='dark']) .social-links a {
+  color: var(--gold-soft);
+  &:hover { color: var(--brick); }
 }
 
 .contact-map {
@@ -591,25 +1162,48 @@
   border-radius: 8px 32px 8px 8px;
 }
 
+:host-context(html[data-bs-theme='dark']) .contact-map {
+  filter: invert(0.92) hue-rotate(180deg) brightness(0.95) contrast(0.9);
+}
+
 // ---------------------------------------------------------------
 // Responsive
 // ---------------------------------------------------------------
+@media (max-width: 991.98px) {
+  .campaign-card {
+    grid-template-columns: 1fr;
+  }
+
+  .campaign-image {
+    min-height: 220px;
+  }
+}
+
 @media (max-width: 767.98px) {
   .hero {
     min-height: 100vh;
+    align-items: flex-end;
+    padding-bottom: 4rem;
   }
 
-  .prayer-card-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .jumuah-times {
-    gap: 1.5rem;
-  }
-
-  .donate-inner {
+  .donate-inner,
+  .newsletter-card {
     text-align: center;
     justify-content: center;
+  }
+
+  .prayer-widget {
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host ::ng-deep .hero-swiper .swiper-slide {
+    transition: none;
+  }
+
+  .event-card, .project-card, .workarea-card, .resource-card, .btn {
+    transition: none;
   }
 }

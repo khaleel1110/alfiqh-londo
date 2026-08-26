@@ -1,0 +1,103 @@
+<section class="announcements-page">
+
+  <section class="announcements-hero">
+
+    <div class="container">
+
+      <span class="eyebrow">
+        <i class="bi bi-megaphone"></i>
+        Latest Updates
+      </span>
+
+      <h1>
+        Announcements &
+        <span>Updates</span>
+      </h1>
+
+      <p>
+        Stay informed about our projects, campaigns,
+        programmes and community initiatives.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <section class="announcements-section">
+
+    <div class="container">
+
+      <div class="category-filter">
+
+        @for (category of categories; track category) {
+
+          <button
+            type="button"
+            [class.active]="selectedCategory() === category"
+            (click)="selectCategory(category)"
+          >
+            {{ category }}
+          </button>
+
+        }
+
+      </div>
+
+
+      <div class="announcement-grid">
+
+        @for (
+          announcement of filteredAnnouncements();
+          track announcement.title
+          ) {
+
+          <article
+            class="announcement-card"
+            [class.featured]="announcement.featured"
+          >
+
+            <div
+              class="announcement-image"
+              [style.background-image]="'url(' + announcement.image + ')'"
+            >
+
+              <span>
+                {{ announcement.category }}
+              </span>
+
+            </div>
+
+            <div class="announcement-body">
+
+              <small>
+                <i class="bi bi-calendar3"></i>
+                {{ announcement.date }}
+              </small>
+
+              <h2>
+                {{ announcement.title }}
+              </h2>
+
+              <p>
+                {{ announcement.description }}
+              </p>
+
+              <a routerLink="/contact-us">
+                Learn More
+                <i class="bi bi-arrow-right"></i>
+              </a>
+
+            </div>
+
+          </article>
+
+        }
+
+      </div>
+
+    </div>
+
+  </section>
+
+</section>

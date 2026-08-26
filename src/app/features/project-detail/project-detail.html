@@ -1,0 +1,495 @@
+@if (loading()) {
+
+  <section class="project-loading">
+    <div class="container text-center">
+      <div class="spinner-border"></div>
+      <p class="mt-3">Loading project...</p>
+    </div>
+  </section>
+
+}
+
+@else if (notFound()) {
+
+  <section class="project-not-found">
+    <div class="container text-center">
+
+      <i class="bi bi-folder-x"></i>
+
+      <h1>Project Not Found</h1>
+
+      <p>
+        Sorry, we couldn't find the project you're looking for.
+      </p>
+
+      <a
+        routerLink="/projects"
+        class="btn btn-primary-cta">
+
+        <i class="bi bi-arrow-left me-2"></i>
+        Back to Projects
+
+      </a>
+
+    </div>
+  </section>
+
+}
+
+@else if (project(); as project) {
+
+  <!-- ========================================= -->
+    <!-- HERO -->
+    <!-- ========================================= -->
+
+  <section class="project-hero">
+
+    <div
+      class="project-hero-background"
+      [style.background-image]="'url(' + project.imageUrl + ')'">
+    </div>
+
+    <div class="project-hero-overlay"></div>
+
+    <div class="container project-hero-content">
+
+      <a
+        routerLink="/projects"
+        class="back-link">
+
+        <i class="bi bi-arrow-left"></i>
+        Back to Projects
+
+      </a>
+
+      <div class="hero-meta">
+
+        <span class="project-category">
+          {{ categoryLabel() }}
+        </span>
+
+        <span
+          class="project-status"
+          [class]="'status-' + project.status.toLowerCase()">
+
+          {{ project.status }}
+
+        </span>
+
+        @if (project.featured) {
+
+          <span class="featured-badge">
+            <i class="bi bi-star-fill"></i>
+            Featured
+          </span>
+
+        }
+
+      </div>
+
+      <h1 class="text-white">
+        {{ project.title }}
+      </h1>
+
+      <p>
+        {{ project.shortDescription }}
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- ========================================= -->
+    <!-- PROJECT CONTENT -->
+    <!-- ========================================= -->
+
+  <section class="project-details-section">
+
+    <div class="container">
+
+      <div class="row g-5">
+
+        <!-- MAIN CONTENT -->
+        <div class="col-lg-8">
+
+          <!-- Gallery -->
+
+          @if (gallery().length) {
+
+            <div class="project-gallery">
+
+              <div
+                class="gallery-main"
+                [style.background-image]="'url(' + selectedImage() + ')'">
+              </div>
+
+              @if (gallery().length > 1) {
+
+                <div class="gallery-thumbnails">
+
+                  @for (
+                    image of gallery();
+                    track image
+                    ) {
+
+                    <button
+                      type="button"
+                      class="gallery-thumbnail"
+                      [class.active]="selectedImage() === image"
+                      (click)="selectImage(image)">
+
+                      <img
+                        [src]="image"
+                        [alt]="project.title" />
+
+                    </button>
+
+                  }
+
+                </div>
+
+              }
+
+            </div>
+
+          }
+
+
+          <!-- Description -->
+
+          <div class="content-block">
+
+            <span class="section-eyebrow">
+              About This Project
+            </span>
+
+            <h2>
+              {{ project.title }}
+            </h2>
+
+            <p>
+              {{ project.description }}
+            </p>
+
+          </div>
+
+
+          <!-- Objectives -->
+
+          @if (project.objectives?.length) {
+
+            <div class="content-block">
+
+              <span class="section-eyebrow">
+                What We Aim To Achieve
+              </span>
+
+              <h2>
+                Project Objectives
+              </h2>
+
+              <div class="objectives-list">
+
+                @for (
+                  objective of project.objectives;
+                  track objective
+                  ) {
+
+                  <div class="objective-item">
+
+                    <span class="objective-icon">
+                      <i class="bi bi-check-lg"></i>
+                    </span>
+
+                    <span>
+                      {{ objective }}
+                    </span>
+
+                  </div>
+
+                }
+
+              </div>
+
+            </div>
+
+          }
+
+
+          <!-- Impact -->
+
+          @if (project.impact) {
+
+            <div class="impact-block">
+
+              <div class="impact-icon">
+                <i class="bi bi-heart-fill"></i>
+              </div>
+
+              <div>
+
+                <span class="section-eyebrow">
+                  Our Expected Impact
+                </span>
+
+                <h3>
+                  Making a Difference Together
+                </h3>
+
+                <p>
+                  {{ project.impact }}
+                </p>
+
+              </div>
+
+            </div>
+
+          }
+
+        </div>
+
+
+        <!-- ================================= -->
+        <!-- SIDEBAR -->
+        <!-- ================================= -->
+
+        <div class="col-lg-4">
+
+          <div
+            class="project-sidebar"
+            id="project-support">
+
+            <!-- Support -->
+
+            @if (project.fundraisingEnabled) {
+
+              <div class="support-card">
+
+                <span class="section-eyebrow">
+                  Support This Project
+                </span>
+
+                <h3>
+                  Help Us Make This Possible
+                </h3>
+
+                @if (
+                  project.targetAmount &&
+                  project.raisedAmount !== undefined
+                  ) {
+
+                  <div class="funding-info">
+
+                    <div class="funding-amount">
+
+                      <strong>
+                        £{{ project.raisedAmount | number }}
+                      </strong>
+
+                      <span>
+                        raised
+                      </span>
+
+                    </div>
+
+                    <span>
+                      of £{{ project.targetAmount | number }}
+                    </span>
+
+                  </div>
+
+                  <div class="progress-track">
+
+                    <div
+                      class="progress-fill"
+                      [style.width.%]="progressPercent()">
+                    </div>
+
+                  </div>
+
+                  <div class="progress-meta">
+
+                    <span>
+                      {{ progressPercent() }}% funded
+                    </span>
+
+                    @if (project.supporters) {
+
+                      <span>
+                        {{ project.supporters }} supporters
+                      </span>
+
+                    }
+
+                  </div>
+
+                }
+
+                <button (click)="openDonate()"
+                  type="button"
+                  class="btn btn-donate-project">
+
+                  <i class="bi bi-heart-fill me-2"></i>
+                  Support This Project
+
+                </button>
+
+              </div>
+
+            }
+
+
+            <!-- Project information -->
+
+            <div class="info-card">
+
+              <h3>
+                Project Information
+              </h3>
+
+              <div class="info-item">
+
+                <i class="bi bi-tag"></i>
+
+                <div>
+                  <span>Category</span>
+                  <strong>{{ categoryLabel() }}</strong>
+                </div>
+
+              </div>
+
+
+              <div class="info-item">
+
+                <i class="bi bi-geo-alt"></i>
+
+                <div>
+                  <span>Location</span>
+                  <strong>{{ project.location }}</strong>
+                </div>
+
+              </div>
+
+
+              <div class="info-item">
+
+                <i class="bi bi-calendar-event"></i>
+
+                <div>
+                  <span>Start Date</span>
+
+                  <strong>
+                    {{ project.startDate | date:'dd MMMM yyyy' }}
+                  </strong>
+
+                </div>
+
+              </div>
+
+
+              @if (project.endDate) {
+
+                <div class="info-item">
+
+                  <i class="bi bi-calendar-check"></i>
+
+                  <div>
+
+                    <span>End Date</span>
+
+                    <strong>
+                      {{ project.endDate | date:'dd MMMM yyyy' }}
+                    </strong>
+
+                  </div>
+
+                </div>
+
+              }
+
+
+              @if (project.beneficiaries) {
+
+                <div class="info-item">
+
+                  <i class="bi bi-people"></i>
+
+                  <div>
+
+                    <span>Beneficiaries</span>
+
+                    <strong>
+                      {{ project.beneficiaries }}
+                    </strong>
+
+                  </div>
+
+                </div>
+
+              }
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ========================================= -->
+    <!-- BOTTOM CTA -->
+    <!-- ========================================= -->
+
+  <section class="project-cta">
+
+    <div class="container text-center">
+
+      <span class="section-eyebrow section-eyebrow-light">
+        Be Part Of The Change
+      </span>
+
+      <h2>
+        Together, We Can Make A Greater Impact
+      </h2>
+
+      <p>
+        Your support helps us continue serving communities,
+        supporting families and creating meaningful Islamic projects.
+      </p>
+
+      <div class="cta-actions">
+
+        @if (project.fundraisingEnabled) {
+
+          <button
+            type="button"
+            class="btn btn-donate-light">
+
+            <i class="bi bi-heart-fill me-2"></i>
+            Support This Project
+
+          </button>
+
+        }
+
+        <a
+          routerLink="/projects"
+          class="btn btn-outline-light">
+
+          Explore Other Projects
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+}

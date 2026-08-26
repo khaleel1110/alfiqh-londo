@@ -1,0 +1,275 @@
+<section class="support-page">
+
+  <!-- Hero -->
+  <section class="support-hero">
+
+    <div class="container">
+
+      <div class="hero-content">
+
+        <span class="eyebrow">
+          <i class="bi bi-heart"></i>
+          Support Our Work
+        </span>
+
+        <h1 class="text-white">
+          Your Support
+          <span>Creates Impact</span>
+        </h1>
+
+        <p>
+          Every contribution helps us develop Islamic projects,
+          support vulnerable communities, promote knowledge and
+          turn Islamic values into meaningful action.
+        </p>
+
+        <div class="hero-actions">
+
+          <a
+            routerLink="/donate"
+            class="primary-btn"
+          >
+            Donate Now
+            <i class="bi bi-arrow-right"></i>
+          </a>
+
+          <a
+            routerLink="/projects"
+            class="outline-btn"
+          >
+            Explore Projects
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- Ways to Support -->
+  <section class="support-options">
+
+    <div class="container">
+
+      <div class="section-heading">
+
+        <span class="section-eyebrow">
+          Ways To Help
+        </span>
+
+        <h2>
+          Be Part of the Work
+        </h2>
+
+        <p>
+          There are many ways to contribute to the work of
+          Al-Fiqh London.
+        </p>
+
+      </div>
+
+
+      <div class="options-grid">
+
+        @for (option of supportOptions; track option.title) {
+
+          <a
+            [routerLink]="option.path"
+            class="support-card"
+          >
+
+            <div class="support-icon">
+              <i [class]="option.icon"></i>
+            </div>
+
+            <h3>
+              {{ option.title }}
+            </h3>
+
+            <p>
+              {{ option.description }}
+            </p>
+
+            <span class="learn-more">
+              Learn More
+              <i class="bi bi-arrow-right"></i>
+            </span>
+
+          </a>
+
+        }
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- Bank Transfer -->
+  <section class="bank-section">
+
+    <div class="container">
+
+      <div class="bank-card">
+
+        <div class="bank-content">
+
+          <span class="section-eyebrow">
+            Bank Transfer
+          </span>
+
+          <h2>
+            Support Through Bank Transfer
+          </h2>
+
+          <p>
+            You can support our projects directly by transferring
+            your contribution to our designated account.
+          </p>
+
+          <div class="bank-details">
+
+            <div>
+              <small>Bank</small>
+              <strong>Bank Name</strong>
+            </div>
+
+            <div>
+              <small>Account Name</small>
+              <strong>Al-Fiqh London</strong>
+            </div>
+
+            <div>
+              <small>Account Number</small>
+
+              <div class="account-number">
+
+                <strong>
+                  {{ accountNumber }}
+                </strong>
+
+                <button
+                  type="button"
+                  (click)="copyAccountNumber()"
+                >
+                  <i
+                    [class]="copied
+                      ? 'bi bi-check-lg'
+                      : 'bi bi-copy'"
+                  ></i>
+
+                  {{ copied ? 'Copied' : 'Copy' }}
+                </button>
+
+              </div>
+
+            </div>
+
+            <div>
+              <small>Reference</small>
+              <strong>DONATION</strong>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="bank-icon">
+          <i class="bi bi-bank"></i>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- Impact -->
+  <section class="impact-section">
+
+    <div class="container">
+
+      <div class="impact-grid">
+
+        <div>
+          <span class="section-eyebrow">
+            Every Contribution Matters
+          </span>
+
+          <h2>
+            Give With Purpose
+          </h2>
+
+          <p>
+            Your support can help provide food to families,
+            support orphans, fund Islamic education, facilitate
+            Da'wah and strengthen communities.
+          </p>
+
+          <a
+            routerLink="/impact"
+            class="impact-link"
+          >
+            See Our Impact
+            <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="impact-quote">
+
+          <i class="bi bi-quote"></i>
+
+          <p>
+            "Whoever saves one life, it is as if he has saved
+            all of mankind."
+          </p>
+
+          <small>
+            Qur'an 5:32
+          </small>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- Final CTA -->
+  <section class="support-cta">
+
+    <div class="container text-center">
+
+      <span class="section-eyebrow">
+        Join The Effort
+      </span>
+
+      <h2>
+        Together, We Can Make a Difference
+      </h2>
+
+      <p>
+        Explore our active projects and find a cause
+        that matters to you.
+      </p>
+
+      <a
+        routerLink="/projects"
+        class="primary-btn"
+      >
+        Explore Our Projects
+        <i class="bi bi-arrow-right"></i>
+      </a>
+
+    </div>
+
+  </section>
+
+</section>

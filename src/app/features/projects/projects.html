@@ -93,7 +93,7 @@
             <p class="project-description">{{ project.shortDescription }}</p>
 
             <ng-container *ngIf="project.fundraisingEnabled && project.targetAmount; else impactBlock">
-              <div class="project-progress">
+  <!--            <div class="project-progress">
                 <div class="progress-track">
                   <div class="progress-fill" [style.width.%]="progressPercent(project)"></div>
                 </div>
@@ -101,7 +101,7 @@
                   <span><strong>&pound;{{ project.raisedAmount | number }}</strong> of &pound;{{ project.targetAmount | number }}</span>
                   <span>{{ progressPercent(project) }}%</span>
                 </div>
-              </div>
+              </div>-->
             </ng-container>
             <ng-template #impactBlock>
               <div class="project-impact-label" *ngIf="project.beneficiaries">{{ project.beneficiaries }}</div>
