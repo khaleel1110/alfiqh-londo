@@ -72,6 +72,8 @@ export class ContactUsComponent {
   };
 
   submitted = false;
+  sending = false;
+  errorMsg = '';
 
   form = {
     name: '',
@@ -79,6 +81,7 @@ export class ContactUsComponent {
     subject: '',
     message: '',
   };
+
 
   submitForm(): void {
     if (!this.form.name || !this.form.email || !this.form.message) {

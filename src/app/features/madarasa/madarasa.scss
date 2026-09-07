@@ -38,7 +38,6 @@
   --surface-tint: rgba(238, 240, 236, 0.04);
 }
 
-
 .container {
   max-width: 1180px;
 }
@@ -87,11 +86,6 @@
   text-decoration: none;
 
   &:hover { color: var(--gold); }
-
-  &.link-arrow-light {
-    color: var(--gold-soft);
-    &:hover { color: var(--gold); }
-  }
 }
 
 .btn {
@@ -142,7 +136,7 @@
 }
 
 // ---------------------------------------------------------------
-// Who We Are
+// What Is Our Madrasa
 // ---------------------------------------------------------------
 .who-section {
   padding-bottom: 5rem;
@@ -157,55 +151,22 @@
 }
 
 // ---------------------------------------------------------------
-// Mission / Vision
+// What We Teach
 // ---------------------------------------------------------------
-.mission-section {
+.programmes-section {
   padding-bottom: 5rem;
 }
 
-.statement-card {
-  height: 100%;
-  padding: clamp(1.75rem, 4vw, 2.5rem);
-  border-radius: 32px 8px 32px 8px;
-  background: var(--emerald-deep);
-}
-
-.statement-card-outline {
-  background: transparent;
-  border: 1px solid var(--border-soft);
-}
-
-.statement-text {
-  font-family: var(--font-display);
-  font-size: 1.35rem;
-  line-height: 1.55;
-  color: #f7f3e9;
-  margin: 0;
-}
-
-.statement-text-dark {
-  color: var(--heading);
-}
-
-// ---------------------------------------------------------------
-// Our Work
-// ---------------------------------------------------------------
-.workareas-section {
-  padding-bottom: 5rem;
-}
-
-.workareas-grid {
+.programmes-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1.25rem;
 }
 
-.workarea-card {
-  display: block;
+.programme-card {
   padding: 1.75rem;
   border-radius: 8px 32px 8px 8px;
   border: 1px solid var(--border-soft);
-  text-decoration: none;
   transition: box-shadow 0.15s ease, transform 0.15s ease, background 0.15s ease;
 
   &:hover {
@@ -215,54 +176,76 @@
   }
 }
 
-.workarea-icon {
+.programme-icon {
   font-size: 1.5rem;
   color: var(--gold);
   margin-bottom: 0.75rem;
   display: block;
 }
 
-.workarea-title {
+.programme-age {
+  display: inline-block;
+  font-family: var(--font-utility);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--brick);
+  margin-bottom: 0.5rem;
+}
+
+.programme-title {
   font-family: var(--font-display);
   font-size: 1.2rem;
   color: var(--heading);
   margin-bottom: 0.4rem;
 }
 
-.workarea-description {
+.programme-description {
   font-size: 0.85rem;
   color: var(--ink-soft);
   margin: 0;
 }
 
 // ---------------------------------------------------------------
-// Our Approach
+// Class Levels
 // ---------------------------------------------------------------
-.approach-section {
+.levels-section {
   padding-bottom: 5rem;
 }
 
-.approach-grid {
+.levels-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1.5rem;
 }
 
-.approach-item {
+.level-card {
   padding: 1.5rem;
   border-left: 3px solid var(--gold);
   background: var(--surface-tint);
   border-radius: 0 8px 8px 0;
 }
 
-.approach-title {
+.level-stage {
+  display: inline-block;
+  font-family: var(--font-utility);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+.level-title {
   font-family: var(--font-display);
   font-size: 1.1rem;
   color: var(--heading);
   margin-bottom: 0.4rem;
 }
 
-.approach-description {
+.level-description {
   font-size: 0.9rem;
   color: var(--ink-soft);
   margin: 0;
@@ -270,81 +253,180 @@
 }
 
 // ---------------------------------------------------------------
-// Our Values
+// Weekly Timetable
 // ---------------------------------------------------------------
-.values-section {
+.timetable-section {
   padding-bottom: 5rem;
 }
 
-.values-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 1rem;
+.timetable-table {
+  border: 1px solid var(--border-soft);
+  border-radius: 8px 32px 8px 8px;
+  overflow: hidden;
 }
 
-.value-card {
-  padding: 1.5rem 1.25rem;
+.timetable-row {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr 2fr;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border-soft);
+  align-items: center;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.timetable-head {
+  background: var(--surface-tint);
+  font-family: var(--font-utility);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.timetable-day {
+  font-family: var(--font-display);
+  color: var(--heading);
+  font-size: 1rem;
+}
+
+.timetable-time {
+  font-family: var(--font-utility);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.timetable-class {
+  font-size: 0.9rem;
+  color: var(--ink);
+}
+
+@media (max-width: 575.98px) {
+  .timetable-row {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+}
+
+// ---------------------------------------------------------------
+// Safeguarding
+// ---------------------------------------------------------------
+.safeguarding-section {
+  background: var(--emerald-deep);
+  padding: 4rem 0;
+}
+
+.safeguarding-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    font-size: 0.95rem;
+    color: rgba(247, 243, 233, 0.9);
+    line-height: 1.6;
+  }
+}
+
+.safeguarding-icon {
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+  color: var(--gold-soft);
+  font-size: 1.1rem;
+}
+
+// ---------------------------------------------------------------
+// How to Enrol
+// ---------------------------------------------------------------
+.enrol-section {
+  padding-bottom: 5rem;
+}
+
+.enrol-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.enrol-step {
+  padding: 1.75rem;
   border-radius: 8px 32px 8px 8px;
   background: var(--surface-tint);
   border: 1px solid var(--border-soft);
   text-align: center;
 }
 
-.value-icon {
-  font-size: 1.35rem;
-  color: var(--gold);
-  margin-bottom: 0.6rem;
-  display: block;
+.enrol-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--gold);
+  color: var(--emerald-deep);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
 }
 
-.value-title {
+.enrol-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--heading);
+  margin-bottom: 0.4rem;
+}
+
+.enrol-description {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin: 0;
+  line-height: 1.6;
+}
+
+// ---------------------------------------------------------------
+// FAQ
+// ---------------------------------------------------------------
+.faq-section {
+  padding-bottom: 5rem;
+}
+
+.faq-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.faq-item {
+  padding: 1.5rem;
+  border: 1px solid var(--border-soft);
+  border-radius: 8px 32px 8px 8px;
+}
+
+.faq-question {
   font-family: var(--font-display);
   font-size: 1.05rem;
   color: var(--heading);
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.5rem;
 }
 
-.value-description {
-  font-size: 0.8rem;
+.faq-answer {
+  font-size: 0.9rem;
   color: var(--ink-soft);
   margin: 0;
-  line-height: 1.5;
-}
-
-// ---------------------------------------------------------------
-// Impact snapshot
-// ---------------------------------------------------------------
-.impact-snapshot-section {
-  background: var(--emerald-deep);
-  padding: 4rem 0;
-}
-
-.impact-snapshot-inner {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2.5rem;
-}
-
-.impact-snapshot-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(120px, 1fr));
-  gap: 1.5rem 2.5rem;
-}
-
-.impact-snapshot-value {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  color: var(--gold-soft);
-  line-height: 1;
-}
-
-.impact-snapshot-label {
-  font-family: var(--font-utility);
-  font-size: 0.8rem;
-  color: rgba(247, 243, 233, 0.75);
-  margin-top: 0.35rem;
+  line-height: 1.6;
 }
 
 // ---------------------------------------------------------------
@@ -375,12 +457,7 @@
     padding-top: 100px;
   }
 
-  .impact-snapshot-inner {
+  .safeguarding-section .row {
     text-align: center;
-    justify-content: center;
-  }
-
-  .impact-snapshot-grid {
-    justify-content: center;
   }
 }

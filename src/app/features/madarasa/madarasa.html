@@ -1,0 +1,163 @@
+<div style="overflow: hidden" class="">
+
+<!-- ============ PAGE HEADER ============ -->
+<section class="page-header">
+  <div class="container">
+    <span class="section-eyebrow">Islamic Education</span>
+    <h1 class="page-title">Our Madrasa &mdash; The Islamiyyah</h1>
+    <p class="page-subtitle">
+      Structured Qur'an, Arabic and Islamic studies classes for children,
+      young people and adults &mdash; taught with care, by qualified teachers,
+      in a safe and nurturing environment.
+    </p>
+  </div>
+</section>
+
+<!-- ============ WHAT IS OUR MADRASA ============ -->
+<section class="who-section">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-12 col-lg-6">
+        <span class="section-eyebrow">What Is Our Madrasa</span>
+        <h2 class="section-title">Where Knowledge Meets Character</h2>
+        <p class="section-body" *ngFor="let p of introParagraphs">{{ p }}</p>
+        <a class="link-arrow" routerLink="/contact">Enrol your child &rarr;</a>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="who-image" style="background-image:url('/qr6.jpg')"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHAT WE TEACH ============ -->
+<section class="programmes-section">
+  <div class="container">
+    <span class="section-eyebrow">What We Teach</span>
+    <h2 class="section-title">Our Madrasa Programmes</h2>
+
+    <div class="programmes-grid">
+      <div class="programme-card" *ngFor="let programme of programmes">
+        <i class="{{ programme.icon }} programme-icon"></i>
+        <span class="programme-age">{{ programme.ageGroup }}</span>
+        <h3 class="programme-title">{{ programme.title }}</h3>
+        <p class="programme-description">{{ programme.description }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CLASS LEVELS ============ -->
+<section class="levels-section">
+  <div class="container">
+    <div class="row align-items-start g-5">
+      <div class="col-12 col-lg-4">
+        <span class="section-eyebrow">Progression</span>
+        <h2 class="section-title">How Students Progress</h2>
+        <p class="section-body">
+          Students move through three stages at their own pace, so every
+          child is taught at the right level for them.
+        </p>
+      </div>
+      <div class="col-12 col-lg-8">
+        <div class="levels-grid">
+          <div class="level-card" *ngFor="let level of levels">
+            <span class="level-stage">{{ level.stage }}</span>
+            <h3 class="level-title">{{ level.title }}</h3>
+            <p class="level-description">{{ level.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WEEKLY TIMETABLE ============ -->
+<section class="timetable-section">
+  <div class="container">
+    <span class="section-eyebrow">Timetable</span>
+    <h2 class="section-title">Weekly Classes</h2>
+
+    <div class="timetable-table">
+      <div class="timetable-row timetable-head">
+        <span>Day</span>
+        <span>Time</span>
+        <span>Class</span>
+      </div>
+      <div class="timetable-row" *ngFor="let row of timetable">
+        <span class="timetable-day">{{ row.day }}</span>
+        <span class="timetable-time">{{ row.time }}</span>
+        <span class="timetable-class">{{ row.classLabel }}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SAFEGUARDING & QUALITY ============ -->
+<section class="safeguarding-section">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-12 col-lg-5">
+        <span class="section-eyebrow section-eyebrow-light text-body-secondary">Safeguarding</span>
+        <h2 class="section-title section-title-light">Every Child, Kept Safe</h2>
+        <p class="section-body section-body-light">
+          Safeguarding sits at the centre of everything we do in the Madrasa,
+          overseen by a designated safeguarding lead.
+        </p>
+      </div>
+      <div class="col-12 col-lg-7">
+        <ul class="safeguarding-list">
+          <li *ngFor="let point of safeguardingPoints">
+            <i class="ai-shield text-secondary safeguarding-icon"></i>
+            <span>{{ point }}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW TO ENROL ============ -->
+<section class="enrol-section pt-5">
+  <div class="container">
+    <span class="section-eyebrow">Enrolment</span>
+    <h2 class="section-title">How to Enrol</h2>
+
+    <div class="enrol-grid">
+      <div class="enrol-step" *ngFor="let step of enrolSteps; let i = index">
+        <span class="enrol-number">{{ i + 1 }}</span>
+        <h3 class="enrol-title">{{ step.title }}</h3>
+        <p class="enrol-description">{{ step.description }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="faq-section">
+  <div class="container">
+    <span class="section-eyebrow">Questions</span>
+    <h2 class="section-title">Frequently Asked Questions</h2>
+
+    <div class="faq-list">
+      <div class="faq-item" *ngFor="let faq of faqs">
+        <h3 class="faq-question">{{ faq.question }}</h3>
+        <p class="faq-answer">{{ faq.answer }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CLOSING CTA ============ -->
+<section class="closing-cta-section">
+  <div class="container closing-cta-inner">
+    <h2 class="section-title">Give Your Child the Gift of Knowledge</h2>
+    <p class="section-body">Enrol today or get in touch to find out more about our Madrasa.</p>
+    <div class="closing-cta-actions">
+      <a class="btn btn-secondary px-5 rounded-1" routerLink="/contact-us">Enrol Now</a>
+      <a class="btn btn-outline-dark" routerLink="/about">Learn More About Us</a>
+    </div>
+  </div>
+</section>
+
+</div>

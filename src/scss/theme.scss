@@ -162,3 +162,25 @@
   font-weight: 600;
   font-size: 0.9rem;
 }
+
+
+// Force solid background on mobile header
+@media (max-width: 991.98px) {
+  header.navbar {
+    background-color: #ffffff !important; // Light mode fallback
+
+    // Dark mode support
+    &[data-bs-theme="dark"] {
+      background-color: #212529 !important; // Dark mode fallback
+    }
+
+    // When using ngClass bg classes
+    &.bg-light {
+      background-color: #ffffff !important;
+    }
+
+    &.bg-dark {
+      background-color: #212529 !important;
+    }
+  }
+}

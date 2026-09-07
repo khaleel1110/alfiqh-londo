@@ -8,7 +8,7 @@
 }
 
 .section-eyebrow {
-  color: var(--gold);
+  color: var(--lime);
   font-family: var(--font-utility, inherit);
   font-size: .75rem;
   font-weight: 700;
@@ -56,13 +56,13 @@
   transition: all .2s ease;
 
   &:hover {
-    color: var(--gold);
-    border-color: var(--gold);
+    color: var(--lime);
+    border-color: var(--lime);
   }
 
   &.active {
-    background: var(--gold);
-    border-color: var(--gold);
+    background: var(--lime);
+    border-color: var(--lime);
     color: #183b2f;
   }
 }
@@ -149,7 +149,7 @@
 }
 
 .gallery-overlay span {
-  color: #e4cd8f;
+  color: #c7dd6e;
 
   font-size: .65rem;
   font-weight: 700;
@@ -220,7 +220,7 @@
   color: #fff;
 
   span {
-    color: #e4cd8f;
+    color: #c7dd6e;
 
     font-size: .7rem;
     font-weight: 700;
@@ -256,7 +256,7 @@
   cursor: pointer;
 
   &:hover {
-    background: #c9a24b;
+    background: #a3c520;
     color: #183b2f;
   }
 }

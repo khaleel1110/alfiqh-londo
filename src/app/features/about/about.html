@@ -125,16 +125,16 @@
 <section class="impact-snapshot-section">
   <div class="container impact-snapshot-inner">
     <div>
-      <span class="section-eyebrow section-eyebrow-light">Our Impact</span>
+      <span class="section-eyebrow section-eyebrow-light text-body-secondary">Our Impact</span>
       <h2 class="section-title section-title-light">Real Numbers, Real People</h2>
       <p class="section-body section-body-light">
         A snapshot of what your support has made possible so far.
       </p>
-      <a class="link-arrow link-arrow-light" routerLink="/impact">See the full impact report &rarr;</a>
+      <a class="link-arrow link-arrow-light text-body-secondary" routerLink="/our-impact">See the full impact report &rarr;</a>
     </div>
     <div class="impact-snapshot-grid">
       <div class="impact-snapshot-item" *ngFor="let item of impactHighlights">
-        <div class="impact-snapshot-value">{{ item.value }}</div>
+        <div class="impact-snapshot-value text-secondary ">{{ item.value }}</div>
         <div class="impact-snapshot-label">{{ item.label }}</div>
       </div>
     </div>
@@ -147,7 +147,7 @@
     <h2 class="section-title">Ready to Be Part of It?</h2>
     <p class="section-body">Explore our current projects or support our work directly.</p>
     <div class="closing-cta-actions">
-      <a class="btn btn-primary-cta" routerLink="/projects">Explore Our Projects</a>
+      <a class="btn btn-secondary" routerLink="/projects">Explore Our Projects</a>
       <a class="btn btn-outline-dark" routerLink="/support-us">Support Our Work</a>
     </div>
   </div>

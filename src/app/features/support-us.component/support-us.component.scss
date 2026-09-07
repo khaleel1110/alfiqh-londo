@@ -1,9 +1,9 @@
 :host {
   --emerald: #0f4c3a;
   --emerald-deep: #0a3529;
-  --gold: #c9a24b;
-  --gold-soft: #e4cd8f;
-  --ivory: #f7f3e9;
+  --lime: #a3c520;          /* was --gold: #c9a24b */
+  --lime-soft: #c7dd6e;     /* was --gold-soft: #e4cd8f */
+  --ivory: #ffffff;
   --ink: #232420;
   --ink-soft: #5b6058;
   --border: rgba(15,76,58,.13);
@@ -15,9 +15,9 @@
 
 :host-context(html[data-bs-theme='dark']) {
   --emerald: #22916d;
-  --emerald-deep: #071c15;
-  --gold: #d9b563;
-  --gold-soft: #f0dca0;
+  --emerald-deep: #0d251d;
+  --lime: #b8d84a;          /* was --gold: #d9b563 */
+  --lime-soft: #d3e690;     /* was --gold-soft: #f0dca0 */
   --ivory: #101a16;
   --ink: #eef0ec;
   --ink-soft: #a7b3ac;

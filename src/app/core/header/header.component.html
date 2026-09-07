@@ -1,171 +1,300 @@
-<header [attr.data-bs-theme]="isSmallScreen()?'':(headerThemeMode() ==='dark')?'dark':'light'"
-
-        [ngClass]="{
-          'bg-light':headerThemeMode() !=='dark' && isScrolled(),
-          'bg-dark':(headerThemeMode() ==='dark'  && isScrolled()),
-          }" class="navbar  navbar-expand-lg fixed-top mb-4"
+<header
+  [attr.data-bs-theme]="
+    isSmallScreen()
+      ? ''
+      : (headerThemeMode() === 'dark' ? 'dark' : 'light')
+  "
+  [ngClass]="{
+    'bg-light': headerThemeMode() !== 'dark' && isScrolled(),
+    'bg-dark': headerThemeMode() === 'dark' && isScrolled(),
+    'is-mobile-menu-open': isMenuOpen()
+  }"
+  class="navbar navbar-expand-lg fixed-top py-0 mb-4"
 >
-  <div class="container-fluid ">
+  <div class="container-fluid header-inner">
 
-    <!-- Navbar brand (Logo) -->
+    <!-- ========================================================= -->
+    <!-- LOGO -->
+    <!-- Hidden automatically when mobile menu is open -->
+    <!-- ========================================================= -->
+
     <a class="navbar-brand pe-sm-3" routerLink="/">
       @if (headerThemeMode() !== 'dark') {
-        <img alt="Logo" src="/logo2.svg" id="navbar-logo"
-             style="width: 60px"/>
+        <img
+          alt="Logo"
+          src="/logo2.svg"
+          id="navbar-logo"
+          style="width: 9rem; height: 7rem; object-fit: cover"
+        />
       } @else {
-        <img alt="Logo" src="/logo.svg" id="navbar-logo"
-             style="width: 60px"/>
+        <img
+          alt="Logo"
+          src="/logo.svg"
+          id="navbar-logo"
+          style="width: 9rem; height: 7rem; object-fit: cover"
+        />
       }
     </a>
 
-    <a class="btn btn-primary btn-sm fs-sm order-lg-3 d-none d-sm-inline-flex"
-       routerLink="/contact-us"
-       rel="noopener">
-      <i class="ai-user-plus fs-xl me-2 ms-n1"></i>
-    Contact us
-    </a>
-    <!-- Theme toggle: single icon button that crossfades between sun and
-         moon, rather than a checkbox switch. themeService already exposes
-         `theme()` (signal) and `toggleTheme()`, so this binds straight to
-         it — no wrapper method needed. -->
+
+    <!-- ========================================================= -->
+    <!-- ACTIONS -->
+    <!-- Donate + Contact + Theme -->
+    <!-- Hidden entirely when mobile menu is open -->
+    <!-- ========================================================= -->
+
+    <div class="header-actions order-lg-3 ms-auto">
+
+      <!-- Donate -->
+      <button
+        type="button"
+        class="btn btn-lg btn-outline-secondary header-donate-btn"
+        (click)="openDonate()"
+        aria-label="Donate"
+      >
+        <i class="bi bi-heart me-2"></i>
+        <span>Donate</span>
+      </button>
+
+
+      <!-- Contact us — desktop/tablet only -->
+      <a
+        class="btn btn-sm btn-primary btn-sm fs-sm d-none d-md-inline-flex ms-2"
+        routerLink="/contact-us"
+        rel="noopener"
+      >
+        <i class="ai-user-plus fs-xl me-2 ms-n1"></i>
+        Contact us
+      </a>
+
+
+      <!-- Theme toggle -->
+      <button
+        type="button"
+        class="theme-toggle d-inline-flex ms-2"
+        (click)="themeService.toggleTheme()"
+        [attr.aria-pressed]="themeService.theme() === 'dark'"
+        [attr.aria-label]="
+          themeService.theme() === 'dark'
+            ? 'Switch to light mode'
+            : 'Switch to dark mode'
+        "
+      >
+        <span
+          class="theme-toggle-icons"
+          [class.is-dark]="themeService.theme() === 'dark'"
+        >
+          <i class="ai-sun fs-lg theme-toggle-sun"></i>
+          <i class="ai-moon fs-lg theme-toggle-moon"></i>
+        </span>
+      </button>
+
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- MOBILE TOGGLE -->
+    <!-- Always remains visible -->
+    <!-- ========================================================= -->
+
     <button
+      class="navbar-toggler ms-2"
       type="button"
-      class="theme-toggle d-none d-sm-inline-flex order-lg-2 me-3 me-lg-4 ms-auto"
-      (click)="themeService.toggleTheme()"
-      [attr.aria-pressed]="themeService.theme() === 'dark'"
-      [attr.aria-label]="themeService.theme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
+      (click)="toggleMobileMenu()"
+      [attr.aria-expanded]="isMenuOpen()"
+      aria-controls="navbarNav"
+      [attr.aria-label]="
+        isMenuOpen()
+          ? 'Close navigation'
+          : 'Toggle navigation'
+      "
     >
-      <span class="theme-toggle-icons" [class.is-dark]="themeService.theme() === 'dark'">
-        <i class="ai-sun fs-lg theme-toggle-sun"></i>
-        <i class="ai-moon fs-lg theme-toggle-moon"></i>
-      </span>
-    </button>
-
-
-
-    <!-- Mobile menu toggler (Hamburger) -->
-    <button class="navbar-toggler ms-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <!-- Navbar collapse (Main navigation) -->
-    <nav class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav navbar-nav-scroll me-auto" style="--ar-scroll-height: 520px;">
+
+    <!-- ========================================================= -->
+    <!-- NAVIGATION -->
+    <!-- ========================================================= -->
+
+    <nav
+      class="collapse navbar-collapse"
+      id="navbarNav"
+      [class.show]="isMenuOpen()"
+    >
+
+      <ul
+        class="navbar-nav navbar-nav-scroll me-auto"
+        style="--ar-scroll-height: 520px;"
+      >
+
+        <!-- Home -->
         <li class="nav-item me-0 pe-1">
-          <a class="nav-link" routerLink="/home" [routerLinkActiveOptions]="{exact:true}"
-             routerLinkActive="active">Home</a>
-        </li>
-
-
-
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/about" routerLinkActive="active">About US</a>
-        </li>
-
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle"  data-bs-toggle="dropdown" data-bs-auto-close="outside"
-             aria-expanded="false">Our Work</a>
-          <ul class="dropdown-menu">
-
-            <li><a routerLink="/projects" routerLinkActive="active" class="dropdown-item" >Projects</a></li>
-            <li><a routerLink="/our-impact" routerLinkActive="active" class="dropdown-item" >Our Impact</a></li>
-            <li><a routerLink="/support-us" routerLinkActive="active" class="dropdown-item" >Support Us</a></li>
-
-
-          </ul>
-        </li>
-
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle"  data-bs-toggle="dropdown" data-bs-auto-close="outside"
-             aria-expanded="false">Get to Now </a>
-          <ul class="dropdown-menu">
-
-            <li><a routerLink="/islamic-resources" routerLinkActive="active" class="dropdown-item" >Islamic Resources</a></li>
-            <li><a routerLink="/prayer-times" routerLinkActive="active" class="dropdown-item" >Prayer Times</a></li>
-            <li><a routerLink="/islamic-calendar" routerLinkActive="active" class="dropdown-item" >Islamic Calendar</a></li>
-
-
-          </ul>
-        </li>
-<!--
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/projects" routerLinkActive="active">Projects</a>
-        </li>
-
-        <li class="nav-item">
           <a
             class="nav-link"
-            routerLink="/islamic-resources"
-            routerLinkActive="active">
-
-            Islamic Resources
-
+            routerLink="/home"
+            [routerLinkActiveOptions]="{exact:true}"
+            routerLinkActive="active"
+            (click)="closeMobileMenu()"
+          >
+            Home
           </a>
         </li>
 
+
+        <!-- About -->
         <li class="nav-item">
           <a
             class="nav-link"
-            routerLink="/prayer-times"
-            routerLinkActive="active">
-
-            Prayer Times
-
+            routerLink="/about"
+            routerLinkActive="active"
+            (click)="closeMobileMenu()"
+          >
+            About US
           </a>
-        </li>-->
+        </li>
 
+
+        <!-- ===================================================== -->
+        <!-- OUR WORK -->
+        <!-- ===================================================== -->
+
+        <li
+          class="nav-item dropdown"
+          [class.show]="isDropdownOpen('our-work')"
+        >
+          <a
+            class="nav-link dropdown-toggle"
+            role="button"
+            [attr.aria-expanded]="isDropdownOpen('our-work')"
+            (click)="toggleDropdown('our-work', $event)"
+          >
+            Our Work
+          </a>
+
+          <ul
+            class="dropdown-menu"
+            [class.show]="isDropdownOpen('our-work')"
+          >
+            <li>
+              <a
+                routerLink="/projects"
+                routerLinkActive="active"
+                class="dropdown-item"
+                (click)="closeDropdowns(); closeMobileMenu()"
+              >
+                Projects
+              </a>
+            </li>
+
+<!--            <li>
+              <a
+                routerLink="/our-impact"
+                routerLinkActive="active"
+                class="dropdown-item"
+                (click)="closeDropdowns(); closeMobileMenu()"
+              >
+                Our Impact
+              </a>
+            </li>-->
+
+            <li>
+              <a
+                routerLink="/support-us"
+                routerLinkActive="active"
+                class="dropdown-item"
+                (click)="closeDropdowns(); closeMobileMenu()"
+              >
+                Support Us
+              </a>
+            </li>
+          </ul>
+        </li>
+
+
+        <!-- ===================================================== -->
+        <!-- GET TO KNOW -->
+        <!-- ===================================================== -->
+
+        <li
+          class="nav-item dropdown"
+          [class.show]="isDropdownOpen('get-to-know')"
+        >
+          <a
+            class="nav-link dropdown-toggle"
+            role="button"
+            [attr.aria-expanded]="isDropdownOpen('get-to-know')"
+            (click)="toggleDropdown('get-to-know', $event)"
+          >
+            Get to Know
+          </a>
+
+          <ul
+            class="dropdown-menu"
+            [class.show]="isDropdownOpen('get-to-know')"
+          >
+            <li>
+              <a
+                routerLink="/islamic-resources"
+                routerLinkActive="active"
+                class="dropdown-item"
+                (click)="closeDropdowns(); closeMobileMenu()"
+              >
+                Islamic Resources
+              </a>
+            </li>
+
+            <li>
+              <a
+                routerLink="/prayer-times"
+                routerLinkActive="active"
+                class="dropdown-item"
+                (click)="closeDropdowns(); closeMobileMenu()"
+              >
+                Prayer Times
+              </a>
+            </li>
+
+            <li>
+              <a
+                routerLink="/islamic-calendar"
+                routerLinkActive="active"
+                class="dropdown-item"
+                (click)="closeDropdowns(); closeMobileMenu()"
+              >
+                Islamic Calendar
+              </a>
+            </li>
+          </ul>
+        </li>
+
+
+        <!-- Gallery -->
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/madarasa"
+            routerLinkActive="active"
+            (click)="closeMobileMenu()"
+          >
+      Madarasa
+          </a>
+        </li>
+
+        <!-- Gallery -->
         <li class="nav-item">
           <a
             class="nav-link"
             routerLink="/gallery"
-            routerLinkActive="active">
-
+            routerLinkActive="active"
+            (click)="closeMobileMenu()"
+          >
             Gallery
-
           </a>
         </li>
 
-  <!--      <li class="nav-item">
-          <a class="nav-link" routerLink="/news-and-activities" routerLinkActive="active">Support Us</a>
-        </li>
-       <li class="nav-item">
-          <a class="nav-link" routerLink="/news-and-activities" routerLinkActive="active">Media</a>
-        </li>-->
-        <button
-          type="button"
-          class="btn btn-sm btn-outline-secondary"
-          (click)="openDonate()">
-          <i class="bi bi-heart me-2"></i>
-          Donate
-        </button>
-
-  <!--      <li class="nav-item">
-          <a class="nav-link" routerLink="/contact-us" routerLinkActive="active">Contact Us</a>
-        </li>-->
       </ul>
-      <div class="d-sm-none p-3 mt-n3">
-        <button
-          type="button"
-          class="theme-toggle theme-toggle--mobile w-100 mb-3"
-          (click)="themeService.toggleTheme()"
-          [attr.aria-pressed]="themeService.theme() === 'dark'"
-          [attr.aria-label]="themeService.theme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
-        >
-          <span class="theme-toggle-icons" [class.is-dark]="themeService.theme() === 'dark'">
-            <i class="ai-sun fs-lg theme-toggle-sun"></i>
-            <i class="ai-moon fs-lg theme-toggle-moon"></i>
-          </span>
-          <span class="ms-2">{{ themeService.theme() === 'dark' ? 'Light mode' : 'Dark mode' }}</span>
-        </button>
-
-<!--        <a class="btn btn-primary w-100 mb-1"
-           target="_blank"
-           rel="noopener">
-          <i class="ai-user-check fs-xl me-2 ms-n1"></i>
-          We're hiring
-        </a>-->
-      </div>
     </nav>
+
   </div>
 </header>

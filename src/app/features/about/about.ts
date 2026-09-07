@@ -30,24 +30,25 @@ interface ImpactHighlight {
   styleUrl: './about.scss',
 })
 export class AboutPage {
-  orgName = 'Al-Fiqh London';
+  orgName = 'Al-Fiqh Nigerian Islamic Trust';
 
+  // Drawn directly from the Preamble and Clause 3 (Charitable Objects)
+  // of the Constitution and Trust Deed.
   missionStatement =
-    'To promote authentic Islamic knowledge, strengthen communities and transform Islamic values into meaningful projects that benefit people.';
+    'To promote authentic Islamic knowledge, relieve poverty and hardship, and turn Islamic values — charity, compassion and service — into projects with real, measurable impact across the UK and Nigeria.';
 
   visionStatement =
-    'A community where Islamic knowledge and compassionate action work hand in hand — turning belief into visible, lasting good for people in London and beyond.';
+    'A community where Islamic knowledge and compassionate action work hand in hand — turning belief into visible, lasting good for families, orphans and communities in London and beyond.';
 
-  // "Our Work" — per brief section 24, distinct from the homepage's
-  // "What We Do" grid (which uses the project category set). This one
-  // leads with Knowledge rather than Education, and links Knowledge to
-  // the Resources page rather than a project category.
+  // "Our Work" — per the Trust's Objects (Clause 3) and Educational
+  // Programmes (Clause 17). Distinct from the homepage's "What We Do"
+  // grid, this leads with Knowledge and links it to the Madrasa page.
   workAreas: WorkArea[] = [
     {
-      title: 'Knowledge',
-      description: 'Islamic education and learning, made accessible to everyone.',
+      title: 'Knowledge & Madrasa',
+      description: "Qur'an, Tajweed, Arabic and Islamic studies, made accessible to everyone.",
       icon: 'ai-book',
-      link: '/resources',
+      link: '/madarasa',
     },
     {
       title: "Da'wah",
@@ -57,35 +58,37 @@ export class AboutPage {
       queryParams: { category: 'dawah' },
     },
     {
-      title: 'Charity',
+      title: 'Charity & Poverty Relief',
       description: 'Supporting people facing hardship with food and emergency aid.',
       icon: 'ai-hand-heart',
       link: '/projects',
       queryParams: { category: 'charity' },
     },
     {
-      title: 'Zakat',
-      description: 'Facilitating responsible, transparent Zakat distribution.',
+      title: 'Zakāt & Sadaqah',
+      description: 'Facilitating responsible, transparent Zakāt and Sadaqah distribution.',
       icon: 'ai-percent',
       link: '/projects',
       queryParams: { category: 'zakat' },
     },
     {
       title: 'Orphans',
-      description: 'Supporting vulnerable children with sponsorship and welfare.',
+      description: 'Supporting vulnerable children with sponsorship and welfare, in the UK and Nigeria.',
       icon: 'ai-users',
       link: '/projects',
       queryParams: { category: 'orphans' },
     },
     {
-      title: 'Community',
-      description: 'Building a stronger, more connected Muslim community.',
+      title: 'Humanitarian Relief',
+      description: 'Disaster relief, refugee support and emergency assistance where it is needed most.',
       icon: 'ai-globe',
       link: '/projects',
-      queryParams: { category: 'community' },
+      queryParams: { category: 'relief' },
     },
   ];
 
+  // "How We Work" — reflects the trustees' duties and governance
+  // commitments under Clauses 3.2, 9, 14 and 19.2 of the Deed.
   approach = [
     {
       title: 'Community-Led',
@@ -95,7 +98,7 @@ export class AboutPage {
     {
       title: 'Transparent',
       description:
-        'Every project shows its target, what\u2019s been raised, and where funds go — see our Transparency page.',
+        'Every project shows its target, what\u2019s been raised, and where funds go — restricted funds, including Zakāt, are separately accounted for.',
     },
     {
       title: 'Sustainable',
@@ -137,7 +140,7 @@ export class AboutPage {
     },
     {
       title: 'Community',
-      description: 'Stronger together — no project succeeds alone.',
+      description: 'Stronger together — no project succeeds alone, in London or Nigeria.',
       icon: 'ai-globe',
     },
     {
@@ -147,10 +150,11 @@ export class AboutPage {
     },
   ];
 
+  // Mirrors the homepage impact statistics for consistency across pages.
   impactHighlights: ImpactHighlight[] = [
     { value: '1,250+', label: 'Families Supported' },
     { value: '320+', label: 'Orphans Supported' },
-    { value: '25+', label: 'Community Projects' },
-    { value: '850+', label: "Reached Through Da'wah" },
+    { value: '450+', label: "Madrasa & Qur'an Students" },
+    { value: '85+', label: 'Scholarships & Bursaries Awarded' },
   ];
 }

@@ -7,9 +7,9 @@
 :host {
   --emerald: #0f4c3a;
   --emerald-deep: #0a3529;
-  --gold: #c9a24b;
-  --gold-soft: #e4cd8f;
-  --ivory: #f7f3e9;
+  --lime: #a3c520;          /* was --gold: #c9a24b */
+  --lime-soft: #c7dd6e;     /* was --gold-soft: #e4cd8f */
+  --ivory: #ffffff;
   --ink: #232420;
   --ink-soft: #5b6058;
   --brick: #8c3b2e;
@@ -17,29 +17,19 @@
   --heading: var(--emerald-deep);
   --border-soft: rgba(15, 76, 58, 0.14);
   --surface-tint: rgba(15, 76, 58, 0.035);
-
-  --font-display: 'Amiri', 'Georgia', serif;
-  --font-body: 'Karla', 'Inter', system-ui, sans-serif;
-  --font-utility: 'Inter', system-ui, sans-serif;
-
-  display: block;
-  font-family: var(--font-body);
-  color: var(--ink);
-  background: var(--ivory);
-  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 :host-context(html[data-bs-theme='dark']) {
   --emerald: #22916d;
   --emerald-deep: #0d251d;
-  --gold: #d9b563;
-  --gold-soft: #f0dca0;
+  --lime: #b8d84a;          /* was --gold: #d9b563 */
+  --lime-soft: #d3e690;     /* was --gold-soft: #f0dca0 */
   --ivory: #101a16;
   --ink: #eef0ec;
   --ink-soft: #a7b3ac;
   --brick: #d1725c;
 
-  --heading: var(--gold-soft);
+  --heading: var(--lime-soft);  /* was var(--gold-soft) */
   --border-soft: rgba(238, 240, 236, 0.12);
   --surface-tint: rgba(238, 240, 236, 0.04);
 }
@@ -412,7 +402,7 @@
 }
 
 .project-title {
-  font-family: var(--font-display);
+  font-family: var(--font-display), serif;
   font-size: 1.25rem;
   color: var(--heading);
   margin: 0.5rem 0 0.5rem;
@@ -822,9 +812,9 @@
     left: 0;
   }
 
-  .campaign-next {
+/*  .campaign-next {
     right: 0;
-  }
+  }*/
 }
 
 // ---------------------------------------------------------------
@@ -879,55 +869,498 @@
 // ---------------------------------------------------------------
 // Islamic resources
 // ---------------------------------------------------------------
+// Islamic Resources — Homepage
+// Compact version matching the site's typography and design system
+// ---------------------------------------------------------------
+
 .resources-section {
-  padding-bottom: 5rem;
+  padding: 4rem 0 5rem;
 }
 
-.resource-card {
-  display: block;
-  height: 100%;
-  border: 1px solid var(--border-soft);
-  border-radius: 8px 32px 8px 8px;
-  overflow: hidden;
+
+// ---------------------------------------------------------------
+// Section header
+// ---------------------------------------------------------------
+
+.resources-section .section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.resources-section .section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+
+  font-family: var(--font-utility);
+  font-size: 0.7rem;
+  font-weight: 600;
+
+  letter-spacing: 0.14em;
+  line-height: 1.2;
+
+  text-transform: uppercase;
+
+  color: var(--gold);
+
+  margin-bottom: 0.45rem;
+}
+
+.resources-section .section-title {
+  margin: 0;
+
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 2.5vw, 2.5rem);
+  font-weight: 600;
+
+  line-height: 1.15;
+
+  color: var(--heading);
+}
+
+
+// ---------------------------------------------------------------
+// Browse all resources
+// ---------------------------------------------------------------
+
+.resources-section .link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  flex-shrink: 0;
+
+  font-family: var(--font-utility);
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  color: var(--emerald);
+
   text-decoration: none;
-  color: inherit;
-  transition: box-shadow 0.15s ease, transform 0.15s ease;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
 
   &:hover {
-    box-shadow: 0 16px 32px rgba(15, 76, 58, 0.1);
-    transform: translateY(-2px);
+    color: var(--gold);
+    transform: translateX(3px);
   }
 }
 
-.resource-image {
-  height: 150px;
-  background-size: cover;
-  background-position: center;
+
+// ---------------------------------------------------------------
+// Resource card
+// ---------------------------------------------------------------
+
+.resource-card {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  height: 100%;
+  min-height: 255px;
+
+  padding: 1.35rem;
+
+  border: 1px solid var(--border-soft);
+  border-radius: 8px 28px 8px 8px;
+
+  background: var(--bs-body-bg, var(--ivory));
+
+  color: inherit;
+  text-decoration: none;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+
+  // Small top accent
+  &::before {
+    content: '';
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 0;
+    height: 2px;
+
+    background: var(--emerald);
+
+    transition: width 0.2s ease;
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+
+    border-color: rgba(15, 76, 58, 0.2);
+
+    box-shadow:
+      0 12px 28px rgba(15, 76, 58, 0.09);
+
+    color: inherit;
+
+    &::before {
+      width: 100%;
+    }
+
+    .resource-icon {
+      transform: translateY(-2px);
+      background: rgba(15, 76, 58, 0.09);
+
+      i {
+        transform: scale(1.04);
+      }
+    }
+
+    .resource-action {
+      color: var(--emerald);
+
+      i {
+        transform: translateX(3px);
+      }
+    }
+  }
 }
+
+
+// ---------------------------------------------------------------
+// Resource icon
+// ---------------------------------------------------------------
+
+.resource-icon {
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 1rem;
+
+  border-radius: 12px;
+
+  background: rgba(15, 76, 58, 0.065);
+
+  color: var(--emerald);
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+
+  i {
+    font-size: 1.15rem;
+    line-height: 1;
+
+    transition: transform 0.2s ease;
+  }
+}
+
+
+// ---------------------------------------------------------------
+// Resource category
+// ---------------------------------------------------------------
 
 .resource-category {
   display: block;
+
+  margin: 0 0 0.4rem;
+
   font-family: var(--font-utility);
-  font-size: 0.7rem;
+
+  font-size: 0.65rem;
+  font-weight: 600;
+
   letter-spacing: 0.1em;
+  line-height: 1.2;
+
   text-transform: uppercase;
+
   color: var(--brick);
-  margin: 1.25rem 1.25rem 0;
 }
+
+
+// ---------------------------------------------------------------
+// Resource title
+// ---------------------------------------------------------------
 
 .resource-title {
+  margin: 0 0 0.55rem;
+
   font-family: var(--font-display);
-  font-size: 1.1rem;
+
+  font-size: 1.15rem;
+  font-weight: 600;
+
+  line-height: 1.25;
+
   color: var(--heading);
-  margin: 0.5rem 1.25rem;
 }
+
+
+// ---------------------------------------------------------------
+// Resource description
+// ---------------------------------------------------------------
 
 .resource-excerpt {
-  font-size: 0.85rem;
+  margin: 0;
+
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 400;
+
+  line-height: 1.6;
+
   color: var(--ink-soft);
-  margin: 0 1.25rem 1.25rem;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
 }
 
+
+// ---------------------------------------------------------------
+// Resource action
+// ---------------------------------------------------------------
+
+.resource-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+
+  margin-top: auto;
+  padding-top: 1rem;
+
+  font-family: var(--font-utility);
+
+  font-size: 0.76rem;
+  font-weight: 600;
+
+  line-height: 1;
+
+  color: var(--heading);
+
+  transition: color 0.2s ease;
+
+  i {
+    font-size: 0.75rem;
+
+    transition: transform 0.2s ease;
+  }
+}
+
+
+// ---------------------------------------------------------------
+// Non-clickable / Coming Soon card
+// ---------------------------------------------------------------
+
+div.resource-card {
+  cursor: default;
+
+  &:hover {
+    transform: translateY(-2px);
+
+    &::before {
+      width: 0;
+    }
+
+    .resource-icon {
+      transform: none;
+
+      background: rgba(15, 76, 58, 0.065);
+
+      i {
+        transform: none;
+      }
+    }
+
+    .resource-action {
+      color: var(--heading);
+    }
+  }
+}
+
+
+// ---------------------------------------------------------------
+// Dark mode
+// ---------------------------------------------------------------
+
+:host-context(html[data-bs-theme='dark']) {
+
+  .resources-section .section-title {
+    color: var(--heading);
+  }
+
+  .resources-section .link-arrow {
+    color: var(--gold-soft);
+
+    &:hover {
+      color: var(--gold);
+    }
+  }
+
+  .resource-card {
+    background: var(--bs-dark-bg-subtle, #101815);
+
+    border-color: rgba(255, 255, 255, 0.08);
+
+    &:hover {
+      border-color: rgba(31, 168, 117, 0.25);
+
+      box-shadow:
+        0 14px 30px rgba(0, 0, 0, 0.22);
+    }
+  }
+
+  .resource-icon {
+    background: rgba(31, 168, 117, 0.08);
+    color: #1fa875;
+  }
+
+  .resource-action {
+    color: var(--heading);
+  }
+}
+
+
+// ---------------------------------------------------------------
+// Tablet
+// ---------------------------------------------------------------
+
+@media (max-width: 991.98px) {
+
+  .resources-section {
+    padding: 3.5rem 0 4rem;
+  }
+
+  .resources-section .section-header {
+    align-items: flex-start;
+    margin-bottom: 1.75rem;
+  }
+
+  .resource-card {
+    min-height: 245px;
+  }
+}
+
+
+// ---------------------------------------------------------------
+// Mobile
+// ---------------------------------------------------------------
+
+@media (max-width: 767.98px) {
+
+  .resources-section {
+    padding: 3rem 0 3.5rem;
+  }
+
+  .resources-section .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 0.75rem;
+
+    margin-bottom: 1.75rem;
+  }
+
+  .resources-section .section-title {
+    font-size: 1.9rem;
+  }
+
+  .resources-section .link-arrow {
+    font-size: 0.8rem;
+  }
+
+  .resource-card {
+    min-height: 0;
+    padding: 1.25rem;
+
+    border-radius: 8px 24px 8px 8px;
+  }
+
+  .resource-icon {
+    width: 44px;
+    height: 44px;
+
+    margin-bottom: 0.9rem;
+
+    border-radius: 11px;
+
+    i {
+      font-size: 1.1rem;
+    }
+  }
+
+  .resource-title {
+    font-size: 1.1rem;
+  }
+
+  .resource-excerpt {
+    font-size: 0.8rem;
+    line-height: 1.55;
+  }
+
+  .resource-action {
+    padding-top: 0.9rem;
+    font-size: 0.74rem;
+  }
+}
+
+
+// ---------------------------------------------------------------
+// Small phones
+// ---------------------------------------------------------------
+
+@media (max-width: 575.98px) {
+
+  .resources-section {
+    padding: 2.75rem 0 3rem;
+  }
+
+  .resources-section .section-title {
+    font-size: 1.75rem;
+  }
+
+  .resource-card {
+    padding: 1.15rem;
+
+    border-radius: 8px 20px 8px 8px;
+  }
+
+  .resource-icon {
+    width: 42px;
+    height: 42px;
+
+    margin-bottom: 0.8rem;
+  }
+
+  .resource-category {
+    font-size: 0.62rem;
+  }
+
+  .resource-title {
+    font-size: 1.05rem;
+  }
+
+  .resource-excerpt {
+    font-size: 0.78rem;
+  }
+
+  .resource-action {
+    font-size: 0.72rem;
+  }
+}
 // ---------------------------------------------------------------
 // Donate CTA
 // ---------------------------------------------------------------

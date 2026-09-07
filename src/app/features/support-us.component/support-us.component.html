@@ -12,7 +12,7 @@
           Support Our Work
         </span>
 
-        <h1 class="text-white">
+        <h1 class="text-secondary">
           Your Support
           <span>Creates Impact</span>
         </h1>
@@ -25,9 +25,9 @@
 
         <div class="hero-actions">
 
-          <a
+          <a (click)="openDonate()" type="button"
             routerLink="/donate"
-            class="primary-btn"
+            class="btn btn-secondary border-2 border-secondary"
           >
             Donate Now
             <i class="bi bi-arrow-right"></i>
@@ -262,7 +262,7 @@
 
       <a
         routerLink="/projects"
-        class="primary-btn"
+        class="btn btn-secondary"
       >
         Explore Our Projects
         <i class="bi bi-arrow-right"></i>

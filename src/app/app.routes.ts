@@ -76,6 +76,19 @@ export const routes: Routes = [
       import('./features/our-impact.component/our-impact.component').then(
         (m) => m.OurImpactComponent,
       ),
+  },  {
+    path: 'madarasa',
+    loadComponent: () =>
+      import('./features/madarasa/madarasa').then(
+        (m) => m.MadarasaPage,
+      ),
+  },
+  {
+    path: 'debug',
+    loadComponent: () =>
+      import('./features/debug/debug').then(
+        (m) => m.Debug,
+      ),
   },
   {
     path: 'islamic-calendar',

@@ -1,0 +1,652 @@
+<div class="madrasa-page">
+
+  <!-- ================= HERO ================= -->
+
+  <section class="madrasa-hero">
+    <div class="madrasa-hero-pattern"></div>
+
+
+    <div class="container madrasa-hero-inner">
+      <div class="row align-items-center g-5">
+
+        <div class="col-12 col-lg-7">
+      <span class="section-eyebrow section-eyebrow-light">
+        Al-Fiqh Madrasa
+      </span>
+
+          <h1 class="madrasa-hero-title">
+            Nurturing Faith,
+            <span>Knowledge & Character</span>
+          </h1>
+
+          <p class="madrasa-hero-text">
+            A structured Islamic education programme helping children,
+            young people and adults build a strong foundation in Qur'an,
+            Islamic studies, Arabic and everyday Muslim life.
+          </p>
+
+          <div class="madrasa-hero-actions">
+            <a routerLink="/contact" class="btn btn-madrasa-primary">
+              Enquire About Madrasa
+            </a>
+
+            <a href="#programmes" class="btn btn-madrasa-outline">
+              Explore Programmes
+            </a>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-5">
+          <div class="hero-feature-card">
+
+            <div class="hero-feature-icon">
+              <i class="ai-book"></i>
+            </div>
+
+            <span class="hero-feature-label">
+          Islamic Education
+        </span>
+
+            <h2>
+              Learning Islam for Life
+            </h2>
+
+            <p>
+              Qur'an, Tajweed, Arabic and Islamic studies taught in a
+              structured and supportive environment.
+            </p>
+
+            <div class="hero-feature-divider"></div>
+
+            <div class="hero-feature-meta">
+          <span>
+            <i class="bi bi-book"></i>
+            Qur'an
+          </span>
+
+              <span>
+            <i class="bi bi-mortarboard"></i>
+            Islamic Studies
+          </span>
+
+              <span>
+            <i class="bi bi-people"></i>
+            Community
+          </span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+  </section>
+
+  <!-- ================= INTRODUCTION ================= -->
+
+  <section class="madrasa-intro">
+    <div class="container">
+
+
+      <div class="row align-items-center g-5">
+
+        <div class="col-12 col-lg-6">
+
+      <span class="section-eyebrow">
+        About Our Madrasa
+      </span>
+
+          <h2 class="section-title">
+            An Islamiyya Built Around Knowledge and Tarbiyah
+          </h2>
+
+          <p class="section-body">
+            Al-Fiqh Madrasa provides structured Islamic education designed
+            to help students learn, practise and live by their faith.
+          </p>
+
+          <p class="section-body">
+            Our approach brings together Qur'anic learning, Tajweed,
+            Arabic language and broader Islamic studies while encouraging
+            good character, responsibility and a strong connection with
+            the Muslim community.
+          </p>
+
+          <p class="section-body">
+            The programme is intended to support children, young people
+            and adults at different stages of their Islamic learning
+            journey.
+          </p>
+
+        </div>
+
+        <div class="col-12 col-lg-6">
+
+          <div class="intro-highlight">
+
+            <div class="intro-highlight-icon">
+              <i class="ai-book"></i>
+            </div>
+
+            <div>
+          <span class="intro-highlight-label">
+            Our Educational Focus
+          </span>
+
+              <h3>
+                Knowledge that shapes character
+              </h3>
+
+              <p>
+                We aim to make Islamic learning meaningful beyond the
+                classroom—helping students understand their religion and
+                apply its teachings in everyday life.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+  </section>
+
+  <!-- ================= PROGRAMMES ================= -->
+
+  <section class="programmes-section" id="programmes">
+    <div class="container">
+
+
+      <div class="section-heading-centred">
+    <span class="section-eyebrow">
+      What We Teach
+    </span>
+
+        <h2 class="section-title">
+          Our Madrasa Programmes
+        </h2>
+
+        <p class="section-body">
+          A balanced programme covering the foundations of Islamic
+          knowledge and practical Muslim life.
+        </p>
+      </div>
+
+      <div class="programmes-grid">
+
+        <article
+          class="programme-card"
+          *ngFor="let programme of programmes"
+        >
+
+          <div class="programme-number">
+            {{ programme.number }}
+          </div>
+
+          <div class="programme-icon">
+            <i [class]="programme.icon"></i>
+          </div>
+
+          <span class="programme-age">
+        {{ programme.audience }}
+      </span>
+
+          <h3>
+            {{ programme.title }}
+          </h3>
+
+          <p>
+            {{ programme.description }}
+          </p>
+
+          <div class="programme-topics">
+        <span *ngFor="let topic of programme.topics">
+          {{ topic }}
+        </span>
+          </div>
+
+        </article>
+
+      </div>
+
+    </div>
+
+
+  </section>
+
+  <!-- ================= QURAN ================= -->
+
+  <section class="quran-section">
+    <div class="container">
+
+      ```
+      <div class="quran-card">
+
+        <div class="quran-content">
+
+      <span class="section-eyebrow section-eyebrow-light">
+        Qur'an & Tajweed
+      </span>
+
+          <h2 class="section-title section-title-light">
+            Building a Lifelong Relationship With the Qur'an
+          </h2>
+
+          <p class="section-body section-body-light">
+            Qur'an memorisation and Tajweed form an important part of
+            Islamic education. Students are supported as they develop
+            accurate recitation, memorisation and a deeper appreciation
+            of the Qur'an.
+          </p>
+
+          <div class="quran-features">
+
+            <div class="quran-feature">
+              <i class="ai-book"></i>
+              <div>
+                <strong>Qur'an Reading</strong>
+                <span>Developing confident and accurate recitation.</span>
+              </div>
+            </div>
+
+            <div class="quran-feature">
+              <i class="ai-star"></i>
+              <div>
+                <strong>Tajweed</strong>
+                <span>Learning the rules of correct Qur'anic pronunciation.</span>
+              </div>
+            </div>
+
+            <div class="quran-feature">
+              <i class="ai-heart"></i>
+              <div>
+                <strong>Memorisation</strong>
+                <span>Supporting students in memorising selected portions of Qur'an.</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="quran-side">
+
+          <div class="arabic-decoration">
+            وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا
+          </div>
+
+          <span>
+        Qur'an · Recitation · Memorisation
+      </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+  </section>
+
+  <!-- ================= SUBJECTS ================= -->
+
+  <section class="subjects-section">
+    <div class="container">
+
+      ```
+      <div class="row g-5 align-items-start">
+
+        <div class="col-12 col-lg-4">
+
+      <span class="section-eyebrow">
+        Areas of Study
+      </span>
+
+          <h2 class="section-title">
+            A Broader Islamic Education
+          </h2>
+
+          <p class="section-body">
+            Madrasa education goes beyond memorisation. Students are
+            introduced to the knowledge and skills needed to understand
+            and practise Islam.
+          </p>
+
+        </div>
+
+        <div class="col-12 col-lg-8">
+
+          <div class="subjects-list">
+
+            <div
+              class="subject-item"
+              *ngFor="let subject of subjects"
+            >
+
+              <div class="subject-icon">
+                <i [class]="subject.icon"></i>
+              </div>
+
+              <div>
+                <h3>{{ subject.title }}</h3>
+                <p>{{ subject.description }}</p>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+  </section>
+
+  <!-- ================= STUDENT JOURNEY ================= -->
+
+  <section class="journey-section">
+    <div class="container">
+
+      ```
+      <div class="section-heading-centred">
+
+    <span class="section-eyebrow">
+      The Learning Journey
+    </span>
+
+        <h2 class="section-title">
+          Learn. Practise. Grow.
+        </h2>
+
+        <p class="section-body">
+          Our aim is not simply to teach information, but to help students
+          develop knowledge, confidence and good character.
+        </p>
+
+      </div>
+
+      <div class="journey-grid">
+
+        <div
+          class="journey-item"
+          *ngFor="let step of learningJourney; let i = index"
+        >
+
+          <div class="journey-number">
+            0{{ i + 1 }}
+          </div>
+
+          <div class="journey-line"></div>
+
+          <h3>{{ step.title }}</h3>
+
+          <p>
+            {{ step.description }}
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+  </section>
+
+  <!-- ================= YOUTH ================= -->
+
+  <section class="youth-section">
+
+
+    <div class="container">
+
+      <div class="row align-items-center g-5">
+
+        <div class="col-12 col-lg-6">
+
+          <div class="youth-visual">
+
+            <div class="youth-pattern"></div>
+
+            <div class="youth-badge">
+              <i class="bi bi-people"></i>
+              <span>Youth Development</span>
+            </div>
+
+            <div class="youth-quote">
+              Knowledge should inspire
+              <strong>character and service.</strong>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="col-12 col-lg-6">
+
+      <span class="section-eyebrow">
+        Beyond The Classroom
+      </span>
+
+          <h2 class="section-title">
+            Developing Confident Young Muslims
+          </h2>
+
+          <p class="section-body">
+            Madrasa is also an opportunity to nurture young people and
+            help them develop positive relationships with their faith,
+            their families and their wider community.
+          </p>
+
+          <div class="youth-points">
+
+            <div *ngFor="let point of youthPoints">
+              <i class="bi bi-check2"></i>
+              <span>{{ point }}</span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+  </section>
+
+  <!-- ================= TEACHERS ================= -->
+
+  <section class="teachers-section">
+    <div class="container">
+
+      ```
+      <div class="row align-items-center g-5">
+
+        <div class="col-12 col-lg-5">
+
+      <span class="section-eyebrow">
+        Our Teachers
+      </span>
+
+          <h2 class="section-title">
+            Learning From Qualified Teachers and Scholars
+          </h2>
+
+          <p class="section-body">
+            Al-Fiqh's educational programmes are intended to be delivered
+            by suitably qualified teachers or scholars, with appropriate
+            safeguarding arrangements for programmes involving children.
+          </p>
+
+        </div>
+
+        <div class="col-12 col-lg-7">
+
+          <div class="teacher-principles">
+
+            <div class="teacher-principle">
+              <i class="ai-shield"></i>
+              <div>
+                <h3>Qualified Teaching</h3>
+                <p>
+                  Learning is delivered by appropriately qualified
+                  teachers or scholars.
+                </p>
+              </div>
+            </div>
+
+            <div class="teacher-principle">
+              <i class="ai-users"></i>
+              <div>
+                <h3>Supportive Environment</h3>
+                <p>
+                  Students learn in an environment designed to encourage
+                  questions, growth and positive character.
+                </p>
+              </div>
+            </div>
+
+            <div class="teacher-principle">
+              <i class="ai-shield"></i>
+              <div>
+                <h3>Safeguarding</h3>
+                <p>
+                  Child-facing programmes follow appropriate safeguarding
+                  and teacher suitability requirements.
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+  </section>
+
+  <!-- ================= FAQ ================= -->
+
+  <section class="faq-section">
+    <div class="container">
+
+      ```
+      <div class="section-heading-centred">
+
+    <span class="section-eyebrow">
+      Frequently Asked Questions
+    </span>
+
+        <h2 class="section-title">
+          Madrasa Questions
+        </h2>
+
+      </div>
+
+      <div class="faq-list">
+
+        <div
+          class="faq-item"
+          *ngFor="let faq of faqs"
+        >
+
+          <button
+            type="button"
+            class="faq-question"
+            (click)="toggleFaq(faq)"
+          >
+
+            <span>{{ faq.question }}</span>
+
+            <i
+              class="bi"
+              [class.bi-plus]="!faq.open"
+              [class.bi-dash]="faq.open"
+            ></i>
+
+          </button>
+
+          <div
+            class="faq-answer"
+            [class.faq-answer-open]="faq.open"
+          >
+            <p>
+              {{ faq.answer }}
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+  </section>
+
+  <!-- ================= CTA ================= -->
+
+  <section class="madrasa-cta">
+
+
+    <div class="container">
+
+      <div class="madrasa-cta-inner">
+
+        <div>
+
+      <span class="section-eyebrow section-eyebrow-light">
+        Join Al-Fiqh Madrasa
+      </span>
+
+          <h2 class="section-title section-title-light">
+            Give Yourself or Your Child the Gift of Islamic Knowledge
+          </h2>
+
+          <p class="section-body section-body-light">
+            Get in touch to learn more about our madrasa programmes,
+            classes and upcoming enrolment opportunities.
+          </p>
+
+        </div>
+
+        <div class="madrasa-cta-actions">
+
+          <a
+            routerLink="/contact"
+            class="btn btn-madrasa-primary"
+          >
+            Enquire Now
+          </a>
+
+          <a
+            routerLink="/support-us"
+            class="btn btn-madrasa-outline"
+          >
+            Support Islamic Education
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+  </section>
+
+</div>

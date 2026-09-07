@@ -1,11 +1,11 @@
 :host {
   --emerald: #0f4c3a;
   --emerald-deep: #0a3529;
-  --gold: #c9a24b;
-  --gold-soft: #e4cd8f;
-  --ivory: #f7f3e9;
+  --lime: #a3c520;
+  --lime-soft: #c7dd6e;
+  --ivory: #ffffff;
   --ink: #232420;
-  --ink-soft: #686d66;
+  --ink-soft: #5b6058;
 
   display: contents;
 }
@@ -62,14 +62,14 @@
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: var(--gold-soft);
+  background: var(--lime-soft);
   color: var(--emerald-deep);
   font-size: 1.35rem;
 }
 
 .eyebrow {
   display: block;
-  color: var(--gold);
+  color: var(--lime);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -125,8 +125,8 @@
 
 .form-control:focus,
 .amount-input:focus-within {
-  border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(201, 162, 75, 0.12);
+  border-color: var(--lime);
+  box-shadow: 0 0 0 3px rgba(163, 197, 32, 0.12);
 }
 
 .amount-heading {
@@ -234,7 +234,7 @@
 
 .payment-method > i {
   font-size: 1.4rem;
-  color: var(--gold);
+  color: var(--lime);
 }
 
 .payment-method strong,

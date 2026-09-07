@@ -67,9 +67,11 @@ interface EventItem {
 
 interface ResourceItem {
   title: string;
+  description: string;
   category: string;
-  excerpt: string;
-  image: string;
+  icon: string;
+  path?: string;
+  externalUrl?: string;
 }
 
 interface GalleryImage {
@@ -95,8 +97,11 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
     this.donationModal.open();
   }
 
-  orgName = 'Al-Fiqh London';
-  orgTagline = 'Turning Islamic values into meaningful action';
+  // ---------- Org identity ----------
+  // Registered charity name per the Constitution and Trust Deed.
+  orgName = 'Al-Fiqh Nigerian Islamic Trust';
+  orgTagline =
+    'Advancing Islamic knowledge and turning charity into lasting change across the UK and Nigeria';
 
   @ViewChild('campaignSwiper')
   campaignSwiper!: ElementRef<HTMLElement>;
@@ -236,21 +241,6 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
     requestAnimationFrame(animate);
   }
 
-  /*
-  @ViewChild('heroSwiper') swiperRef!: ElementRef<HTMLElement>;
-  private swiper?: Swiper;
-  currentSlide = signal(0);
-
-  slides: Slide[] = [
-    { tag: 'Da\'wah & Community', image: '/h5.webp' },
-    { tag: 'Islamic Education', image: '/hero1.webp' },
-    { tag: 'Qur\'an Programmes', image: '/h1.webp' },
-    { tag: 'Zakat', image: '/h2.webp' },
-    { tag: 'Supporting Orphans', image: '/h4.webp' },
-    { tag: 'Charity & Food Distribution', image: '/h3.webp' },
-  ];
-*/
-
   // ---------- Prayer times — small widget only, per the brief ----------
   // TODO: swap for the shared PrayerTimesService once the dedicated
   // /prayer-times page exists, so location + method stay in sync.
@@ -272,7 +262,7 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
     this.startCountdown();
 
     this.contact.mapsEmbedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-      'https://www.google.com/maps?q=London&output=embed',
+      'https://www.google.com/maps?q=97+Roycraft+Avenue+Barking+London+IG11+0NS&output=embed',
     );
   }
 
@@ -303,24 +293,6 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
     );
     this.statsObserver.observe(this.statsSectionRef.nativeElement);
   }
-
-  /*  private animateCounters(): void {
-    this.countersAnimated = true;
-    const duration = 1400;
-    const start = performance.now();
-
-    const tick = (now: number) => {
-      const progress = Math.min((now - start) / duration, 1);
-      // Ease-out so the count settles rather than stopping abruptly.
-      const eased = 1 - Math.pow(1 - progress, 3);
-
-      this.counterValues.set(this.impactStats.map((stat) => Math.round(stat.target * eased)));
-
-      if (progress < 1) requestAnimationFrame(tick);
-    };
-
-    requestAnimationFrame(tick);
-  }*/
 
   progressPercent(project: Project): number {
     if (!project.target || !project.raised) return 0;
@@ -400,13 +372,16 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
   // ---------- Impact statistics (animated counters) ----------
   // TODO: replace with ImpactStatsService reading Firestore `impactStats`
   // (ordered, active-only) once Firebase is wired up.
+  // Figures reflect the Trust's charitable objects under Clause 3 of the
+  // Constitution and Trust Deed (education/madrasa, poverty relief,
+  // orphan welfare, scholarships, community projects).
   impactStats: ImpactStat[] = [
     { title: 'Families Supported', target: 1250, suffix: '+', icon: 'ai-users' },
-    { title: 'Meals Distributed', target: 5000, suffix: '+', icon: 'ai-bowl' },
+    { title: 'Food Parcels Distributed', target: 5000, suffix: '+', icon: 'ai-bowl' },
     { title: 'Orphans Supported', target: 320, suffix: '+', icon: 'ai-heart' },
-    { title: "Reached Through Da'wah", target: 850, suffix: '+', icon: 'ai-mic' },
-    { title: 'Community Projects', target: 25, suffix: '+', icon: 'ai-briefcase' },
-    { title: 'Active Programmes', target: 12, suffix: '', icon: 'ai-activity' },
+    { title: "Madrasa & Qur'an Students", target: 450, suffix: '+', icon: 'ai-book' },
+    { title: 'Scholarships & Bursaries Awarded', target: 85, suffix: '+', icon: 'ai-briefcase' },
+    { title: 'Community Projects', target: 25, suffix: '+', icon: 'ai-globe' },
   ];
 
   counterValues = signal<number[]>(this.impactStats.map(() => 0));
@@ -416,6 +391,7 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
 
   // ---------- Featured projects ----------
   // TODO: ProjectService.getFeaturedProjects() once Firestore `projects`
+  // collection is live.
 
   slides: Slide[] = [
     {
@@ -423,33 +399,33 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
       image: '/h5.webp',
     },
     {
-      tag: 'Islamic Education',
+      tag: 'Madrasa & Islamic Education',
       image: '/hero1.webp',
     },
     {
-      tag: "Qur'an Programmes",
+      tag: "Qur'an & Tajweed",
       image: '/q3.webp',
     },
     {
-      tag: 'Zakat',
+      tag: 'Zakāt & Sadaqah',
       image: '/h2.webp',
     },
     {
-      tag: 'Supporting Orphans',
+      tag: 'Orphan Welfare',
       image: '/h4.webp',
     },
     {
-      tag: 'Charity & Food Distribution',
+      tag: 'Relief in Nigeria & the UK',
       image: '/h3.webp',
     },
   ];
-  // collection is live.
   featuredProjects: Project[] = [
     {
-      title: 'Ramadan Food Distribution',
-      slug: 'ramadan-food-distribution',
+      title: 'Poverty Relief & Food Distribution',
+      slug: 'poverty-relief-food-distribution',
       category: 'Charity',
-      shortDescription: 'Providing essential food packages to families during Ramadan.',
+      shortDescription:
+        'Food parcels and essential household items for families facing hardship in the UK and Nigeria.',
       image: '/h3.webp',
       status: 'Active',
       fundraisingEnabled: true,
@@ -457,11 +433,13 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
       raised: 7450,
       supporters: 214,
     },
+
     {
-      title: 'Orphan Education Sponsorship',
-      slug: 'orphan-education-sponsorship',
+      title: 'Orphan Sponsorship — Nigeria & UK',
+      slug: 'orphan-sponsorship',
       category: 'Orphans',
-      shortDescription: 'Funding school fees, books and uniforms for sponsored orphans.',
+      shortDescription:
+        'Monthly subsistence, school fees and educational materials for sponsored orphans.',
       image: '/z10.jpg',
       status: 'Ongoing',
       fundraisingEnabled: true,
@@ -469,65 +447,73 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
       raised: 9200,
       supporters: 168,
     },
+
     {
-      title: "Qur'an Memorisation Programme",
-      slug: 'quran-memorisation-programme',
+      title: 'Alfiqh Madrasa & Islamiyyah',
+      slug: 'weekend-madrasa',
       category: 'Education',
-      shortDescription: "Weekly Qur'an classes for children and adults across London.",
+      shortDescription:
+        "Qur'an memorisation, Tajweed, Arabic and Islamic studies for children and adults.",
       image: '/y5.jpg',
       status: 'Active',
       fundraisingEnabled: false,
-      impactLabel: '180 / 250 Students Enrolled',
+      impactLabel: '180+  Students Enrolled',
     },
   ];
 
   // ---------- What We Do ----------
+  // Aligned with the Trust's Objects (Clause 3) and Powers (Clause 5) of
+  // the Constitution and Trust Deed.
   workAreas: WorkArea[] = [
     {
       title: "Da'wah",
       slug: 'dawah',
-      description: 'Sharing Islamic knowledge and encouraging positive engagement.',
+      description: "Advancing the Islamic religion through da'wah, lectures and study circles.",
       icon: 'ai-mic',
     },
     {
-      title: 'Zakat',
-      slug: 'zakat',
-      description: 'Facilitating responsible, transparent Zakat distribution.',
-      icon: 'ai-percent',
-    },
-    {
-      title: 'Charity',
-      slug: 'charity',
-      description: 'Supporting people facing hardship with food and emergency aid.',
-      icon: 'ai-hand-heart',
-    },
-    {
-      title: 'Education',
+      title: 'Madrasa & Education',
       slug: 'education',
-      description: "Qur'an classes, Islamic studies and youth programmes.",
+      description:
+        "Qur'an, Tajweed, Arabic and Islamic studies for children, young people and adults.",
       icon: 'ai-book',
     },
     {
-      title: 'Orphans',
+      title: 'Zakāt & Sadaqah',
+      slug: 'zakat',
+      description:
+        'Collecting and distributing Zakāt, Sadaqah and Waqf with transparency and accountability.',
+      icon: 'ai-percent',
+    },
+    {
+      title: 'Charity & Poverty Relief',
+      slug: 'charity',
+      description: 'Food, clothing and emergency financial assistance for families in hardship.',
+      icon: 'ai-hand-heart',
+    },
+    {
+      title: 'Orphans & Welfare',
       slug: 'orphans',
-      description: 'Sponsorship, education and welfare for vulnerable children.',
+      description:
+        'Sponsorship, education and welfare support for orphans and vulnerable children.',
       icon: 'ai-users',
     },
     {
-      title: 'Community',
-      slug: 'community',
-      description: 'Building a stronger, more connected Muslim community.',
+      title: 'Humanitarian Relief',
+      slug: 'relief',
+      description:
+        'Disaster relief, refugee support and emergency assistance in the UK, Nigeria and beyond.',
       icon: 'ai-globe',
     },
   ];
 
   campaigns: Project[] = [
     {
-      title: 'Ramadan Food Distribution',
-      slug: 'ramadan-food-distribution',
+      title: 'Poverty Relief & Food Distribution',
+      slug: 'poverty-relief-food-distribution',
       category: 'Charity',
       shortDescription:
-        'Providing essential food packages to families facing hardship and ensuring that no family is left without food during Ramadan.',
+        'Providing food parcels and essential household items to families facing hardship in the UK and Nigeria, so no family goes without.',
       image: '/is2.jpg',
       status: 'Active',
       fundraisingEnabled: true,
@@ -537,11 +523,11 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
     },
 
     {
-      title: 'Orphan Education Sponsorship',
-      slug: 'orphan-education-sponsorship',
+      title: 'Orphan Sponsorship — Nigeria & UK',
+      slug: 'orphan-sponsorship',
       category: 'Orphans',
       shortDescription:
-        'Supporting vulnerable children with education, school materials and long-term care so they can build a brighter future.',
+        'Monthly subsistence, school fees and educational materials for orphans and vulnerable children, with long-term care and support.',
       image: '/y2.jpg',
       status: 'Ongoing',
       fundraisingEnabled: true,
@@ -553,9 +539,9 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
     {
       title: "Qur'an Memorisation Programme",
       slug: 'quran-memorisation-programme',
-      category: 'Islamic Education',
+      category: 'Madrasa',
       shortDescription:
-        "Creating opportunities for children and adults to memorise the Qur'an while developing a deeper connection with Islamic knowledge.",
+        "Weekend and evening classes in Qur'an memorisation, Tajweed and Arabic for children and adults across London.",
       image: '/qr6.jpg',
       status: 'Active',
       fundraisingEnabled: false,
@@ -567,7 +553,7 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
       slug: 'dawah-islamic-outreach',
       category: "Da'wah",
       shortDescription:
-        'Supporting programmes that share authentic Islamic knowledge, engage communities and promote understanding of Islam.',
+        'Lectures, study circles and outreach that share authentic Islamic knowledge and promote community cohesion.',
       image: '/z4.jpg',
       status: 'Active',
       fundraisingEnabled: false,
@@ -575,11 +561,11 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
     },
 
     {
-      title: 'Zakat Distribution',
-      slug: 'zakat-distribution',
-      category: 'Zakat',
+      title: 'Zakāt & Sadaqah Distribution',
+      slug: 'zakat-sadaqah-distribution',
+      category: 'Zakāt',
       shortDescription:
-        'Helping eligible families and individuals receive Zakat support with dignity, transparency and responsibility.',
+        'Helping eligible families and individuals receive Zakāt and Sadaqah support with dignity, transparency and accountability to donors.',
       image: '/z6.webp',
       status: 'Ongoing',
       fundraisingEnabled: true,
@@ -589,11 +575,11 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
     },
 
     {
-      title: 'Community Food Support',
-      slug: 'community-food-support',
-      category: 'Community',
+      title: 'Refugee & Disaster Relief',
+      slug: 'refugee-disaster-relief',
+      category: 'Humanitarian',
       shortDescription:
-        'Providing food and essential support to families, individuals and communities experiencing financial hardship.',
+        'Emergency humanitarian assistance, refugee and asylum-seeker support, and disaster relief in the UK, Nigeria and elsewhere.',
       image: '/is.jpg',
       status: 'Active',
       fundraisingEnabled: true,
@@ -610,55 +596,93 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
       category: 'Ramadan',
       date: this.daysFromNow(2),
       time: '6:30 PM',
-      location: 'Community Hall',
+      location: 'Community Hall, Barking',
     },
     {
       title: 'Weekly Tafsir Circle',
       category: 'Education',
       date: this.daysFromNow(3),
       time: '7:00 PM',
-      location: 'Learning Centre',
+      location: 'Madrasa Learning Centre, Barking',
     },
     {
-      title: 'New Muslim Support Session',
-      category: "Da'wah",
+      title: 'Orphan Sponsorship Info Session',
+      category: 'Orphans',
       date: this.daysFromNow(6),
       time: '4:00 PM',
-      location: 'Outreach Office',
+      location: 'Trust Office, 97 Roycraft Avenue',
     },
   ];
 
   // ---------- Islamic resources teaser ----------
+
   resources: ResourceItem[] = [
     {
-      title: 'The Etiquette of Giving Sadaqah',
-      category: 'Fiqh',
-      excerpt: 'A short guide on the manners and intentions behind voluntary charity.',
-      image: '/h2.webp',
+      title: 'The Holy Qur’an',
+      description: 'Read, reflect and explore the words of the Qur’an.',
+      category: 'Qur’an',
+      icon: 'bi bi-book',
+      externalUrl: '/islamic-resources',
     },
+
     {
-      title: 'Understanding Zakat Eligibility',
-      category: 'Fiqh',
-      excerpt: 'Who qualifies to receive Zakat, explained simply and responsibly.',
-      image: '/z6.webp',
+      title: 'Islamic Learning',
+      description: 'Articles and educational resources for learning about Islam.',
+      category: 'Learning',
+      icon: 'bi bi-lightbulb',
+      path: '/islamic-calendar',
     },
+
     {
-      title: "Da'wah With Wisdom",
-      category: "Da'wah",
-      excerpt: 'Reflections on the Prophetic approach to sharing Islam with others.',
-      image: '/img4.png',
+      title: 'Islamic Calendar',
+      description: 'Keep track of important Islamic dates and occasions.',
+      category: 'Learning',
+      icon: 'bi bi-calendar3',
+      path: '/islamic-calendar',
+    },
+
+    {
+      title: 'Daily Duas',
+      description: 'Useful supplications for everyday life and worship.',
+      category: 'Duas',
+      icon: 'bi bi-stars',
+    },
+
+    {
+      title: 'Prayer Times',
+      description: "Find today's prayer times and stay connected to your salah.",
+      category: 'Prayer',
+      icon: 'bi bi-moon-stars',
+      path: '/prayer-times',
+    },
+
+    {
+      title: 'Islamic Learning',
+      description: 'Articles and educational resources for learning about Islam.',
+      category: 'Learning',
+      icon: 'bi bi-lightbulb',
+      path: '/islamic-calendar',
+    },
+
+    {
+      title: 'Islamic Calendar',
+      description: 'Keep track of important Islamic dates and occasions.',
+      category: 'Learning',
+      icon: 'bi bi-calendar3',
+      path: '/islamic-calendar',
     },
   ];
 
   galleryImages: GalleryImage[] = [
-    { url: '/h5.webp', caption: 'Community Outreach', category: "Da'wah" },
-    { url: '/z6.webp', caption: 'Zakat Distribution Day', category: 'Zakat' },
-    { url: '/h3.webp', caption: 'Ramadan Food Packing', category: 'Charity' },
-    { url: '/y7.jpg', caption: 'Orphan Sponsorship Visit', category: 'Orphans' },
+    { url: '/z2.jpg', caption: "Da'wah Outreach", category: "Da'wah" },
+    { url: '/images/gallery/img3.jpg', caption: "Da'wah London", category: "Da'wah" },
+    { url: '/images/gallery/img4.png', caption: "Da'wah", category: 'Charity' },
+    { url: '/y7.jpg', caption: 'Orphan Sponsorship Visit, Nigeria', category: 'Orphans' },
   ];
 
   quickLinks = [
     { label: 'Our Projects', path: '/projects' },
+    { label: 'Madrasa', path: '/madarasa' },
     { label: 'Donate', path: '/donate' },
     { label: 'Zakat', path: '/zakat' },
     { label: 'Events', path: '/events' },
@@ -666,10 +690,11 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
     { label: 'About Us', path: '/about' },
   ];
 
+  // Registered office per the Constitution and Trust Deed.
   contact = {
-    address: '123 Example Road, London, E1 6AN',
+    address: '97 Roycraft Avenue, Barking, London, IG11 0NS, England',
     phone: '+44 20 0000 0000',
-    email: 'info@alfiqhlondon.org.uk',
+    email: 'info@alfiqhtrust.org.uk',
     mapsEmbedUrl: '' as string | SafeResourceUrl,
     social: [
       { label: 'Facebook', url: 'https://facebook.com' },

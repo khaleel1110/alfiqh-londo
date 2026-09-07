@@ -28,17 +28,17 @@
     </span>
 
     <h1 class="hero-title text-white display-2">
-      Building a Stronger Ummah Through Action
+      Knowledge, Charity and Service — for the Ummah in the UK and Nigeria
     </h1>
 
     <p class="hero-subtitle">
-      {{ orgName }} develops and supports Islamic projects that promote
-      knowledge, compassion, charity and positive change.
+      {{ orgName }} is a registered charity turning Islamic values —
+      {{ orgTagline }}.
     </p>
 
     <div class="hero-actions">
       <a
-        class="btn btn-primary-cta"
+        class="btn btn-secondary"
         routerLink="/projects"
       >
         Explore Our Projects
@@ -53,6 +53,53 @@
     </div>
   </div>
 </section>
+
+  <!-- ============ WHAT WE DO ============ -->
+  <section class="workareas-section">
+    <div class="container pt-4">
+      <div class="row justify-content-center align-items-center py-4 text-center">
+        <span class="section-eyebrow text-center">What We Do</span>
+
+        <h2 class="section-title text-center">Serving the Ummah Through Faith, Education and Compassion</h2>
+
+      </div>
+
+
+
+      <div class="workareas-grid">
+
+        <a
+          class="workarea-card"
+          *ngFor="let area of workAreas"
+
+          [routerLink]="
+          area.slug === 'education'
+            ? ['/madarasa']
+            : ['/projects']
+        "
+
+          [queryParams]="
+          area.slug === 'education'
+            ? null
+            : { category: area.slug }
+        "
+        >
+
+          <i class="{{ area.icon }} workarea-icon"></i>
+
+          <h3 class="workarea-title">
+            {{ area.title }}
+          </h3>
+
+          <p class="workarea-description">
+            {{ area.description }}
+          </p>
+
+        </a>
+
+      </div>
+    </div>
+  </section>
 
 <!-- ============ IMPACT STATISTICS ============ -->
 <section class="stats-section" #statsSection>
@@ -70,72 +117,181 @@
   </div>
 </section>
 
-<!-- ============ FEATURED PROJECTS ============ -->
-<section class="projects-section">
-  <div class="container">
-    <div class="section-header">
-      <div>
-        <span class="section-eyebrow">Our Projects</span>
-        <h2 class="section-title">What We're Working On</h2>
-      </div>
-      <a class="link-arrow" routerLink="/projects">View all projects &rarr;</a>
-    </div>
 
-    <div class="row g-4">
-      <div class="col-12 col-md-6 col-lg-4" *ngFor="let project of featuredProjects">
-        <div class="project-card">
-          <div class="project-image" [style.background-image]="'url(' + project.image + ')'">
-            <span class="project-status" [class]="'status-' + project.status.toLowerCase()">{{ project.status }}</span>
-          </div>
-          <div class="project-body">
-            <span class="project-category">{{ project.category }}</span>
-            <h3 class="project-title">{{ project.title }}</h3>
-            <p class="project-description">{{ project.shortDescription }}</p>
-
-      <!--      <ng-container *ngIf="project.fundraisingEnabled; else impactBlock">
-              <div class="project-progress">
-                <div class="progress-track">
-                  <div class="progress-fill" [style.width.%]="progressPercent(project)"></div>
-                </div>
-                <div class="progress-meta">
-                  <span><strong>&pound;{{ project.raised | number }}</strong> raised of &pound;{{ project.target | number }}</span>
-                  <span>{{ progressPercent(project) }}%</span>
-                </div>
-                <div class="project-supporters" *ngIf="project.supporters">{{ project.supporters }} supporters</div>
-              </div>
-            </ng-container>-->
-            <ng-template #impactBlock>
-              <div class="project-impact-label">{{ project.impactLabel }}</div>
-            </ng-template>
-
-            <a class="btn btn-support-project" routerLink="/projects" routerLinkActive>Support Project</a>
-          </div>
+  <!-- ============ PRAYER TIME  ============ -->
+  <section class="prayer-widget-section">
+    <div class="container">
+      <a class="prayer-widget" routerLink="/prayer-times">
+        <div>
+          <span class="label">Next Prayer</span>
+          <span class="prayer-widget-name">{{ nextPrayerKey() || '—' }}</span>
+          <span class="prayer-widget-time">{{ nextPrayerTimeLabel() }}</span>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ WHAT WE DO ============ -->
-<section class="workareas-section">
-  <div class="container">
-    <span class="section-eyebrow">What We Do</span>
-    <h2 class="section-title">Six Ways We Serve the Ummah</h2>
-
-    <div class="workareas-grid">
-      <a
-        class="workarea-card"
-        *ngFor="let area of workAreas"
-        [routerLink]="['/projects']"
-        [queryParams]="{ category: area.slug }"
-      >
-        <i class="{{ area.icon }} workarea-icon"></i>
-        <h3 class="workarea-title">{{ area.title }}</h3>
-        <p class="workarea-description">{{ area.description }}</p>
+        <div class="prayer-widget-countdown">
+          <span class="label">In</span>
+          <span class="value">{{ countdown() }}</span>
+        </div>
+        <span class="link-arrow">Full prayer times &rarr;</span>
       </a>
     </div>
-  </div>
-</section>
+  </section>
+
+  <!-- ============ FEATURED PROJECTS ============ -->
+  <section class="projects-section">
+    <div class="container">
+
+      <div class="section-header">
+        <div>
+          <span class="section-eyebrow">Our Projects</span>
+          <h2 class="section-title">What We're Working On</h2>
+        </div>
+
+        <a
+          class="link-arrow"
+          routerLink="/projects"
+        >
+          View all projects &rarr;
+        </a>
+      </div>
+
+
+      <div class="row g-4">
+
+        <div
+          class="col-12 col-md-6 col-lg-4"
+          *ngFor="let project of featuredProjects"
+        >
+
+          <div class="project-card">
+
+            <!-- Image -->
+            <div
+              class="project-image"
+              [style.background-image]="'url(' + project.image + ')'"
+            >
+            <span
+              class="project-status"
+              [class]="'status-' + project.status.toLowerCase()"
+            >
+              {{ project.status }}
+            </span>
+            </div>
+
+
+            <!-- Body -->
+            <div class="project-body">
+
+            <span class="project-category">
+              {{ project.category }}
+            </span>
+
+              <h3 class="project-title">
+                {{ project.title }}
+              </h3>
+
+              <p class="project-description">
+                {{ project.shortDescription }}
+              </p>
+
+
+              <!-- ================================================= -->
+              <!-- Fundraising projects -->
+              <!-- ================================================= -->
+
+              <ng-container *ngIf="project.fundraisingEnabled; else impactBlock">
+
+                <!--
+                <div class="project-progress">
+                  <div class="progress-track">
+                    <div
+                      class="progress-fill"
+                      [style.width.%]="progressPercent(project)"
+                    ></div>
+                  </div>
+
+                  <div class="progress-meta">
+                    <span>
+                      <strong>
+                        &pound;{{ project.raised | number }}
+                      </strong>
+                      raised of
+                      &pound;{{ project.target | number }}
+                    </span>
+
+                    <span>
+                      {{ progressPercent(project) }}%
+                    </span>
+                  </div>
+
+                  <div
+                    class="project-supporters"
+                    *ngIf="project.supporters"
+                  >
+                    {{ project.supporters }} supporters
+                  </div>
+                </div>
+                -->
+
+              </ng-container>
+
+
+              <!-- ================================================= -->
+              <!-- Non-fundraising projects -->
+              <!-- ================================================= -->
+
+              <ng-template #impactBlock>
+
+                <div class="project-impact-label">
+                  {{ project.impactLabel }}
+                </div>
+
+              </ng-template>
+
+
+              <!-- ================================================= -->
+              <!-- ACTION -->
+              <!-- ================================================= -->
+
+              <ng-container
+                *ngIf="project.fundraisingEnabled; else madrasaLink"
+              >
+
+                <!-- Donation projects -->
+                <button
+                  type="button"
+                  class="btn btn-support-project"
+                  (click)="openDonate()"
+                >
+                  <i class="bi bi-heart me-2"></i>
+                  Support Project
+                </button>
+
+              </ng-container>
+
+
+              <!-- Madrasa / other non-fundraising projects -->
+              <ng-template #madrasaLink>
+
+                <a
+                  class="btn btn-support-project"
+                  routerLink="/madarasa"
+                >
+                  Learn More
+                  <i class="bi bi-arrow-right ms-2"></i>
+                </a>
+
+              </ng-template>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
 
 <section class="campaign-section">
   <div class="container">
@@ -189,7 +345,7 @@
 
                   </div>
 
-                  <a
+       <!--           <a
                     (click)=" openDonate()"
                     class="btn btn-donate-light">
 
@@ -198,7 +354,7 @@
 
                     Support This Campaign
 
-                  </a>
+                  </a>-->
 
                 </div>
 
@@ -242,15 +398,15 @@
 </section>
 <!-- ============ CURRENT CAMPAIGN ============ -->
 
-<!-- ============ UPCOMING EVENTS ============ -->
-<section class="events-section">
+
+<!--<section class="events-section">
   <div class="container">
     <div class="section-header">
       <div>
         <span class="section-eyebrow">What's On</span>
         <h2 class="section-title">Upcoming Events</h2>
       </div>
-  <!--    <a class="link-arrow" routerLink="/events">See all events &rarr;</a>-->
+  &lt;!&ndash;    <a class="link-arrow" routerLink="/events">See all events &rarr;</a>&ndash;&gt;
     </div>
 
     <div class="row g-4">
@@ -268,81 +424,157 @@
       </div>
     </div>
   </div>
-</section>
+</section>-->
 
-<!-- ============ ISLAMIC RESOURCES ============ -->
-<section class="resources-section">
-  <div class="container">
-    <div class="section-header">
-      <div>
-        <span class="section-eyebrow">Learn</span>
-        <h2 class="section-title">Islamic Resources</h2>
-      </div>
-      <a class="link-arrow" routerLink="/islamic-resources">Browse all resources &rarr;</a>
-    </div>
+  <!-- ============ ISLAMIC RESOURCES ============ -->
+  <section class="resources-section">
+    <div class="container">
 
-    <div class="row g-4">
-      <div class="col-12 col-md-6 col-lg-4" *ngFor="let resource of resources">
-        <a class="resource-card" routerLink="/resources">
-          <div class="resource-image" [style.background-image]="'url(' + resource.image + ')'"></div>
-          <span class="resource-category">{{ resource.category }}</span>
-          <h3 class="resource-title">{{ resource.title }}</h3>
-          <p class="resource-excerpt">{{ resource.excerpt }}</p>
+      <div class="section-header">
+
+        <div>
+        <span class="section-eyebrow">
+          Learn
+        </span>
+
+          <h2 class="section-title">
+            Islamic Resources
+          </h2>
+        </div>
+
+        <a
+          class="link-arrow"
+          routerLink="/islamic-resources"
+        >
+          Browse all resources &rarr;
         </a>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="prayer-widget-section">
-  <div class="container">
-    <a class="prayer-widget" routerLink="/prayer-times">
-      <div>
-        <span class="label">Next Prayer</span>
-        <span class="prayer-widget-name">{{ nextPrayerKey() || '—' }}</span>
-        <span class="prayer-widget-time">{{ nextPrayerTimeLabel() }}</span>
-      </div>
-      <div class="prayer-widget-countdown">
-        <span class="label">In</span>
-        <span class="value">{{ countdown() }}</span>
-      </div>
-      <span class="link-arrow">Full prayer times &rarr;</span>
-    </a>
-  </div>
-</section>
 
-<!-- ============ DONATE CTA ============ -->
-<section class="donate-section">
-  <div class="container donate-inner">
-    <div>
-      <span class="section-eyebrow section-eyebrow-light">Support Islamic Projects</span>
-      <h2 class="section-title section-title-light">Your Support Creates Impact</h2>
-      <p class="section-body section-body-light">
-        Your contribution can help provide food, education, support for vulnerable
-        families, orphan care, Islamic education and community development.
-      </p>
-    </div>
-    <a (click)="openDonate()" class="btn btn-donate-light" >Donate Now</a>
-  </div>
-</section>
-
-<!-- ============ GALLERY ============ -->
-<section class="gallery-section">
-  <div class="container">
-    <div class="section-header">
-      <div>
-        <span class="section-eyebrow">Moments</span>
-        <h2 class="section-title">From Our Projects</h2>
       </div>
-      <a class="link-arrow" routerLink="/gallery">View full gallery &rarr;</a>
-    </div>
 
-    <div class="gallery-grid">
-      <div class="gallery-item" *ngFor="let image of galleryImages" [style.background-image]="'url(' + image.url + ')'">
-        <span class="gallery-caption">{{ image.caption }}</span>
+
+      <div class="row g-4">
+
+        <!-- Show first 3 resources on homepage -->
+        <div
+          class="col-12 col-md-6 col-lg-4"
+          *ngFor="let resource of resources | slice:0:3"
+        >
+
+          <!-- ============================================== -->
+          <!-- INTERNAL RESOURCE -->
+          <!-- ============================================== -->
+
+          <a
+            *ngIf="resource.path; else externalResource"
+            [routerLink]="resource.path"
+            class="resource-card"
+          >
+
+            <div class="resource-icon">
+              <i [class]="resource.icon"></i>
+            </div>
+
+            <span class="resource-category">
+            {{ resource.category }}
+          </span>
+
+            <h3 class="resource-title">
+              {{ resource.title }}
+            </h3>
+
+            <p class="resource-excerpt">
+              {{ resource.description }}
+            </p>
+
+            <span class="resource-action">
+            Explore
+            <i class="bi bi-arrow-right"></i>
+          </span>
+
+          </a>
+
+
+          <!-- ============================================== -->
+          <!-- EXTERNAL RESOURCE -->
+          <!-- ============================================== -->
+
+          <ng-template #externalResource>
+
+            <a
+              *ngIf="resource.externalUrl; else unavailableResource"
+              class="resource-card"
+            >
+
+              <div class="resource-icon">
+                <i [class]="resource.icon"></i>
+              </div>
+
+              <span class="resource-category">
+              {{ resource.category }}
+            </span>
+
+              <h3 class="resource-title">
+                {{ resource.title }}
+              </h3>
+
+              <p class="resource-excerpt">
+                {{ resource.description }}
+              </p>
+
+              <span class="resource-action">
+              Explore
+              <i class="bi bi-arrow-up-right"></i>
+            </span>
+
+            </a>
+
+          </ng-template>
+
+
+          <!-- ============================================== -->
+          <!-- RESOURCE WITHOUT LINK -->
+          <!-- ============================================== -->
+
+          <ng-template #unavailableResource>
+
+            <div class="resource-card">
+
+              <div class="resource-icon">
+                <i [class]="resource.icon"></i>
+              </div>
+
+              <span class="resource-category">
+              {{ resource.category }}
+            </span>
+
+              <h3 class="resource-title">
+                {{ resource.title }}
+              </h3>
+
+              <p class="resource-excerpt">
+                {{ resource.description }}
+              </p>
+
+              <span class="resource-action">
+              Coming Soon
+            </span>
+
+            </div>
+
+          </ng-template>
+
+        </div>
+
       </div>
+
     </div>
-  </div>
-</section>
+  </section>
+
+
+
+
+
+
 
 <!-- ============ PRAYER TIMES WIDGET ============ -->
 <!-- Small utility widget per the brief — the full daily card and
@@ -361,7 +593,7 @@
 </section>-->
 
 <!-- ============ NEWSLETTER ============ -->
-<section class="newsletter-section">
+<!--<section class="newsletter-section">
   <div class="container">
     <div class="newsletter-card" *ngIf="!newsletterSubmitted(); else thanksBlock">
       <div>
@@ -387,8 +619,40 @@
       </div>
     </ng-template>
   </div>
-</section>
+</section>-->
+  <!-- ============ DONATE CTA ============ -->
+  <section class="donate-section">
+    <div class="container donate-inner">
+      <div>
+        <span class="section-eyebrow section-eyebrow-light">Support Islamic Projects</span>
+        <h2 class="section-title section-title-light">Your Support Creates Impact</h2>
+        <p class="section-body section-body-light">
+          Your Zakāt, Sadaqah and donations help provide food, madrasa education,
+          orphan care, scholarships and humanitarian relief in the UK and Nigeria.
+        </p>
+      </div>
+      <a (click)="openDonate()" class="btn btn-donate-light" >Donate Now</a>
+    </div>
+  </section>
 
+  <!-- ============ GALLERY ============ -->
+  <section class="gallery-section">
+    <div class="container pt-5">
+      <div class="section-header">
+        <div>
+          <span class="section-eyebrow">Moments</span>
+          <h2 class="section-title">From Our Projects</h2>
+        </div>
+        <a class="link-arrow" routerLink="/gallery">View full gallery &rarr;</a>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-item" *ngFor="let image of galleryImages" [style.background-image]="'url(' + image.url + ')'">
+          <span class="gallery-caption">{{ image.caption }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
 
 <!-- ============ CONTACT / LOCATION ============

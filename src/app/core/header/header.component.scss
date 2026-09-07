@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Active nav link
+// ---------------------------------------------------------------
+
 /* Light mode active navlink */
 :root [data-bs-theme="light"] .nav-link.active,
 html:not([data-bs-theme="dark"]) .nav-link.active {
@@ -13,4 +17,284 @@ html:not([data-bs-theme="dark"]) .nav-link.active {
 
 .nav-link {
   font-weight: bold;
+}
+
+
+// ---------------------------------------------------------------
+// Header layout
+// ---------------------------------------------------------------
+
+.header-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+
+// ---------------------------------------------------------------
+// Header actions
+// ---------------------------------------------------------------
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+
+  .theme-toggle {
+    order: 10;
+  }
+}
+
+.header-donate-btn {
+  white-space: nowrap;
+}
+
+
+// ---------------------------------------------------------------
+// Mobile hamburger
+// ---------------------------------------------------------------
+
+.navbar-toggler {
+  order: 11;
+  flex-shrink: 0;
+}
+
+
+// ---------------------------------------------------------------
+// Desktop
+// ---------------------------------------------------------------
+
+@media (min-width: 992px) {
+
+  // Center main navigation
+  .navbar-collapse {
+    flex-grow: 0;
+  }
+
+  .navbar-nav.navbar-nav-scroll {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    margin: 0 !important;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    white-space: nowrap;
+    z-index: 2;
+  }
+
+  .header-donate-btn {
+    margin-left: 0;
+  }
+
+  .navbar-toggler {
+    display: none;
+  }
+}
+
+
+// ---------------------------------------------------------------
+// Small devices
+// ---------------------------------------------------------------
+
+@media (max-width: 991.98px) {
+
+  // -------------------------------------------------------------
+  // Normal mobile header
+  // -------------------------------------------------------------
+
+  .header-inner {
+    min-height: 64px;
+  }
+
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .navbar-brand img {
+    width: 10rem !important;
+    height:6.2rem !important;
+    object-fit: contain !important;
+  }
+
+  // Actions stay between logo and hamburger
+  .header-actions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+  }
+
+  // Donate is visible on small devices
+  .header-donate-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0.45rem 0.7rem;
+
+    .bi {
+      margin-right: 0 !important;
+    }
+  }
+
+  // Hide the "Donate" text on very small screens
+  .header-donate-btn {
+    .bi + * {
+      display: none;
+    }
+  }
+
+  // Theme toggle visible
+  .theme-toggle {
+    display: inline-flex !important;
+  }
+
+  // Hamburger
+  .navbar-toggler {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-left: 0.5rem !important;
+  }
+
+
+  // -------------------------------------------------------------
+  // WHEN MOBILE MENU IS OPEN
+  // -------------------------------------------------------------
+
+  header.is-mobile-menu-open {
+
+    // Hide logo
+    .navbar-brand {
+      display: none;
+    }
+
+    // Hide donate + theme toggle
+    .header-actions {
+      display: none;
+    }
+
+    // Keep hamburger visible and move it to the right
+    .navbar-toggler {
+      margin-left: auto !important;
+    }
+
+    // Mobile navigation becomes full width
+    .navbar-collapse {
+      width: 100%;
+      flex-basis: 100%;
+    }
+  }
+
+
+  // -------------------------------------------------------------
+  // Mobile collapse panel
+  // -------------------------------------------------------------
+
+  .navbar-collapse {
+
+    &.show {
+      background: inherit;
+    }
+  }
+
+  .navbar-nav.navbar-nav-scroll {
+    width: 100%;
+    margin-top: 0.75rem !important;
+    padding-bottom: 1rem;
+  }
+
+
+  // -------------------------------------------------------------
+  // Mobile navigation links
+  // -------------------------------------------------------------
+
+  .navbar-nav .nav-link {
+    padding: 0.8rem 0.5rem;
+  }
+
+
+  // -------------------------------------------------------------
+  // Mobile dropdowns
+  // -------------------------------------------------------------
+
+  .nav-item.dropdown .dropdown-menu {
+    position: static;
+    float: none;
+
+    display: none;
+
+    width: 100%;
+
+    border: none;
+    box-shadow: none;
+
+    background: transparent;
+
+    padding-left: 1rem;
+    margin: 0;
+
+    &.show {
+      display: block;
+    }
+  }
+
+  .nav-item.dropdown .dropdown-item {
+    padding: 0.65rem 0.75rem;
+  }
+}
+
+
+// ---------------------------------------------------------------
+// Extra-small phones
+// ---------------------------------------------------------------
+
+@media (max-width: 575.98px) {
+
+  .header-inner {
+    min-height: 60px;
+  }
+
+  .navbar-brand img {
+    width: 6.5rem !important;
+    height: 4rem !important;
+  }
+
+  .header-donate-btn {
+    width: 38px;
+    height: 38px;
+
+    padding: 0;
+
+    border-radius: 50%;
+
+    .bi {
+      font-size: 1rem;
+    }
+  }
+
+  .theme-toggle {
+    width: 38px;
+    height: 38px;
+
+    justify-content: center;
+    align-items: center;
+
+    margin-left: 0.25rem !important;
+  }
+
+  .navbar-toggler {
+    width: 40px;
+    height: 40px;
+
+    margin-left: 0.25rem !important;
+  }
 }

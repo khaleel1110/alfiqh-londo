@@ -1,11 +1,16 @@
-import {Component, computed, HostListener, inject, signal} from '@angular/core';
-import {NavigationEnd, NavigationStart, Router, RouterLink, RouterLinkActive} from "@angular/router";
-import {NgClass, NgForOf} from "@angular/common";
-import {digitalProduct, service} from "./links";
-import {DarkModeService} from "../../services/dark-mode/dark-mode.service";
-import {filter} from "rxjs";
+import { Component, computed, ElementRef, HostListener, inject, signal } from '@angular/core';
+import {
+  NavigationEnd,
+  NavigationStart,
+  Router,
+  RouterLink,
+  RouterLinkActive,
+} from '@angular/router';
+import { NgClass, NgForOf } from '@angular/common';
+import { digitalProduct, service } from './links';
+import { DarkModeService } from '../../services/dark-mode/dark-mode.service';
+import { filter } from 'rxjs';
 import { DonationModalService } from '../../services/donation-modal.service';
-
 
 @Component({
   selector: 'app-header',
@@ -15,7 +20,10 @@ import { DonationModalService } from '../../services/donation-modal.service';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-  constructor(private donationModal: DonationModalService) {
+  constructor(
+    private donationModal: DonationModalService,
+    private elementRef: ElementRef<HTMLElement>,
+  ) {
     /*this.footerServices = this.processServicesForFooter();*/
     this.isSmallScreen.set(window.innerWidth < 991);
     this.router.events
@@ -26,6 +34,11 @@ export class HeaderComponent {
         }
         if (event instanceof NavigationStart) {
           this.checkRoute(event.url);
+          // Any navigation (including clicking a nav link) should close
+          // the mobile menu and any open dropdown, since we no longer
+          // rely on Bootstrap's JS plugins to do this for us.
+          this.isMenuOpen.set(false);
+          this.openDropdown.set(null);
         }
       });
   }
@@ -49,6 +62,53 @@ export class HeaderComponent {
   isScrolled = signal(false);
   currentUrl = signal('');
   isSmallScreen = signal(false);
+
+  // ---------- Mobile menu ----------
+  // Driven entirely by Angular rather than Bootstrap's JS collapse
+  // plugin, so it works even if bootstrap.bundle.js isn't loaded/wired
+  // up. The `.collapse` / `.collapse.show` CSS from Bootstrap still
+  // applies — we just toggle the `show` class ourselves.
+  isMenuOpen = signal(false);
+
+  toggleMobileMenu(): void {
+    this.isMenuOpen.update((open) => !open);
+  }
+
+  closeMobileMenu(): void {
+    this.isMenuOpen.set(false);
+  }
+
+  // ---------- Nav dropdowns ("Our Work", "Get to Know") ----------
+  // Same problem as the collapse menu: `data-bs-toggle="dropdown"` needs
+  // Bootstrap's JS to be loaded and initialised, which isn't reliable
+  // here (and doesn't work at all inside the mobile collapse panel).
+  // We drive this with a signal instead and reuse Bootstrap's existing
+  // `.dropdown-menu` / `.dropdown-menu.show` CSS for the actual styling.
+  openDropdown = signal<string | null>(null);
+
+  isDropdownOpen(name: string): boolean {
+    return this.openDropdown() === name;
+  }
+
+  toggleDropdown(name: string, event?: Event): void {
+    event?.preventDefault();
+    event?.stopPropagation();
+    this.openDropdown.update((current) => (current === name ? null : name));
+  }
+
+  closeDropdowns(): void {
+    this.openDropdown.set(null);
+  }
+
+  // Close any open dropdown when the user clicks outside the header
+  // (the toggle buttons themselves stop propagation, so this only
+  // fires for genuine outside/other clicks).
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    if (!this.elementRef.nativeElement.contains(event.target as Node)) {
+      this.closeDropdowns();
+    }
+  }
 
   headerThemeMode = computed(() => {
     const darkOnlyRoutes = [
@@ -91,6 +151,12 @@ export class HeaderComponent {
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.isSmallScreen.set(window.innerWidth < 991);
+    // If the viewport grows back to desktop width, make sure the mobile
+    // menu doesn't stay stuck open underneath the now-visible desktop nav.
+    if (window.innerWidth >= 992) {
+      this.isMenuOpen.set(false);
+      this.openDropdown.set(null);
+    }
   }
 
   /*  projects = projectCaseStudies;*/

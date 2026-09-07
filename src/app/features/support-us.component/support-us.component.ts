@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
+import { DonationModalService } from '../../services/donation-modal.service';
 
 interface SupportOption {
   title: string;
@@ -17,7 +19,14 @@ interface SupportOption {
   styleUrl: './support-us.component.scss',
 })
 export class SupportUsComponent {
+  constructor(
+    private donationModal: DonationModalService,
+  ) {}
   copied = false;
+
+  openDonate(): void {
+    this.donationModal.open();
+  }
 
   supportOptions: SupportOption[] = [
     {
