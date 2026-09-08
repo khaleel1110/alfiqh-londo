@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface InitializeDonationRequest {
   amount: number;
@@ -18,19 +19,29 @@ export interface InitializeDonationResponse {
   reference: string;
 }
 
+export interface DonationStatusResponse {
+  status: 'pending' | 'paid' | 'not_found';
+  amount?: number;
+  currency?: string;
+  purpose?: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class DonationService {
   private readonly http = inject(HttpClient);
 
-  // Replace with your deployed Firebase HTTPS function URL.
-  private readonly apiUrl = '/api/donations/initialize';
-
   initializePayment(
-    payload: InitializeDonationRequest,
+      payload: InitializeDonationRequest,
   ): Observable<InitializeDonationResponse> {
     return this.http.post<InitializeDonationResponse>(
-      this.apiUrl,
-      payload,
+        environment.initializeDonationUrl,
+        { ...payload, origin: window.location.origin },
+    );
+  }
+
+  verifyDonation(reference: string): Observable<DonationStatusResponse> {
+    return this.http.get<DonationStatusResponse>(
+      `${environment.verifyDonationUrl}?reference=${encodeURIComponent(reference)}`,
     );
   }
 }

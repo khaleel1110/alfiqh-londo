@@ -1,17 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { SafeResourceUrl } from '@angular/platform-browser';
+import { environment } from '../../../environments/environment'; // adjust path to your project
+
+interface ContactApiResponse {
+  success: boolean;
+  error?: string;
+}
 
 @Component({
   selector: 'app-contact-us',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, HttpClientModule],
   templateUrl: './contact-us.component.html',
   styleUrl: './contact-us.component.scss',
 })
 export class ContactUsComponent {
+  private http = inject(HttpClient);
+
   contactReasons = [
     {
       icon: 'bi bi-chat-dots',
@@ -82,21 +91,32 @@ export class ContactUsComponent {
     message: '',
   };
 
-
   submitForm(): void {
     if (!this.form.name || !this.form.email || !this.form.message) {
+      this.errorMsg = 'Please fill in your name, email and message.';
       return;
     }
 
-    console.log('Contact form:', this.form);
+    this.errorMsg = '';
+    this.sending = true;
 
-    this.submitted = true;
+    this.http
+      .post<ContactApiResponse>(environment.contactFunctionUrl, this.form)
+      .subscribe({
+        next: (res) => {
+          this.sending = false;
 
-    this.form = {
-      name: '',
-      email: '',
-      subject: '',
-      message: '',
-    };
+          if (res.success) {
+            this.submitted = true;
+            this.form = { name: '', email: '', subject: '', message: '' };
+          } else {
+            this.errorMsg = res.error || 'Something went wrong. Please try again.';
+          }
+        },
+        error: () => {
+          this.sending = false;
+          this.errorMsg = 'Something went wrong. Please try again later.';
+        },
+      });
   }
 }

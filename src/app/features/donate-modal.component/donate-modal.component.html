@@ -62,22 +62,21 @@
           <select
             class="currency-select"
             formControlName="currency">
-            @for (currency of currencies; track currency.code) {
+            @for (currency of availableCurrencies; track currency.code) {
               <option [value]="currency.code">
                 {{ currency.code }} ({{ currency.symbol }})
               </option>
             }
           </select>
         </div>
-
         <div class="amount-input">
-          <span>
-            @for (currency of currencies; track currency.code) {
-              @if (currency.code === form.controls.currency.value) {
-                {{ currency.symbol }}
-              }
-            }
-          </span>
+  <span>
+    @for (currency of availableCurrencies; track currency.code) {
+      @if (currency.code === form.controls.currency.value) {
+        {{ currency.symbol }}
+      }
+    }
+  </span>
 
           <input
             type="number"
@@ -86,7 +85,6 @@
             step="1"
             placeholder="10,000" />
         </div>
-
         <div class="quick-amounts">
           @for (amount of quickAmounts; track amount) {
             <button
@@ -94,7 +92,7 @@
               class="quick-amount"
               [class.active]="form.controls.amount.value === amount"
               (click)="setAmount(amount)">
-              {{ form.controls.currency.value === 'NGN' ? '₦' : '' }}{{ amount | number }}
+              {{ currentSymbol() }}{{ amount | number }}
             </button>
           }
         </div>
@@ -144,6 +142,8 @@
             </span>
           </button>
 
+          <!-- Replace the existing "transfer-box" block in donate-modal.component.html with this: -->
+
           @if (selectedMethod === 'transfer') {
             <div class="transfer-box mt-4">
 
@@ -159,19 +159,19 @@
               </div>
 
               <div class="bank-detail">
-                <span>Bank</span>
+                <span class="me-2 ">Bank</span>
                 <strong>{{ bankDetails.bankName }}</strong>
               </div>
 
               <div class="bank-detail">
-                <span>Account Name</span>
-                <strong>{{ bankDetails.accountName }}</strong>
+                <span class="me-2 ">Account Name</span>
+                <strong class="me-2">{{ bankDetails.accountName }}</strong>
               </div>
 
               <div class="bank-detail">
                 <span>Account Number</span>
 
-                <div class="d-flex align-items-center gap-2">
+                <div class="d-flex align-items-center me02 gap-2">
                   <strong>{{ bankDetails.accountNumber }}</strong>
 
                   <button
@@ -191,10 +191,30 @@
                 </div>
               }
 
+<!--              <div class="bank-detail">
+                <span>Wire Routing No.</span>
+                <strong>{{ bankDetails.routingNumber }}</strong>
+              </div>
+
+              <div class="bank-detail">
+                <span>BIC / SWIFT</span>
+                <strong>{{ bankDetails.bic }}</strong>
+              </div>
+
+              <div class="bank-detail">
+                <span>IBAN</span>
+                <strong>{{ bankDetails.iban }}</strong>
+              </div>
+
+              <div class="bank-detail">
+                <span>Bank Address</span>
+                <strong>{{ bankDetails.bankAddress }}</strong>
+              </div>
+
               <div class="alert alert-light mt-3 mb-0">
                 <i class="bi bi-info-circle me-2"></i>
                 {{ bankDetails.referenceHint }}
-              </div>
+              </div>-->
 
             </div>
           }

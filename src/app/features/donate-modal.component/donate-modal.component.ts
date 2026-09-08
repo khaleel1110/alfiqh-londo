@@ -44,20 +44,55 @@ export class DonateModalComponent {
     'Education',
   ];
 
+  // Replace the bankDetails block in donate-modal.component.ts with this:
+
   readonly bankDetails = {
-    bankName: 'YOUR BANK NAME',
-    accountName: 'YOUR ORGANIZATION NAME',
-    accountNumber: '0000000000',
-    sortCode: '',
+    bankName: 'Revolut',
+    accountName: 'Alfiqh London',
+    accountNumber: '123457890',
+    sortCode: '', // Not applicable — international transfer uses routing/IBAN below instead
+    routingNumber: '45788099',
+    bic: 'REVOGB21',
+    iban: 'GB41REVO00996963993423',
+    bankAddress: '7 Westferry Circus, E14 4HD, London, United Kingdom',
     referenceHint: 'Please use your name or donation purpose as the transfer reference.',
   };
 
-  readonly currencies: Currency[] = [
+  // donate-modal.component.ts
+
+  readonly cardCurrencies: Currency[] = [
+    { code: 'NGN', symbol: '₦', name: 'Nigerian Naira' },
+    { code: 'USD', symbol: '$', name: 'US Dollar' },
+  ];
+
+  readonly transferCurrencies: Currency[] = [
     { code: 'NGN', symbol: '₦', name: 'Nigerian Naira' },
     { code: 'USD', symbol: '$', name: 'US Dollar' },
     { code: 'GBP', symbol: '£', name: 'British Pound' },
     { code: 'EUR', symbol: '€', name: 'Euro' },
   ];
+
+  get availableCurrencies(): Currency[] {
+    return this.selectedMethod === 'card' ? this.cardCurrencies : this.transferCurrencies;
+  }
+
+  currentSymbol(): string {
+    const code = this.form.controls.currency.value;
+    return this.availableCurrencies.find((c) => c.code === code)?.symbol ?? '';
+  }
+
+  selectMethod(method: 'card' | 'transfer'): void {
+    this.selectedMethod = method;
+    this.errorMessage = '';
+
+    // If switching to card and the current currency isn't supported, reset it
+    if (
+      method === 'card' &&
+      !this.cardCurrencies.some((c) => c.code === this.form.controls.currency.value)
+    ) {
+      this.form.controls.currency.setValue('NGN');
+    }
+  }
 
   readonly quickAmounts = [5000, 10000, 25000, 50000];
 
@@ -85,10 +120,12 @@ export class DonateModalComponent {
     this.form.controls.amount.markAsDirty();
   }
 
+  /*
   selectMethod(method: 'card' | 'transfer'): void {
     this.selectedMethod = method;
     this.errorMessage = '';
   }
+*/
 
   close(): void {
     if (!this.loading) {
@@ -120,7 +157,14 @@ export class DonateModalComponent {
     // -----------------------------------------
     // CARD PAYMENT
     // -----------------------------------------
+    // CARD PAYMENT
+    if (!this.cardCurrencies.some((c) => c.code === value.currency)) {
+      this.errorMessage = `Card payment in ${value.currency} isn't supported yet. Please use NGN or USD, or pay by bank transfer.`;
+      return;
+    }
+
     this.loading = true;
+
 
     this.donationService
       .initializePayment({

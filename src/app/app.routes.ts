@@ -76,19 +76,14 @@ export const routes: Routes = [
       import('./features/our-impact.component/our-impact.component').then(
         (m) => m.OurImpactComponent,
       ),
-  },  {
+  },
+  {
     path: 'madarasa',
-    loadComponent: () =>
-      import('./features/madarasa/madarasa').then(
-        (m) => m.MadarasaPage,
-      ),
+    loadComponent: () => import('./features/madarasa/madarasa').then((m) => m.MadarasaPage),
   },
   {
     path: 'debug',
-    loadComponent: () =>
-      import('./features/debug/debug').then(
-        (m) => m.Debug,
-      ),
+    loadComponent: () => import('./features/debug/debug').then((m) => m.Debug),
   },
   {
     path: 'islamic-calendar',
@@ -96,5 +91,10 @@ export const routes: Routes = [
       import('./features/islamic-calendar.component/islamic-calendar.component').then(
         (m) => m.IslamicCalendarComponent,
       ),
+  },
+  {
+    path: 'donate/callback',
+    loadComponent: () =>
+      import('./features/donate-modal.component/donation-callback.component').then((m) => m.DonationCallbackComponent),
   },
 ];

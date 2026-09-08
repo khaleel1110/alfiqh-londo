@@ -118,7 +118,7 @@
     <!-- ========================================================= -->
 
     <nav
-      class="collapse navbar-collapse"
+      class="collapse  navbar-collapse"
       id="navbarNav"
       [class.show]="isMenuOpen()"
     >
@@ -184,6 +184,16 @@
                 (click)="closeDropdowns(); closeMobileMenu()"
               >
                 Projects
+              </a>
+            </li>
+            <li>
+              <a
+                routerLink="/gallery"
+                routerLinkActive="active"
+                class="dropdown-item"
+                (click)="closeDropdowns(); closeMobileMenu()"
+              >
+            Gallery
               </a>
             </li>
 
@@ -281,7 +291,7 @@
           </a>
         </li>
 
-        <!-- Gallery -->
+<!--        &lt;!&ndash; Gallery &ndash;&gt;
         <li class="nav-item">
           <a
             class="nav-link"
@@ -291,7 +301,7 @@
           >
             Gallery
           </a>
-        </li>
+        </li>-->
 
       </ul>
     </nav>

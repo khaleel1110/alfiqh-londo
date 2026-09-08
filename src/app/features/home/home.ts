@@ -396,28 +396,32 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
   slides: Slide[] = [
     {
       tag: "Da'wah & Community",
-      image: '/h5.webp',
+      image:
+        'https://firebasestorage.googleapis.com/v0/b/gomart-apps.appspot.com/o/alfiqh-london%2Fz4.jpg?alt=media&token=2c46f4e8-4e38-4479-90f0-3417e706d002',
     },
     {
       tag: 'Madrasa & Islamic Education',
-      image: '/hero1.webp',
+      image:
+        'https://firebasestorage.googleapis.com/v0/b/gomart-apps.appspot.com/o/alfiqh-london%2Fqr6.jpg?alt=media&token=cbf13eb4-b172-4c0b-8d74-cb59ce89846b',
     },
-    {
+    /*    {
       tag: "Qur'an & Tajweed",
       image: '/q3.webp',
-    },
+    },*/
     {
       tag: 'Zakāt & Sadaqah',
-      image: '/h2.webp',
+      image:
+        'https://firebasestorage.googleapis.com/v0/b/gomart-apps.appspot.com/o/alfiqh-london%2Fh2.webp?alt=media&token=97b964e8-8590-48fa-8c82-119026fbce48',
     },
     {
       tag: 'Orphan Welfare',
-      image: '/h4.webp',
+      image:
+        'https://firebasestorage.googleapis.com/v0/b/gomart-apps.appspot.com/o/alfiqh-london%2Fh4.webp?alt=media&token=d9b6ab78-b1b1-4c60-b563-b98e85e9bfde',
     },
-    {
+    /*    {
       tag: 'Relief in Nigeria & the UK',
       image: '/h3.webp',
-    },
+    },*/
   ];
   featuredProjects: Project[] = [
     {
@@ -426,7 +430,8 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
       category: 'Charity',
       shortDescription:
         'Food parcels and essential household items for families facing hardship in the UK and Nigeria.',
-      image: '/h3.webp',
+      image:
+        'https://firebasestorage.googleapis.com/v0/b/gomart-apps.appspot.com/o/alfiqh-london%2Fh3.webp?alt=media&token=01f896e0-1e85-4286-b068-2a16cdbccd15',
       status: 'Active',
       fundraisingEnabled: true,
       target: 10000,
@@ -440,7 +445,8 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
       category: 'Orphans',
       shortDescription:
         'Monthly subsistence, school fees and educational materials for sponsored orphans.',
-      image: '/z10.jpg',
+      image:
+        'https://firebasestorage.googleapis.com/v0/b/gomart-apps.appspot.com/o/alfiqh-london%2Fz10.jpg?alt=media&token=fe13fd23-dafa-4d6f-90c0-cdd084dfeaa0',
       status: 'Ongoing',
       fundraisingEnabled: true,
       target: 15000,
@@ -454,7 +460,8 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
       category: 'Education',
       shortDescription:
         "Qur'an memorisation, Tajweed, Arabic and Islamic studies for children and adults.",
-      image: '/y5.jpg',
+      image:
+        'https://firebasestorage.googleapis.com/v0/b/gomart-apps.appspot.com/o/alfiqh-london%2Fy5.jpg?alt=media&token=315edab8-c314-4ba7-b8b5-0f69fccb2341',
       status: 'Active',
       fundraisingEnabled: false,
       impactLabel: '180+  Students Enrolled',
