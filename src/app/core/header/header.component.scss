@@ -1,220 +1,957 @@
-// ---------------------------------------------------------------
-// Active nav link
-// ---------------------------------------------------------------
+// ===============================================================
+// AL-FIQH HEADER / NAVBAR
+// ===============================================================
+//
+// Responsive strategy:
+//
+// >= 1280px  → Full desktop navigation
+// 992–1279  → Collapsed navigation + hamburger
+// 768–991   → Tablet collapsed navigation
+// 576–767   → Mobile collapsed navigation
+// < 576px   → Compact mobile
+//
+// IMPORTANT:
+// Bootstrap's navbar-expand-lg normally expands at 992px.
+// We explicitly override that behavior from 992px–1279px.
+// ===============================================================
+
+
+// ===============================================================
+// ACTIVE NAV LINK
+// ===============================================================
 
 /* Light mode active navlink */
 :root [data-bs-theme="light"] .nav-link.active,
 html:not([data-bs-theme="dark"]) .nav-link.active {
-  font-weight: bold;
-  color: #017B4D;
+  font-weight: 700;
+  color: #017b4d;
 }
 
 /* Dark mode active navlink */
 [data-bs-theme="dark"] .nav-link.active {
-  font-weight: bold;
+  font-weight: 700;
   color: #1fa875;
 }
 
 .nav-link {
-  font-weight: bold;
+  font-weight: 700;
 }
 
 
-// ---------------------------------------------------------------
-// Header layout
-// ---------------------------------------------------------------
+// ===============================================================
+// HEADER BASE
+// ===============================================================
 
 .header-inner {
   position: relative;
+
   display: flex;
   align-items: center;
+
+  width: 100%;
+
   flex-wrap: nowrap;
 }
 
 
-// ---------------------------------------------------------------
-// Header actions
-// ---------------------------------------------------------------
+// ===============================================================
+// LOGO
+// ===============================================================
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+
+  flex-shrink: 0;
+
+  position: relative;
+
+  z-index: 20;
+}
+
+
+// ===============================================================
+// HEADER ACTIONS
+// Donate + Contact + Theme
+// ===============================================================
 
 .header-actions {
   display: flex;
   align-items: center;
+
   flex-shrink: 0;
+
+  position: relative;
+
+  z-index: 20;
 
   .theme-toggle {
     order: 10;
   }
 }
 
+
+// Donate button
 .header-donate-btn {
   white-space: nowrap;
-}
-
-
-// ---------------------------------------------------------------
-// Mobile hamburger
-// ---------------------------------------------------------------
-
-.navbar-toggler {
-  order: 11;
   flex-shrink: 0;
 }
 
 
-// ---------------------------------------------------------------
-// Desktop
-// ---------------------------------------------------------------
+// ===============================================================
+// HAMBURGER
+// ===============================================================
 
-@media (min-width: 992px) {
+.navbar-toggler {
+  flex-shrink: 0;
 
-  // Center main navigation
-  .navbar-collapse {
-    flex-grow: 0;
-  }
+  position: relative;
 
-  .navbar-nav.navbar-nav-scroll {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    margin: 0 !important;
-
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
-    white-space: nowrap;
-    z-index: 2;
-  }
-
-  .header-donate-btn {
-    margin-left: 0;
-  }
-
-  .navbar-toggler {
-    display: none;
-  }
+  z-index: 30;
 }
 
 
-// ---------------------------------------------------------------
-// Small devices
-// ---------------------------------------------------------------
+// #################################################################
+// #################################################################
+// DESKTOP
+// >= 1280px
+// #################################################################
+// #################################################################
 
-@media (max-width: 991.98px) {
+@media (min-width: 1280px) {
 
   // -------------------------------------------------------------
-  // Normal mobile header
+  // Header
   // -------------------------------------------------------------
 
   .header-inner {
-    min-height: 64px;
+    min-height: 72px;
+
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    flex-wrap: nowrap;
   }
+
+
+  // -------------------------------------------------------------
+  // Logo
+  // -------------------------------------------------------------
 
   .navbar-brand {
     display: flex;
     align-items: center;
-    flex-shrink: 0;
+
+    flex: 0 0 auto;
+
+    position: relative;
+
+    z-index: 20;
   }
 
+
   .navbar-brand img {
-    width: 10rem !important;
-    height:6.2rem !important;
+    width: 9rem !important;
+    height: 7rem !important;
+
     object-fit: contain !important;
   }
 
-  // Actions stay between logo and hamburger
+
+  // -------------------------------------------------------------
+  // RIGHT-SIDE ACTIONS
+  //
+  // Permanently anchored to the right.
+  // -------------------------------------------------------------
+
   .header-actions {
-    margin-left: auto;
+    position: absolute;
+
+    top: 50%;
+    right: 1.25rem;
+
+    transform: translateY(-50%);
+
     display: flex;
     align-items: center;
+
+    margin-left: 0 !important;
+
+    flex-shrink: 0;
+
+    z-index: 20;
   }
 
-  // Donate is visible on small devices
+
+  // -------------------------------------------------------------
+  // Navigation container
+  //
+  // Mathematically centered in the entire header.
+  // -------------------------------------------------------------
+
+  .navbar-collapse {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: max-content;
+
+    flex-grow: 0 !important;
+    flex-basis: auto !important;
+
+    display: flex !important;
+
+    align-items: center;
+
+    margin: 0;
+
+    z-index: 5;
+  }
+
+
+  // -------------------------------------------------------------
+  // Navigation list
+  // -------------------------------------------------------------
+
+  .navbar-nav.navbar-nav-scroll {
+    position: static;
+
+    display: flex;
+
+    flex-direction: row;
+
+    align-items: center;
+
+    width: max-content;
+
+    margin: 0 !important;
+    padding: 0;
+
+    white-space: nowrap;
+
+    overflow: visible;
+  }
+
+
+  // -------------------------------------------------------------
+  // Navigation items
+  // -------------------------------------------------------------
+
+  .navbar-nav .nav-item {
+    flex-shrink: 0;
+  }
+
+
+  // -------------------------------------------------------------
+  // Navigation links
+  // -------------------------------------------------------------
+
+  .navbar-nav .nav-link {
+    padding-left: 0.65rem;
+    padding-right: 0.65rem;
+
+    white-space: nowrap;
+  }
+
+
+  // -------------------------------------------------------------
+  // Hide hamburger
+  // -------------------------------------------------------------
+
+  .navbar-toggler {
+    display: none !important;
+  }
+
+
+  // -------------------------------------------------------------
+  // Desktop Donate
+  // -------------------------------------------------------------
+
   .header-donate-btn {
     display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    white-space: nowrap;
+  }
+}
+
+
+// #################################################################
+// EXTRA LARGE DESKTOP
+// >= 1400px
+// #################################################################
+
+@media (min-width: 1400px) {
+
+  .header-inner {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+
+  .header-actions {
+    right: 1.5rem;
+  }
+
+
+  .navbar-nav .nav-link {
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
+  }
+}
+
+
+// #################################################################
+// TABLET / COLLAPSED DESKTOP
+// 992px – 1279px
+// #################################################################
+//
+// THIS IS THE IMPORTANT SECTION.
+//
+// Bootstrap's navbar-expand-lg tries to expand the navigation
+// from 992px upward.
+//
+// We explicitly override it here.
+//
+// Therefore:
+//
+// 1265px → hamburger
+// 1255px → hamburger
+// 1200px → hamburger
+// 1100px → hamburger
+// 1000px → hamburger
+//
+// Navigation only appears when .show is added.
+// #################################################################
+// ===============================================================
+// COLLAPSED NAVIGATION — TABLET / MEDIUM
+// 992px – 1279px
+// ===============================================================
+
+@media (min-width: 992px) and (max-width: 1279.98px) {
+
+  // -------------------------------------------------------------
+  // Header
+  // -------------------------------------------------------------
+
+  .header-inner {
+    min-height: 68px;
+
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+    display: flex;
+    align-items: center;
+
+    flex-wrap: nowrap;
+
+    position: relative;
+  }
+
+
+  // -------------------------------------------------------------
+  // Logo
+  // -------------------------------------------------------------
+
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+
+    flex-shrink: 0;
+
+    position: relative;
+    z-index: 20;
+  }
+
+  .navbar-brand img {
+    width: 9rem !important;
+    height: 5.8rem !important;
+
+    object-fit: contain !important;
+  }
+
+
+  // -------------------------------------------------------------
+  // Header actions
+  // -------------------------------------------------------------
+
+  .header-actions {
+    margin-left: auto !important;
+
+    display: flex;
+    align-items: center;
+
+    flex-shrink: 0;
+
+    position: relative;
+    z-index: 20;
+  }
+
+
+  // -------------------------------------------------------------
+  // Donate
+  // -------------------------------------------------------------
+
+  .header-donate-btn {
+    display: inline-flex;
+
     align-items: center;
     justify-content: center;
 
     padding: 0.45rem 0.7rem;
 
-    .bi {
-      margin-right: 0 !important;
-    }
+    white-space: nowrap;
+
+    flex-shrink: 0;
   }
 
-  // Hide the "Donate" text on very small screens
-  .header-donate-btn {
-    .bi + * {
-      display: none;
-    }
+
+  // -------------------------------------------------------------
+  // Contact
+  // -------------------------------------------------------------
+
+  .header-actions > a {
+    display: inline-flex !important;
+
+    flex-shrink: 0;
   }
 
-  // Theme toggle visible
+
+  // -------------------------------------------------------------
+  // Theme
+  // -------------------------------------------------------------
+
   .theme-toggle {
     display: inline-flex !important;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
   }
 
+
+  // -------------------------------------------------------------
   // Hamburger
+  // -------------------------------------------------------------
+
   .navbar-toggler {
-    display: inline-flex;
+    display: inline-flex !important;
+
     align-items: center;
     justify-content: center;
 
     margin-left: 0.5rem !important;
+
+    flex-shrink: 0;
+
+    position: relative;
+
+    z-index: 30;
+  }
+
+
+  // =============================================================
+  // IMPORTANT
+  // =============================================================
+  //
+  // Override Bootstrap's navbar-expand-lg.
+  //
+  // Bootstrap wants the navbar to expand at 992px.
+  // We don't want that.
+  //
+  // 992–1279 = collapsed navbar.
+  // =============================================================
+
+  .navbar-collapse {
+    display: none !important;
+
+    position: absolute;
+
+    top: 100%;
+    left: 0;
+    right: 0;
+
+    width: 100%;
+
+    margin: 0;
+
+    padding: 0 1rem;
+
+    flex-basis: auto !important;
+    flex-grow: 0 !important;
+
+    transform: none !important;
+
+    background: inherit;
+
+    z-index: 1000;
   }
 
 
   // -------------------------------------------------------------
-  // WHEN MOBILE MENU IS OPEN
+  // OPEN MENU
   // -------------------------------------------------------------
 
-  header.is-mobile-menu-open {
-
-    // Hide logo
-    .navbar-brand {
-      display: none;
-    }
-
-    // Hide donate + theme toggle
-    .header-actions {
-      display: none;
-    }
-
-    // Keep hamburger visible and move it to the right
-    .navbar-toggler {
-      margin-left: auto !important;
-    }
-
-    // Mobile navigation becomes full width
-    .navbar-collapse {
-      width: 100%;
-      flex-basis: 100%;
-    }
+  .navbar-collapse.show {
+    display: block !important;
   }
 
 
   // -------------------------------------------------------------
-  // Mobile collapse panel
+  // Navigation list
+  // -------------------------------------------------------------
+
+  .navbar-nav.navbar-nav-scroll {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+    width: 100%;
+
+    margin: 0 !important;
+
+    padding-top: 0.75rem;
+    padding-bottom: 1rem;
+
+    white-space: normal;
+
+    overflow-y: auto;
+  }
+
+
+  // -------------------------------------------------------------
+  // Links
+  // -------------------------------------------------------------
+
+  .navbar-nav .nav-link {
+    display: block;
+
+    padding: 0.8rem 0.5rem;
+  }
+
+
+  // -------------------------------------------------------------
+  // Dropdown
+  // -------------------------------------------------------------
+
+  .nav-item.dropdown .dropdown-menu {
+    position: static;
+
+    float: none;
+
+    display: none;
+
+    width: 100%;
+
+    border: none;
+
+    box-shadow: none;
+
+    background: transparent;
+
+    padding-left: 1rem;
+
+    margin: 0;
+  }
+
+
+  .nav-item.dropdown .dropdown-menu.show {
+    display: block;
+  }
+
+
+  .nav-item.dropdown .dropdown-item {
+    padding: 0.65rem 0.75rem;
+  }
+}
+
+
+// #################################################################
+// TABLET
+// 768px – 991px
+// #################################################################
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+
+  .header-inner {
+    min-height: 68px;
+
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+    display: flex;
+    align-items: center;
+
+    flex-wrap: nowrap;
+  }
+
+
+  // -------------------------------------------------------------
+  // Logo
+  // -------------------------------------------------------------
+
+  .navbar-brand img {
+    width: 9rem !important;
+    height: 5.8rem !important;
+
+    object-fit: contain !important;
+  }
+
+
+  // -------------------------------------------------------------
+  // Actions
+  // -------------------------------------------------------------
+
+  .header-actions {
+    margin-left: auto !important;
+
+    display: flex;
+
+    align-items: center;
+
+    flex-shrink: 0;
+  }
+
+
+  // -------------------------------------------------------------
+  // Keep Donate text
+  // -------------------------------------------------------------
+
+  .header-donate-btn .bi + * {
+    display: inline !important;
+  }
+
+
+  .header-donate-btn {
+    padding: 0.45rem 0.8rem;
+  }
+
+
+  // -------------------------------------------------------------
+  // Keep Contact
+  // -------------------------------------------------------------
+
+  .header-actions > a {
+    display: inline-flex !important;
+  }
+
+
+  // -------------------------------------------------------------
+  // Theme
+  // -------------------------------------------------------------
+
+  .theme-toggle {
+    display: inline-flex !important;
+  }
+
+
+  // -------------------------------------------------------------
+  // Hamburger
+  // -------------------------------------------------------------
+
+  .navbar-toggler {
+    display: inline-flex !important;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-left: 0.5rem !important;
+
+    flex-shrink: 0;
+  }
+
+
+  // -------------------------------------------------------------
+  // Collapse
   // -------------------------------------------------------------
 
   .navbar-collapse {
+    display: none !important;
 
-    &.show {
-      background: inherit;
-    }
+    position: absolute;
+
+    top: 100%;
+    left: 0;
+    right: 0;
+
+    width: 100%;
+
+    margin: 0;
+
+    padding: 0 1rem;
+
+    transform: none;
+
+    flex-basis: auto !important;
+    flex-grow: 0 !important;
+
+    background: inherit;
+
+    z-index: 1000;
   }
 
+
+  .navbar-collapse.show {
+    display: block !important;
+  }
+
+
+  // -------------------------------------------------------------
+  // Navigation
+  // -------------------------------------------------------------
+
   .navbar-nav.navbar-nav-scroll {
+    display: flex;
+
+    flex-direction: column;
+
     width: 100%;
-    margin-top: 0.75rem !important;
+
+    margin: 0 !important;
+
+    padding-top: 0.75rem;
     padding-bottom: 1rem;
   }
 
 
   // -------------------------------------------------------------
-  // Mobile navigation links
+  // Dropdowns
+  // -------------------------------------------------------------
+
+  .nav-item.dropdown .dropdown-menu {
+    position: static;
+
+    float: none;
+
+    display: none;
+
+    width: 100%;
+
+    border: none;
+
+    box-shadow: none;
+
+    background: transparent;
+
+    padding-left: 1rem;
+
+    margin: 0;
+  }
+
+
+  .nav-item.dropdown .dropdown-menu.show {
+    display: block;
+  }
+}
+
+
+// #################################################################
+// SMALL MOBILE
+// < 768px
+// #################################################################
+
+@media (max-width: 767.98px) {
+
+  // -------------------------------------------------------------
+  // Header
+  // -------------------------------------------------------------
+
+  .header-inner {
+    min-height: 64px;
+
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+
+    display: flex;
+    align-items: center;
+
+    flex-wrap: nowrap;
+  }
+
+
+  // -------------------------------------------------------------
+  // Logo
+  // -------------------------------------------------------------
+
+  .navbar-brand {
+    display: flex;
+
+    align-items: center;
+
+    flex-shrink: 0;
+  }
+
+
+  .navbar-brand img {
+    width: 8rem !important;
+    height: 5rem !important;
+
+    object-fit: contain !important;
+  }
+
+
+  // -------------------------------------------------------------
+  // Actions
+  // -------------------------------------------------------------
+
+  .header-actions {
+    margin-left: auto !important;
+
+    display: flex;
+
+    align-items: center;
+
+    flex-shrink: 0;
+  }
+
+
+  // -------------------------------------------------------------
+  // Hide Contact
+  // -------------------------------------------------------------
+
+  .header-actions > a {
+    display: none !important;
+  }
+
+
+  // -------------------------------------------------------------
+  // Donate icon only
+  // -------------------------------------------------------------
+
+  .header-donate-btn {
+    width: 40px;
+    height: 40px;
+
+    padding: 0;
+
+    border-radius: 50%;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+  }
+
+
+  .header-donate-btn .bi {
+    margin-right: 0 !important;
+
+    font-size: 1rem;
+  }
+
+
+  .header-donate-btn .bi + * {
+    display: none;
+  }
+
+
+  // -------------------------------------------------------------
+  // Theme toggle
+  // -------------------------------------------------------------
+
+  .theme-toggle {
+    display: inline-flex !important;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+    height: 40px;
+
+    margin-left: 0.25rem !important;
+
+    flex-shrink: 0;
+  }
+
+
+  // -------------------------------------------------------------
+  // Hamburger
+  // -------------------------------------------------------------
+
+  .navbar-toggler {
+    display: inline-flex !important;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+    height: 40px;
+
+    margin-left: 0.25rem !important;
+
+    flex-shrink: 0;
+  }
+
+
+  // -------------------------------------------------------------
+  // Collapse
+  // -------------------------------------------------------------
+
+  .navbar-collapse {
+    display: none !important;
+
+    position: absolute;
+
+    top: 100%;
+    left: 0;
+    right: 0;
+
+    width: 100%;
+
+    margin: 0;
+
+    padding: 0 0.75rem;
+
+    transform: none;
+
+    flex-basis: auto !important;
+    flex-grow: 0 !important;
+
+    background: inherit;
+
+    z-index: 1000;
+  }
+
+
+  .navbar-collapse.show {
+    display: block !important;
+  }
+
+
+  // -------------------------------------------------------------
+  // Navigation
+  // -------------------------------------------------------------
+
+  .navbar-nav.navbar-nav-scroll {
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    margin: 0 !important;
+
+    padding-top: 0.5rem;
+    padding-bottom: 1rem;
+
+    overflow-y: auto;
+  }
+
+
+  // -------------------------------------------------------------
+  // Links
   // -------------------------------------------------------------
 
   .navbar-nav .nav-link {
@@ -223,11 +960,12 @@ html:not([data-bs-theme="dark"]) .nav-link.active {
 
 
   // -------------------------------------------------------------
-  // Mobile dropdowns
+  // Dropdowns
   // -------------------------------------------------------------
 
   .nav-item.dropdown .dropdown-menu {
     position: static;
+
     float: none;
 
     display: none;
@@ -235,17 +973,21 @@ html:not([data-bs-theme="dark"]) .nav-link.active {
     width: 100%;
 
     border: none;
+
     box-shadow: none;
 
     background: transparent;
 
     padding-left: 1rem;
-    margin: 0;
 
-    &.show {
-      display: block;
-    }
+    margin: 0;
   }
+
+
+  .nav-item.dropdown .dropdown-menu.show {
+    display: block;
+  }
+
 
   .nav-item.dropdown .dropdown-item {
     padding: 0.65rem 0.75rem;
@@ -253,48 +995,362 @@ html:not([data-bs-theme="dark"]) .nav-link.active {
 }
 
 
-// ---------------------------------------------------------------
-// Extra-small phones
-// ---------------------------------------------------------------
+// #################################################################
+// EXTRA SMALL PHONES
+// < 576px
+// #################################################################
 
 @media (max-width: 575.98px) {
 
+  // -------------------------------------------------------------
+  // Header
+  // -------------------------------------------------------------
+
   .header-inner {
     min-height: 60px;
+
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
+
+
+  // -------------------------------------------------------------
+  // Logo
+  // -------------------------------------------------------------
 
   .navbar-brand img {
     width: 6.5rem !important;
     height: 4rem !important;
   }
 
+
+  // -------------------------------------------------------------
+  // Donate
+  // -------------------------------------------------------------
+
   .header-donate-btn {
     width: 38px;
     height: 38px;
-
-    padding: 0;
-
-    border-radius: 50%;
-
-    .bi {
-      font-size: 1rem;
-    }
   }
+
+
+  // -------------------------------------------------------------
+  // Theme
+  // -------------------------------------------------------------
 
   .theme-toggle {
     width: 38px;
     height: 38px;
-
-    justify-content: center;
-    align-items: center;
-
-    margin-left: 0.25rem !important;
   }
 
-  .navbar-toggler {
-    width: 40px;
-    height: 40px;
 
-    margin-left: 0.25rem !important;
+  // -------------------------------------------------------------
+  // Hamburger
+  // -------------------------------------------------------------
+
+  .navbar-toggler {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+
+// #################################################################
+// MOBILE MENU OPEN
+// Applies to every collapsed breakpoint
+// #################################################################
+
+@media (max-width: 1279.98px) {
+
+  header.is-mobile-menu-open {
+
+    // -----------------------------------------------------------
+    // Hide logo
+    // -----------------------------------------------------------
+
+    .navbar-brand {
+      display: none;
+    }
+
+
+    // -----------------------------------------------------------
+    // Hide Donate / Contact / Theme
+    // -----------------------------------------------------------
+
+    .header-actions {
+      display: none;
+    }
+
+
+    // -----------------------------------------------------------
+    // Move hamburger to the right
+    // -----------------------------------------------------------
+
+    .navbar-toggler {
+      margin-left: auto !important;
+    }
+
+
+    // -----------------------------------------------------------
+    // Make opened menu full width
+    // -----------------------------------------------------------
+
+    .navbar-collapse.show {
+      display: block !important;
+
+      width: 100%;
+
+      left: 0;
+      right: 0;
+    }
+  }
+}
+
+
+// ===============================================================
+// OPEN MOBILE / TABLET NAVIGATION — WHITE CARD
+// ===============================================================
+//
+// The opened navigation should NEVER be transparent.
+// Light mode  → white card
+// Dark mode   → dark card
+//
+// Applies to:
+// 992px – 1279px
+// 768px – 991px
+// < 768px
+// ===============================================================
+
+@media (max-width: 1279.98px) {
+
+  .navbar-collapse {
+
+    // Keep it hidden until the toggle opens it
+    display: none !important;
+
+    position: absolute;
+
+    top: calc(100% + 0.5rem);
+    left: 0.75rem;
+    right: 0.75rem;
+
+    width: auto;
+
+    margin: 0 !important;
+    padding: 0.5rem 0.75rem 0.75rem;
+
+    flex-basis: auto !important;
+    flex-grow: 0 !important;
+
+    transform: none !important;
+
+    // -----------------------------------------------------------
+    // LIGHT MODE
+    // -----------------------------------------------------------
+
+    background: #ffffff !important;
+
+    border: 1px solid rgba(0, 0, 0, 0.08);
+
+    border-radius: 1rem;
+
+    box-shadow:
+      0 12px 35px rgba(0, 0, 0, 0.12),
+      0 3px 10px rgba(0, 0, 0, 0.06);
+
+    overflow: hidden;
+
+    z-index: 1000;
+  }
+
+
+  // -------------------------------------------------------------
+  // DARK MODE
+  // -------------------------------------------------------------
+
+  [data-bs-theme="dark"] .navbar-collapse {
+    background: #171c1a !important;
+
+    border-color: rgba(255, 255, 255, 0.08);
+
+    box-shadow:
+      0 12px 35px rgba(0, 0, 0, 0.35),
+      0 3px 10px rgba(0, 0, 0, 0.2);
+  }
+
+
+  // -------------------------------------------------------------
+  // OPEN STATE
+  // -------------------------------------------------------------
+
+  .navbar-collapse.show {
+    display: block !important;
+  }
+
+
+  // -------------------------------------------------------------
+  // NAVIGATION LIST
+  // -------------------------------------------------------------
+
+  .navbar-nav.navbar-nav-scroll {
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+    margin: 0 !important;
+
+    padding: 0.25rem 0;
+
+    white-space: normal;
+
+    overflow-y: auto;
+  }
+
+
+  // -------------------------------------------------------------
+  // NAV LINKS
+  // -------------------------------------------------------------
+
+  .navbar-nav .nav-link {
+    display: block;
+
+    padding: 0.75rem 0.75rem;
+
+    border-radius: 0.6rem;
+
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+
+  // Light mode hover
+  .navbar-nav .nav-link:hover {
+    background: rgba(1, 123, 77, 0.07);
+  }
+
+
+  // Dark mode hover
+  [data-bs-theme="dark"] .navbar-nav .nav-link:hover {
+    background: rgba(31, 168, 117, 0.12);
+  }
+
+
+  // -------------------------------------------------------------
+  // DROPDOWN
+  // -------------------------------------------------------------
+
+  .nav-item.dropdown .dropdown-menu {
+
+    position: static;
+
+    float: none;
+
+    display: none;
+
+    width: 100%;
+
+    margin: 0;
+
+    padding: 0.25rem 0 0.25rem 0.75rem;
+
+    border: none;
+
+    box-shadow: none;
+
+    background: transparent !important;
+  }
+
+
+  .nav-item.dropdown .dropdown-menu.show {
+    display: block;
+  }
+
+
+  // -------------------------------------------------------------
+  // DROPDOWN ITEMS
+  // -------------------------------------------------------------
+
+  .nav-item.dropdown .dropdown-item {
+    display: block;
+
+    padding: 0.65rem 0.75rem;
+
+    border-radius: 0.5rem;
+
+    background: transparent;
+
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+
+  .nav-item.dropdown .dropdown-item:hover {
+    background: rgba(1, 123, 77, 0.07);
+  }
+
+
+  [data-bs-theme="dark"] .nav-item.dropdown .dropdown-item:hover {
+    background: rgba(31, 168, 117, 0.12);
+  }
+}
+
+
+// ===============================================================
+// MEDIUM / TABLET CARD WIDTH
+// 992px – 1279px
+// ===============================================================
+
+@media (min-width: 992px) and (max-width: 1279.98px) {
+
+  .navbar-collapse {
+    left: 1rem;
+    right: 1rem;
+
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+
+
+// ===============================================================
+// SMALL MOBILE CARD
+// < 768px
+// ===============================================================
+
+@media (max-width: 767.98px) {
+
+  .navbar-collapse {
+    left: 0.75rem;
+    right: 0.75rem;
+
+    top: calc(100% + 0.4rem);
+
+    padding: 0.5rem 0.65rem 0.7rem;
+
+    border-radius: 0.9rem;
+  }
+}
+
+
+// ===============================================================
+// EXTRA SMALL PHONES
+// < 576px
+// ===============================================================
+
+@media (max-width: 575.98px) {
+
+  .navbar-collapse {
+    left: 0.5rem;
+    right: 0.5rem;
+
+    top: calc(100% + 0.35rem);
+
+    border-radius: 0.85rem;
   }
 }

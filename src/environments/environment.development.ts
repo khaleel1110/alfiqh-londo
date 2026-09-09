@@ -1,11 +1,9 @@
-const useEmulator = false;
+const useEmulator = true;
 
-const functionsBaseUrl = useEmulator
-  ? 'http://127.0.0.1:5001/gomart-apps/europe-west2'
-  : 'https://europe-west2-gomart-apps.cloudfunctions.net';
+const functionsBaseUrl = 'http://127.0.0.1:5001/gomart-apps/europe-west2';
 
 export const environment = {
-  production: true,
+  production: false,
   useEmulator,
 
   firebaseApp: {
@@ -19,6 +17,8 @@ export const environment = {
   },
 
   initializeDonationUrl: `${functionsBaseUrl}/initializeDonation`,
+
   verifyDonationUrl: `${functionsBaseUrl}/verifyDonation`,
+
   contactFunctionUrl: `${functionsBaseUrl}/sendContactMessage`,
 };

@@ -168,6 +168,38 @@
   background: var(--emerald-deep);
 }
 
+// Reserve clearance from the fixed navbar (top) and the swiper
+// pagination dots (bottom) once we're past the mobile hamburger
+// layout. The swiper background itself still fills the whole
+// section (position:absolute; inset:0 ignores this padding), only
+// .hero-content — which is in normal flow — gets pushed in from it.
+@media (min-width: 992px) {
+  .hero {
+    padding-top: 9rem;     // navbar logo is ~7rem tall + breathing room
+    padding-bottom: 6rem;  // clears the pagination dots sitting 28px from the bottom
+  }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  color: var(--ivory);
+  max-width: 46rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;          // was 0.75rem — a touch more breathing room between the two buttons
+  margin-top: 0.5rem;
+}
+
+
+
+
+
+
+
 .hero-swiper {
   position: absolute;
   inset: 0;
@@ -254,7 +286,7 @@
   max-width: 46rem;
 }
 
-.hero-tag {
+/*.hero-tag {
   display: inline-block;
   font-family: var(--font-utility);
   letter-spacing: 0.14em;
@@ -265,7 +297,7 @@
   border: 1px solid rgba(228, 205, 143, 0.4);
   border-radius: 999px;
 
-}
+}*/
 
 .hero-title {
   font-family: var(--font-display);
@@ -281,11 +313,11 @@
   margin-bottom: 1.75rem;
 }
 
-.hero-actions {
+/*.hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-}
+}*/
 
 // ---------------------------------------------------------------
 // Impact statistics

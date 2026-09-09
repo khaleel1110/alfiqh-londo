@@ -19,9 +19,7 @@ interface SupportOption {
   styleUrl: './support-us.component.scss',
 })
 export class SupportUsComponent {
-  constructor(
-    private donationModal: DonationModalService,
-  ) {}
+  constructor(private donationModal: DonationModalService) {}
   copied = false;
 
   openDonate(): void {
@@ -58,7 +56,7 @@ export class SupportUsComponent {
     },
   ];
 
-  accountNumber = '0000000000';
+  accountNumber = '62826674';
 
   copyAccountNumber(): void {
     navigator.clipboard.writeText(this.accountNumber);

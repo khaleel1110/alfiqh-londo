@@ -1,24 +1,16 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DestroyRef,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormBuilder,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { DonationModalService, DonationPurpose } from '../../services/donation-modal.service';
-import { DonationService } from '../../services/donation.service';
 
+import { DonationModalService, DonationPurpose } from '../../services/donation-modal.service';
+
+import { DonationService, DonationCurrency } from '../../services/donation.service';
 
 interface Currency {
-  code: string;
-  symbol: string;
-  name: string;
+  readonly code: DonationCurrency;
+  readonly symbol: string;
+  readonly name: string;
 }
 
 @Component({
@@ -31,9 +23,14 @@ interface Currency {
 })
 export class DonateModalComponent {
   readonly modal = inject(DonationModalService);
+
   private readonly donationService = inject(DonationService);
   private readonly fb = inject(FormBuilder);
   private readonly destroyRef = inject(DestroyRef);
+
+  // ============================================================
+  // Donation purposes
+  // ============================================================
 
   readonly purposes: DonationPurpose[] = [
     'General Donation',
@@ -44,13 +41,41 @@ export class DonateModalComponent {
     'Education',
   ];
 
-  // Replace the bankDetails block in donate-modal.component.ts with this:
+  // ============================================================
+  // Supported currencies
+  // ============================================================
+
+  readonly currencies: Currency[] = [
+    {
+      code: 'NGN',
+      symbol: '₦',
+      name: 'Nigerian Naira',
+    },
+    {
+      code: 'USD',
+      symbol: '$',
+      name: 'US Dollar',
+    },
+  ];
+
+  // ============================================================
+  // Quick donation amounts
+  // ============================================================
+
+  readonly quickAmountsByCurrency: Record<DonationCurrency, readonly number[]> = {
+    NGN: [5000, 10000, 25000, 50000],
+    USD: [10, 25, 50, 100],
+  };
+
+  // ============================================================
+  // Bank transfer details
+  // ============================================================
 
   readonly bankDetails = {
-    bankName: 'Revolut',
-    accountName: 'Alfiqh London',
-    accountNumber: '123457890',
-    sortCode: '', // Not applicable — international transfer uses routing/IBAN below instead
+    bankName: 'HSBC',
+    accountName: 'Alfiqh Nigerian Islamic Trust',
+    accountNumber: '62826674',
+    sortCode: '40-25-27',
     routingNumber: '45788099',
     bic: 'REVOGB21',
     iban: 'GB41REVO00996963993423',
@@ -58,135 +83,247 @@ export class DonateModalComponent {
     referenceHint: 'Please use your name or donation purpose as the transfer reference.',
   };
 
-  // donate-modal.component.ts
+  // ============================================================
+  // Payment method
+  // ============================================================
 
-  readonly cardCurrencies: Currency[] = [
-    { code: 'NGN', symbol: '₦', name: 'Nigerian Naira' },
-    { code: 'USD', symbol: '$', name: 'US Dollar' },
-  ];
+  selectedMethod: 'card' | 'transfer' = 'card';
 
-  readonly transferCurrencies: Currency[] = [
-    { code: 'NGN', symbol: '₦', name: 'Nigerian Naira' },
-    { code: 'USD', symbol: '$', name: 'US Dollar' },
-    { code: 'GBP', symbol: '£', name: 'British Pound' },
-    { code: 'EUR', symbol: '€', name: 'Euro' },
-  ];
-
-  get availableCurrencies(): Currency[] {
-    return this.selectedMethod === 'card' ? this.cardCurrencies : this.transferCurrencies;
-  }
-
-  currentSymbol(): string {
-    const code = this.form.controls.currency.value;
-    return this.availableCurrencies.find((c) => c.code === code)?.symbol ?? '';
-  }
-
-  selectMethod(method: 'card' | 'transfer'): void {
-    this.selectedMethod = method;
-    this.errorMessage = '';
-
-    // If switching to card and the current currency isn't supported, reset it
-    if (
-      method === 'card' &&
-      !this.cardCurrencies.some((c) => c.code === this.form.controls.currency.value)
-    ) {
-      this.form.controls.currency.setValue('NGN');
-    }
-  }
-
-  readonly quickAmounts = [5000, 10000, 25000, 50000];
+  // ============================================================
+  // State
+  // ============================================================
 
   loading = false;
   errorMessage = '';
   successMessage = '';
-  selectedMethod: 'card' | 'transfer' = 'card';
 
-  form = this.fb.nonNullable.group({
+  // ============================================================
+  // Form
+  // ============================================================
+
+  readonly form = this.fb.nonNullable.group({
     amount: [10000, [Validators.required, Validators.min(100)]],
-    currency: ['NGN', Validators.required],
+
+    currency: ['NGN' as DonationCurrency, Validators.required],
+
     purpose: ['General Donation' as DonationPurpose, Validators.required],
+
     donorName: [''],
+
     donorEmail: ['', [Validators.required, Validators.email]],
+
     anonymous: [false],
+
     recurring: [false],
   });
 
   constructor() {
-    // Modal options are read from the shared signal when the modal is opened.
+    // ----------------------------------------------------------
+    // Automatically change the default amount when currency
+    // changes.
+    // ----------------------------------------------------------
+
+    this.form.controls.currency.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((currency) => {
+        this.errorMessage = '';
+        this.successMessage = '';
+
+        if (currency === 'USD') {
+          this.form.controls.amount.setValue(25);
+        } else {
+          this.form.controls.amount.setValue(10000);
+        }
+
+        this.form.controls.amount.markAsPristine();
+        this.form.controls.amount.updateValueAndValidity();
+      });
   }
+
+  // ============================================================
+  // Current currency
+  // ============================================================
+
+  get currentCurrency(): DonationCurrency {
+    return this.form.controls.currency.value;
+  }
+
+  get currentCurrencyInfo(): Currency {
+    return (
+      this.currencies.find((currency) => currency.code === this.currentCurrency) ??
+      this.currencies[0]
+    );
+  }
+
+  get currentSymbol(): string {
+    return this.currentCurrencyInfo.symbol;
+  }
+
+  get quickAmounts(): readonly number[] {
+    return this.quickAmountsByCurrency[this.currentCurrency];
+  }
+
+  get minimumAmount(): number {
+    return this.currentCurrency === 'USD' ? 1 : 100;
+  }
+
+  get amountPlaceholder(): string {
+    return this.currentCurrency === 'USD' ? '25' : '10,000';
+  }
+
+  // ============================================================
+  // Payment method
+  // ============================================================
+
+  selectMethod(method: 'card' | 'transfer'): void {
+    if (this.loading) {
+      return;
+    }
+
+    this.selectedMethod = method;
+
+    this.errorMessage = '';
+    this.successMessage = '';
+
+    // Both payment methods currently support the same
+    // currencies, so there is no need to reset the currency.
+  }
+
+  // ============================================================
+  // Quick amount
+  // ============================================================
 
   setAmount(amount: number): void {
     this.form.controls.amount.setValue(amount);
     this.form.controls.amount.markAsDirty();
-  }
+    this.form.controls.amount.updateValueAndValidity();
 
-  /*
-  selectMethod(method: 'card' | 'transfer'): void {
-    this.selectedMethod = method;
-    this.errorMessage = '';
-  }
-*/
-
-  close(): void {
-    if (!this.loading) {
-      this.modal.close();
-      this.resetMessages();
-    }
-  }
-
-  submit(): void {
     this.errorMessage = '';
     this.successMessage = '';
+  }
+
+  // ============================================================
+  // Close
+  // ============================================================
+
+  close(): void {
+    if (this.loading) {
+      return;
+    }
+
+    this.modal.close();
+    this.resetMessages();
+  }
+
+  // ============================================================
+  // Submit
+  // ============================================================
+
+  submit(): void {
+    this.resetMessages();
+
+    if (this.loading) {
+      return;
+    }
+
+    // ----------------------------------------------------------
+    // Validate form
+    // ----------------------------------------------------------
 
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+
+      this.errorMessage = 'Please check the donation details and try again.';
+
       return;
     }
 
     const value = this.form.getRawValue();
 
-    // -----------------------------------------
-    // BANK TRANSFER
-    // -----------------------------------------
+    // ----------------------------------------------------------
+    // Currency
+    // ----------------------------------------------------------
+
+    const currency = value.currency;
+
+    if (currency !== 'NGN' && currency !== 'USD') {
+      this.errorMessage = 'Please select a valid donation currency.';
+
+      return;
+    }
+
+    // ----------------------------------------------------------
+    // Amount
+    // ----------------------------------------------------------
+
+    const amount = Number(value.amount);
+
+    const minimumAmount = currency === 'USD' ? 1 : 100;
+
+    if (!Number.isFinite(amount) || amount < minimumAmount) {
+      this.errorMessage =
+        currency === 'USD'
+          ? 'Please enter a valid USD donation amount of at least $1.'
+          : 'Please enter a valid NGN donation amount of at least ₦100.';
+
+      return;
+    }
+
+    // ----------------------------------------------------------
+    // Donor name
+    // ----------------------------------------------------------
+
+    const donorName = value.anonymous ? undefined : value.donorName.trim() || undefined;
+
+    // ----------------------------------------------------------
+    // Bank transfer
+    // ----------------------------------------------------------
+
     if (this.selectedMethod === 'transfer') {
-      this.successMessage = 'Please complete the bank transfer using the account details below.';
+      this.successMessage =
+        'Please complete your bank transfer using the account details shown above.';
 
       return;
     }
 
-    // -----------------------------------------
-    // CARD PAYMENT
-    // -----------------------------------------
-    // CARD PAYMENT
-    if (!this.cardCurrencies.some((c) => c.code === value.currency)) {
-      this.errorMessage = `Card payment in ${value.currency} isn't supported yet. Please use NGN or USD, or pay by bank transfer.`;
-      return;
-    }
+    // ----------------------------------------------------------
+    // Card payment
+    // ----------------------------------------------------------
 
     this.loading = true;
 
+    const request = {
+      amount,
+      currency,
+      purpose: value.purpose,
+      donorName,
+      donorEmail: value.donorEmail.trim(),
+      anonymous: value.anonymous,
+      recurring: value.recurring,
+    };
+
+    console.log('Submitting donation:', request);
 
     this.donationService
-      .initializePayment({
-        amount: Number(value.amount),
-        currency: value.currency,
-        purpose: value.purpose,
-        donorName: value.anonymous ? undefined : value.donorName || undefined,
-        donorEmail: value.donorEmail,
-        anonymous: value.anonymous,
-        recurring: value.recurring,
-      })
+      .initializePayment(request)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (response) => {
           this.loading = false;
 
-          if (!response?.authorization_url) {
+          console.log('Donation initialization successful:', response);
+
+          if (!response || !response.authorization_url) {
             this.errorMessage = 'Payment checkout could not be created. Please try again.';
+
             return;
           }
 
-          window.location.href = response.authorization_url;
+          // ----------------------------------------------------
+          // Redirect to Paystack
+          // ----------------------------------------------------
+
+          window.location.assign(response.authorization_url);
         },
 
         error: (error) => {
@@ -194,18 +331,75 @@ export class DonateModalComponent {
 
           console.error('Donation initialization failed:', error);
 
+          // ----------------------------------------------------
+          // Network error
+          // ----------------------------------------------------
+
+          if (error?.status === 0) {
+            this.errorMessage =
+              'Unable to connect to the payment service. Please check your connection and try again.';
+
+            return;
+          }
+
+          // ----------------------------------------------------
+          // Backend error
+          // ----------------------------------------------------
+
+          const backendError = error?.error;
+
+          if (typeof backendError === 'string' && backendError.trim()) {
+            this.errorMessage = backendError;
+
+            return;
+          }
+
+          if (backendError?.error) {
+            this.errorMessage = backendError.error;
+
+            return;
+          }
+
+          if (backendError?.message) {
+            this.errorMessage = backendError.message;
+
+            return;
+          }
+
+          if (error?.message) {
+            this.errorMessage = error.message;
+
+            return;
+          }
+
           this.errorMessage =
-            error?.error?.message || 'Unable to start the payment. Please try again.';
+            currency === 'USD'
+              ? 'Unable to start the USD payment. Please try again.'
+              : 'Unable to start the payment. Please try again.';
         },
       });
   }
+
+  // ============================================================
+  // Reset messages
+  // ============================================================
 
   private resetMessages(): void {
     this.errorMessage = '';
     this.successMessage = '';
   }
 
+  // ============================================================
+  // Copy account number
+  // ============================================================
+
   copyAccountNumber(): void {
+    if (!navigator.clipboard) {
+      this.errorMessage = 'Copying is not supported by this browser.';
+
+      return;
+    }
+
     navigator.clipboard
       .writeText(this.bankDetails.accountNumber)
       .then(() => {

@@ -11,226 +11,469 @@
       aria-labelledby="donation-title"
       (click)="$event.stopPropagation()">
 
+      <!-- =====================================================
+           Close
+      ====================================================== -->
+
       <button
         type="button"
         class="modal-close"
         aria-label="Close donation form"
         [disabled]="loading"
         (click)="close()">
+
         <i class="bi bi-x-lg"></i>
       </button>
 
+      <!-- =====================================================
+           Header
+      ====================================================== -->
+
       <div class="donation-header">
+
         <div class="donation-icon">
           <i class="bi bi-heart-fill"></i>
         </div>
 
-        <span class="eyebrow">Support Our Work</span>
+        <span class="eyebrow">
+          Support Our Work
+        </span>
 
         <h2 id="donation-title">
           Make a Difference Today
         </h2>
 
         <p>
-          Your contribution helps us support communities through charity,
-          education, Zakat and Islamic programmes.
+          Your contribution helps us support communities
+          through charity, education, Zakat and Islamic
+          programmes.
         </p>
+
       </div>
 
+      <!-- =====================================================
+           Error
+      ====================================================== -->
+
       @if (errorMessage) {
-        <div class="alert alert-danger">
+        <div
+          class="alert alert-danger"
+          role="alert">
+
           <i class="bi bi-exclamation-circle me-2"></i>
+
           {{ errorMessage }}
+
         </div>
       }
 
-      <form [formGroup]="form" (ngSubmit)="submit()">
+      <!-- =====================================================
+           Success
+      ====================================================== -->
+
+      @if (successMessage) {
+        <div
+          class="alert alert-success"
+          role="status">
+
+          <i class="bi bi-check-circle me-2"></i>
+
+          {{ successMessage }}
+
+        </div>
+      }
+
+      <!-- =====================================================
+           Form
+      ====================================================== -->
+
+      <form
+        [formGroup]="form"
+        (ngSubmit)="submit()">
+
+        <!-- ===================================================
+             Purpose
+        ==================================================== -->
 
         <div class="field-group">
-          <label>Donation Purpose</label>
 
-          <select class="form-control" formControlName="purpose">
-            @for (purpose of purposes; track purpose) {
-              <option [value]="purpose">{{ purpose }}</option>
-            }
-          </select>
-        </div>
-
-        <div class="amount-heading">
-          <label>Donation Amount</label>
+          <label for="donation-purpose">
+            Donation Purpose
+          </label>
 
           <select
-            class="currency-select"
-            formControlName="currency">
-            @for (currency of availableCurrencies; track currency.code) {
-              <option [value]="currency.code">
-                {{ currency.code }} ({{ currency.symbol }})
+            id="donation-purpose"
+            class="form-control"
+            formControlName="purpose">
+
+            @for (
+              purpose of purposes;
+              track $index
+              ) {
+              <option [value]="purpose">
+                {{ purpose }}
               </option>
             }
+
           </select>
+
         </div>
+
+        <!-- ===================================================
+             Amount heading
+        ==================================================== -->
+
+        <div class="amount-heading">
+
+          <label for="donation-amount">
+            Donation Amount
+          </label>
+
+          <span class="currency-label">
+            NGN (₦)
+          </span>
+
+        </div>
+
+        <!-- ===================================================
+             Amount input
+        ==================================================== -->
+
         <div class="amount-input">
-  <span>
-    @for (currency of availableCurrencies; track currency.code) {
-      @if (currency.code === form.controls.currency.value) {
-        {{ currency.symbol }}
-      }
-    }
-  </span>
+
+          <span aria-hidden="true">
+            ₦
+          </span>
 
           <input
+            id="donation-amount"
             type="number"
             formControlName="amount"
             min="100"
             step="1"
-            placeholder="10,000" />
+            placeholder="10,000"
+            inputmode="numeric"
+            autocomplete="off"
+            aria-label="Donation amount in Nigerian Naira" />
+
         </div>
+
+        <!-- ===================================================
+             Amount validation
+        ==================================================== -->
+
+        @if (
+          form.controls.amount.invalid &&
+          form.controls.amount.touched
+          ) {
+          <div class="field-error">
+
+            @if (
+              form.controls.amount.errors?.['required']
+              ) {
+              Please enter a donation amount.
+            }
+
+            @if (
+              form.controls.amount.errors?.['min']
+              ) {
+              The minimum donation is ₦100.
+            }
+
+          </div>
+        }
+
+        <!-- ===================================================
+             Quick amounts
+        ==================================================== -->
+
         <div class="quick-amounts">
-          @for (amount of quickAmounts; track amount) {
+
+          @for (
+            amount of quickAmounts;
+            track $index
+            ) {
+
             <button
               type="button"
               class="quick-amount"
-              [class.active]="form.controls.amount.value === amount"
+              [class.active]="
+                form.controls.amount.value === amount
+              "
+              [disabled]="loading"
               (click)="setAmount(amount)">
-              {{ currentSymbol() }}{{ amount | number }}
+
+              ₦{{ amount | number }}
+
             </button>
+
           }
+
         </div>
 
+        <!-- ===================================================
+             Donor information
+        ==================================================== -->
+
         <div class="field-row">
+
           <div class="field-group">
-            <label>Your Name <span>(optional)</span></label>
+
+            <label for="donor-name">
+              Your Name
+              <span>(optional)</span>
+            </label>
+
             <input
+              id="donor-name"
               class="form-control"
               type="text"
               formControlName="donorName"
-              placeholder="Full name" />
+              placeholder="Full name"
+              autocomplete="name" />
+
           </div>
 
           <div class="field-group">
-            <label>Email</label>
+
+            <label for="donor-email">
+              Email
+            </label>
+
             <input
+              id="donor-email"
               class="form-control"
               type="email"
               formControlName="donorEmail"
-              placeholder="you@example.com" />
+              placeholder="you@example.com"
+              autocomplete="email" />
+
+            @if (
+              form.controls.donorEmail.invalid &&
+              form.controls.donorEmail.touched
+              ) {
+              <div class="field-error">
+
+                @if (
+                  form.controls.donorEmail.errors?.['required']
+                  ) {
+                  Email address is required.
+                }
+
+                @if (
+                  form.controls.donorEmail.errors?.['email']
+                  ) {
+                  Please enter a valid email address.
+                }
+
+              </div>
+            }
+
           </div>
+
         </div>
 
-        <label class="check-row">
-          <input type="checkbox" formControlName="anonymous" />
-          <span>Make my donation anonymous</span>
-        </label>
+        <!-- ===================================================
+             Anonymous
+        ==================================================== -->
 
         <label class="check-row">
-          <input type="checkbox" formControlName="recurring" />
-          <span>Make this a recurring donation</span>
+
+          <input
+            type="checkbox"
+            formControlName="anonymous" />
+
+          <span>
+            Make my donation anonymous
+          </span>
+
         </label>
 
-        <div class="payment-title">Payment Method</div>
+        <!-- ===================================================
+             Recurring
+        ==================================================== -->
+
+        <label class="check-row">
+
+          <input
+            type="checkbox"
+            formControlName="recurring" />
+
+          <span>
+            Make this a recurring donation
+          </span>
+
+        </label>
+
+        <!-- ===================================================
+             Payment title
+        ==================================================== -->
+
+        <div class="payment-title">
+          Payment Method
+        </div>
+
+        <!-- ===================================================
+             Payment methods
+        ==================================================== -->
 
         <div class="payment-methods">
+
+          <!-- Card -->
+
           <button
             type="button"
             class="payment-method"
-            [class.active]="selectedMethod === 'card'"
+            [class.active]="
+              selectedMethod === 'card'
+            "
+            [disabled]="loading"
             (click)="selectMethod('card')">
+
             <i class="bi bi-credit-card"></i>
+
             <span>
-              <strong>Card</strong>
-              <small>Secure online payment</small>
+              <strong>
+                Card
+              </strong>
+
+              <small>
+                Secure online payment
+              </small>
             </span>
+
           </button>
 
-          <!-- Replace the existing "transfer-box" block in donate-modal.component.html with this: -->
+          <!-- Bank transfer -->
 
-          @if (selectedMethod === 'transfer') {
-            <div class="transfer-box mt-4">
+          <button
+            type="button"
+            class="payment-method"
+            [class.active]="
+              selectedMethod === 'transfer'
+            "
+            [disabled]="loading"
+            (click)="selectMethod('transfer')">
 
-              <div class="d-flex align-items-center gap-2 mb-3">
-                <i class="bi bi-bank fs-4"></i>
+            <i class="bi bi-bank"></i>
 
-                <div>
-                  <h6 class="mb-0">Bank Transfer</h6>
-                  <small class="text-muted">
-                    Transfer your donation directly to our account.
-                  </small>
-                </div>
+            <span>
+              <strong>
+                Bank Transfer
+              </strong>
+
+              <small>
+                Pay directly by transfer
+              </small>
+            </span>
+
+          </button>
+
+        </div>
+
+        <!-- ===================================================
+             Bank transfer information
+        ==================================================== -->
+
+        @if (selectedMethod === 'transfer') {
+
+          <div class="transfer-box mt-4">
+
+            <div
+              class="d-flex align-items-center gap-2 mb-3">
+
+              <i class="bi bi-bank fs-4"></i>
+
+              <div>
+
+                <h6 class="mb-0">
+                  Bank Transfer
+                </h6>
+
+                <small class="text-muted">
+                  Transfer your donation directly
+                  to our account.
+                </small>
+
               </div>
-
-              <div class="bank-detail">
-                <span class="me-2 ">Bank</span>
-                <strong>{{ bankDetails.bankName }}</strong>
-              </div>
-
-              <div class="bank-detail">
-                <span class="me-2 ">Account Name</span>
-                <strong class="me-2">{{ bankDetails.accountName }}</strong>
-              </div>
-
-              <div class="bank-detail">
-                <span>Account Number</span>
-
-                <div class="d-flex align-items-center me02 gap-2">
-                  <strong>{{ bankDetails.accountNumber }}</strong>
-
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary"
-                    (click)="copyAccountNumber()">
-
-                    <i class="bi bi-copy"></i>
-                  </button>
-                </div>
-              </div>
-
-              @if (bankDetails.sortCode) {
-                <div class="bank-detail">
-                  <span>Sort Code</span>
-                  <strong>{{ bankDetails.sortCode }}</strong>
-                </div>
-              }
-
-<!--              <div class="bank-detail">
-                <span>Wire Routing No.</span>
-                <strong>{{ bankDetails.routingNumber }}</strong>
-              </div>
-
-              <div class="bank-detail">
-                <span>BIC / SWIFT</span>
-                <strong>{{ bankDetails.bic }}</strong>
-              </div>
-
-              <div class="bank-detail">
-                <span>IBAN</span>
-                <strong>{{ bankDetails.iban }}</strong>
-              </div>
-
-              <div class="bank-detail">
-                <span>Bank Address</span>
-                <strong>{{ bankDetails.bankAddress }}</strong>
-              </div>
-
-              <div class="alert alert-light mt-3 mb-0">
-                <i class="bi bi-info-circle me-2"></i>
-                {{ bankDetails.referenceHint }}
-              </div>-->
 
             </div>
-          }
 
-          <button
-            type="button"
-            class="payment-method"
-            [class.active]="selectedMethod === 'transfer'"
-            (click)="selectMethod('transfer')">
-            <i class="bi bi-bank"></i>
-            <span>
-              <strong>Bank Transfer</strong>
-              <small>Pay directly by transfer</small>
-            </span>
-          </button>
-        </div>
+            <div class="bank-detail">
+
+              <span>
+                Bank
+              </span>
+
+              <strong>
+                {{ bankDetails.bankName }}
+              </strong>
+
+            </div>
+
+            <div class="bank-detail">
+
+              <span>
+                Account Name
+              </span>
+
+              <strong>
+                {{ bankDetails.accountName }}
+              </strong>
+
+            </div>
+
+            <div class="bank-detail">
+
+              <span>
+                Account Number
+              </span>
+
+              <div
+                class="d-flex align-items-center gap-2">
+
+                <strong>
+                  {{ bankDetails.accountNumber }}
+                </strong>
+
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-secondary"
+                  [disabled]="loading"
+                  aria-label="Copy account number"
+                  (click)="copyAccountNumber()">
+
+                  <i class="bi bi-copy"></i>
+
+                </button>
+
+              </div>
+
+            </div>
+
+            @if (bankDetails.sortCode) {
+
+              <div class="bank-detail">
+
+                <span>
+                  Sort Code
+                </span>
+
+                <strong>
+                  {{ bankDetails.sortCode }}
+                </strong>
+
+              </div>
+
+            }
+
+          </div>
+
+        }
+
+        <!-- ===================================================
+             Submit
+        ==================================================== -->
 
         <button
           type="submit"
@@ -238,23 +481,45 @@
           [disabled]="loading">
 
           @if (loading) {
-            <span class="spinner-border spinner-border-sm me-2"></span>
+
+            <span
+              class="spinner-border spinner-border-sm me-2"
+              aria-hidden="true">
+            </span>
+
             Connecting to secure payment...
+
           } @else {
-            <i class="bi bi-lock-fill me-2"></i>
+
+            <i
+              class="bi bi-lock-fill me-2">
+            </i>
+
             Donate Securely
+
           }
+
         </button>
 
+        <!-- ===================================================
+             Security
+        ==================================================== -->
+
         <div class="security-note">
+
           <i class="bi bi-shield-check"></i>
+
           <span>
-            Payments are processed through a secure payment provider.
-            Your card details are never stored by this website.
+            Payments are processed through a secure payment
+            provider. Your card details are never stored by
+            this website.
           </span>
+
         </div>
 
       </form>
+
     </section>
+
   </div>
 }

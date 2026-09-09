@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "gomart-apps"
-  }
+    "default": "gomart-apps",
+    "production": "gomart-apps"
+  },
+  "targets": {},
+  "etags": {}
 }
